@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Self-Actualising Circles</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #f5f2eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+  canvas { display: block; cursor: crosshair; }
+  #controls {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 18px;
+    align-items: flex-end;
+    background: rgba(245,242,235,0.85);
+    padding: 12px 20px;
+    border: 1px solid rgba(0,0,0,0.08);
+    backdrop-filter: blur(8px);
+  }
+  .ctrl { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  label {
+    color: rgba(0,0,0,0.3);
+    font-family: 'Courier New', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+  }
+  input[type=range] {
+    -webkit-appearance: none;
+    width: 72px; height: 1px;
+    background: rgba(0,0,0,0.15);
+    outline: none; cursor: pointer;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.5);
+    cursor: pointer;
+  }
+  .seg { display: flex; gap: 2px; }
+  .seg-btn {
+    background: rgba(0,0,0,0.04);
+    border: 1px solid rgba(0,0,0,0.1);
+    color: rgba(0,0,0,0.3);
+    font-family: 'Courier New', monospace;
+    font-size: 9px; letter-spacing: 1px;
+    padding: 4px 8px; cursor: pointer;
+    transition: all 0.12s;
+  }
+  .seg-btn.active {
+    background: rgba(0,0,0,0.1);
+    border-color: rgba(0,0,0,0.3);
+    color: rgba(0,0,0,0.8);
+  }
+  .divider {
+    width: 1px; height: 40px;
+    background: rgba(0,0,0,0.07);
+    align-self: center;
+  }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+
+<div id="controls">
+  <div class="ctrl">
+    <label>mode</label>
+    <div class="seg">
+      <button class="seg-btn active" data-mode="phyllotaxis">phyllotaxis</button>
+      <button class="seg-btn" data-mode="ripple">ripple</button>
+      <button class="seg-btn" data-mode="orbit">orbit</button>
+      <button class="seg-btn" data-mode="breath">breath</button>
+    </div>
+  </div>
+  <div class="divider"></div>
+  <div class="ctrl">
+    <label>count</label>
+    <input type="range" id="count" min="50" max="800" step="10" value="320">
+  </div>
+  <div class="ctrl">
+    <label>scale</label>
+    <input type="range" id="scale" min="0.3" max="2.5" step="0.05" value="1">
+  </div>
+  <div class="ctrl">
+    <label>angle</label>
+    <input type="range" id="angle" min="136" max="138" step="0.001" value="137.508">
+  </div>
+  <div class="ctrl">
+    <label>speed</label>
+    <input type="range" id="speed" min="0" max="3" step="0.05" value="0.6">
+  </div>
+  <div class="divider"></div>
+  <div class="ctrl">
+    <label>invert</label>
+    <div class="seg">
+      <button class="seg-btn active" id="invOff">off</button>
+      <button class="seg-btn" id="invOn">on</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+const PHI = 137.50776405003785; // true golden angle
+
+let cfg = {
+  mode: 'phyllotaxis',
+  count: 320,
+  scale: 1,
+  angle: PHI,
+  speed: 0.6,
+  invert: false
+};
+
+let t = 0;
+let mouse = { x: 0, y: 0, active: false };
+let W, H;
+
+function resize() {
+  W = canvas.width  = Math.min(window.innerWidth, window.innerHeight - 80, 700);
+  H = canvas.height = W;
+}
+resize();
+window.addEventListener('resize', resize);
+
+canvas.addEventListener('mousemove', e => {
+  let r = canvas.getBoundingClientRect();
+  mouse.x = e.clientX - r.left - W/2;
+  mouse.y = e.clientY - r.top  - H/2;
+  mouse.active = true;
+});
+canvas.addEventListener('mouseleave', () => { mouse.active = false; });
+
+// Controls
+document.querySelectorAll('[data-mode]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('[data-mode]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    cfg.mode = btn.dataset.mode;
+  });
+});
+['count','scale','angle','speed'].forEach(id => {
+  document.getElementById(id).addEventListener('input', e => {
+    cfg[id] = parseFloat(e.target.value);
+  });
+});
+document.getElementById('invOff').addEventListener('click', () => {
+  cfg.invert = false;
+  document.getElementById('invOff').classList.add('active');
+  document.getElementById('invOn').classList.remove('active');
+});
+document.getElementById('invOn').addEventListener('click', () => {
+  cfg.invert = true;
+  document.getElementById('invOn').classList.add('active');
+  document.getElementById('invOff').classList.remove('active');
+});
+
+function draw() {
+  requestAnimationFrame(draw);
+  t += 0.016 * cfg.speed;
+
+  const bg = cfg.invert ? '#0a0a08' : '#f5f2eb';
+  const fg = cfg.invert ? '#e8e4d8' : '#1a1917';
+
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  ctx.save();
+  ctx.translate(W/2, H/2);
+
+  const n = Math.floor(cfg.count);
+  const spread = W * 0.44;
+  const angleRad = cfg.angle * Math.PI / 180;
+
+  for (let i = 0; i < n; i++) {
+    let r = Math.sqrt(i / n) * spread;
+    let theta = i * angleRad;
+    let x = Math.cos(theta) * r;
+    let y = Math.sin(theta) * r;
+
+    // Base dot size: larger at center, smaller at edge
+    let normR = r / spread; // 0=center, 1=edge
+    let baseSize = (1 - normR * 0.82) * 14 * cfg.scale;
+
+    let size = baseSize;
+    let alpha = 1;
+
+    if (cfg.mode === 'phyllotaxis') {
+      // Static with gentle mouse repulsion
+      if (mouse.active) {
+        let dx = x - mouse.x;
+        let dy = y - mouse.y;
+        let d = Math.sqrt(dx*dx + dy*dy);
+        let push = Math.max(0, 1 - d / 80);
+        size = baseSize * (1 + push * 1.4);
+      }
+
+    } else if (cfg.mode === 'ripple') {
+      // Concentric ripple waves emanating from center
+      let wave = Math.sin(normR * 14 - t * 3);
+      size = baseSize * (0.5 + 0.65 * (wave * 0.5 + 0.5));
+      // Mouse epicenter
+      if (mouse.active) {
+        let dx = x - mouse.x;
+        let dy = y - mouse.y;
+        let d = Math.sqrt(dx*dx + dy*dy) / spread;
+        let mwave = Math.sin(d * 14 - t * 4);
+        size += baseSize * 0.5 * (mwave * 0.5 + 0.5);
+      }
+
+    } else if (cfg.mode === 'orbit') {
+      // Each dot orbits its phyllotaxis position in a tiny circle
+      // Orbit radius and phase varies by radial position — creates rolling waves
+      let orbitR = baseSize * 0.5;
+      let phase = normR * Math.PI * 6 + theta * 0.5;
+      x += Math.cos(phase - t * 2) * orbitR * 3;
+      y += Math.sin(phase - t * 2) * orbitR * 3;
+      size = baseSize;
+
+    } else if (cfg.mode === 'breath') {
+      // All dots breathe in/out — size pulsates with a wave that travels outward
+      let phase = normR * Math.PI * 4 - t * 2;
+      let pulse = Math.sin(phase) * 0.5 + 0.5;
+      size = baseSize * (0.3 + 0.9 * pulse);
+      alpha = 0.4 + 0.6 * pulse;
+    }
+
+    size = Math.max(0.5, size);
+
+    ctx.beginPath();
+    ctx.arc(x, y, size / 2, 0, Math.PI * 2);
+    ctx.fillStyle = cfg.invert
+      ? `rgba(232,228,216,${alpha})`
+      : `rgba(26,25,23,${alpha})`;
+    ctx.fill();
+  }
+
+  ctx.restore();
+}
+
+draw();
+</script>
+</body>
+</html>

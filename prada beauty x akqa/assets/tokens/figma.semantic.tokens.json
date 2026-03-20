@@ -1,0 +1,716 @@
+{
+  "background/page": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        1,
+        1,
+        1
+      ],
+      "alpha": 1,
+      "hex": "#FFFFFF"
+    },
+    "$description": "Main page background"
+  },
+  "background/surface": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0.9568627451,
+        0.9607843137,
+        0.968627451
+      ],
+      "alpha": 1,
+      "hex": "#F4F5F7"
+    },
+    "$description": "Card and filter panel backgrounds"
+  },
+  "background/overlay": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0,
+        0,
+        0
+      ],
+      "alpha": 1,
+      "hex": "#000000"
+    },
+    "$description": "Modal and drawer scrim"
+  },
+  "text/primary": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0,
+        0,
+        0
+      ],
+      "alpha": 1,
+      "hex": "#000000"
+    },
+    "$description": "Headings, product names, body copy"
+  },
+  "text/secondary": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0.2,
+        0.2,
+        0.2
+      ],
+      "alpha": 1,
+      "hex": "#333333"
+    },
+    "$description": "Subheadings and descriptors"
+  },
+  "text/tertiary": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0.2705882353,
+        0.2666666667,
+        0.2156862745
+      ],
+      "alpha": 1,
+      "hex": "#454437"
+    },
+    "$description": "Meta labels, helper text"
+  },
+  "text/placeholder": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0.4117647059,
+        0.4117647059,
+        0.4117647059
+      ],
+      "alpha": 1,
+      "hex": "#696969"
+    },
+    "$description": "Input placeholders"
+  },
+  "text/disabled": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0.737254902,
+        0.737254902,
+        0.7411764706
+      ],
+      "alpha": 1,
+      "hex": "#BCBCBD"
+    },
+    "$description": "Disabled state text"
+  },
+  "text/on-dark": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        1,
+        1,
+        1
+      ],
+      "alpha": 1,
+      "hex": "#FFFFFF"
+    },
+    "$description": "Text on dark surfaces e.g. footer"
+  },
+  "border/default": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0.8784313725,
+        0.8784313725,
+        0.8784313725
+      ],
+      "alpha": 1,
+      "hex": "#E0E0E0"
+    },
+    "$description": "Dividers and card borders"
+  },
+  "border/subtle": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0.8470588235,
+        0.8470588235,
+        0.8470588235
+      ],
+      "alpha": 1,
+      "hex": "#D8D8D8"
+    },
+    "$description": "Inset borders inside components"
+  },
+  "border/strong": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0.8,
+        0.8,
+        0.8
+      ],
+      "alpha": 1,
+      "hex": "#CCCCCC"
+    },
+    "$description": "Focus rings and active borders"
+  },
+  "border/input-focus": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0.8078431373,
+        0.831372549,
+        0.8549019608
+      ],
+      "alpha": 1,
+      "hex": "#CED4DA"
+    },
+    "$description": "Form field border default state"
+  },
+  "interactive/primary-bg": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0,
+        0,
+        0
+      ],
+      "alpha": 1,
+      "hex": "#000000"
+    },
+    "$description": "Primary CTA — Add to Bag, Buy Now"
+  },
+  "interactive/primary-text": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        1,
+        1,
+        1
+      ],
+      "alpha": 1,
+      "hex": "#FFFFFF"
+    },
+    "$description": "Label on primary black CTA"
+  },
+  "interactive/secondary-bg": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        1,
+        1,
+        1
+      ],
+      "alpha": 1,
+      "hex": "#FFFFFF"
+    },
+    "$description": "Ghost button background"
+  },
+  "interactive/secondary-border": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0,
+        0,
+        0
+      ],
+      "alpha": 1,
+      "hex": "#000000"
+    },
+    "$description": "Ghost button border"
+  },
+  "interactive/hover": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0.1254901961,
+        0.1254901961,
+        0.1254901961
+      ],
+      "alpha": 1,
+      "hex": "#202020"
+    },
+    "$description": "Button and link hover state"
+  },
+  "interactive/link": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0.2,
+        0.2,
+        0.2
+      ],
+      "alpha": 1,
+      "hex": "#333333"
+    },
+    "$description": "Inline links and nav items"
+  },
+  "status/error": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0.6705882353,
+        0,
+        0.0509803922
+      ],
+      "alpha": 1,
+      "hex": "#AB000D"
+    },
+    "$description": "Error, out-of-stock, required fields"
+  },
+  "status/info": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0.8,
+        0.8941176471,
+        0.9647058824
+      ],
+      "alpha": 1,
+      "hex": "#CCE4F6"
+    },
+    "$description": "Info banners and callout backgrounds"
+  },
+  "status/success": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0.8705882353,
+        0.9215686275,
+        0.7882352941
+      ],
+      "alpha": 1,
+      "hex": "#DEEBC9"
+    },
+    "$description": "Success states, in-stock indicator"
+  },
+  "status/success-alt": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0.8117647059,
+        0.862745098,
+        0.7176470588
+      ],
+      "alpha": 1,
+      "hex": "#CFDCB7"
+    },
+    "$description": "Eco and sustainability badge fill"
+  },
+  "status/highlight": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0.9960784314,
+        0.8549019608,
+        0.3921568627
+      ],
+      "alpha": 1,
+      "hex": "#FEDA64"
+    },
+    "$description": "Promo badge, New-In label, sale tag"
+  },
+  "status/promo": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0.8980392157,
+        0.8196078431,
+        0.8862745098
+      ],
+      "alpha": 1,
+      "hex": "#E5D1E2"
+    },
+    "$description": "Seasonal promo banner, limited edition chip"
+  },
+  "swatch/dark-1": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0.3137254902,
+        0.1529411765,
+        0.1254901961
+      ],
+      "alpha": 1,
+      "hex": "#502720"
+    },
+    "$description": "Deepest espresso lip shade"
+  },
+  "swatch/dark-2": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0.3450980392,
+        0.231372549,
+        0.2078431373
+      ],
+      "alpha": 1,
+      "hex": "#583B35"
+    },
+    "$description": "Deep lip shade"
+  },
+  "swatch/dark-3": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0.3529411765,
+        0.2509803922,
+        0.2235294118
+      ],
+      "alpha": 1,
+      "hex": "#5A4039"
+    },
+    "$description": "Deep lip shade"
+  },
+  "swatch/dark-4": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0.3843137255,
+        0.2588235294,
+        0.2392156863
+      ],
+      "alpha": 1,
+      "hex": "#62423D"
+    },
+    "$description": "Deep brown-plum shade"
+  },
+  "swatch/dark-5": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0.4,
+        0.2470588235,
+        0.1607843137
+      ],
+      "alpha": 1,
+      "hex": "#663F29"
+    },
+    "$description": "Terracotta-brown shade"
+  },
+  "swatch/dark-6": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0.4078431373,
+        0.2980392157,
+        0.2666666667
+      ],
+      "alpha": 1,
+      "hex": "#684C44"
+    },
+    "$description": "Warm dark shade"
+  },
+  "swatch/dark-7": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0.4588235294,
+        0.3411764706,
+        0.2941176471
+      ],
+      "alpha": 1,
+      "hex": "#75574B"
+    },
+    "$description": "Medium-dark earth shade"
+  },
+  "swatch/mid-1": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0.4941176471,
+        0.231372549,
+        0.1921568627
+      ],
+      "alpha": 1,
+      "hex": "#7E3B31"
+    },
+    "$description": "Rich brick-red lip shade"
+  },
+  "swatch/mid-2": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0.5411764706,
+        0.4039215686,
+        0.3490196078
+      ],
+      "alpha": 1,
+      "hex": "#8A6759"
+    },
+    "$description": "Mid-tone warm brown"
+  },
+  "swatch/mid-3": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0.6117647059,
+        0.4666666667,
+        0.3921568627
+      ],
+      "alpha": 1,
+      "hex": "#9C7764"
+    },
+    "$description": "Mid sienna shade"
+  },
+  "swatch/mid-4": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0.6156862745,
+        0.2941176471,
+        0.2352941176
+      ],
+      "alpha": 1,
+      "hex": "#9D4B3C"
+    },
+    "$description": "Saturated brick-red shade"
+  },
+  "swatch/mid-5": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0.6588235294,
+        0.5215686275,
+        0.4039215686
+      ],
+      "alpha": 1,
+      "hex": "#A88567"
+    },
+    "$description": "Warm caramel shade"
+  },
+  "swatch/mid-6": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0.6745098039,
+        0.3490196078,
+        0.2862745098
+      ],
+      "alpha": 1,
+      "hex": "#AC5949"
+    },
+    "$description": "Terracotta-coral shade"
+  },
+  "swatch/mid-7": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0.7058823529,
+        0.5647058824,
+        0.4666666667
+      ],
+      "alpha": 1,
+      "hex": "#B49077"
+    },
+    "$description": "Sandy brown shade"
+  },
+  "swatch/nude-1": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0.7490196078,
+        0.5607843137,
+        0.4588235294
+      ],
+      "alpha": 1,
+      "hex": "#BF8F75"
+    },
+    "$description": "Deep nude shade"
+  },
+  "swatch/nude-2": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0.7529411765,
+        0.6196078431,
+        0.5137254902
+      ],
+      "alpha": 1,
+      "hex": "#C09E83"
+    },
+    "$description": "Warm nude shade"
+  },
+  "swatch/nude-3": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0.7803921569,
+        0.6431372549,
+        0.5450980392
+      ],
+      "alpha": 1,
+      "hex": "#C7A48B"
+    },
+    "$description": "Nude shade"
+  },
+  "swatch/nude-4": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0.8509803922,
+        0.7176470588,
+        0.6235294118
+      ],
+      "alpha": 1,
+      "hex": "#D9B79F"
+    },
+    "$description": "Light nude and blush"
+  },
+  "swatch/nude-5": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0.862745098,
+        0.7411764706,
+        0.6470588235
+      ],
+      "alpha": 1,
+      "hex": "#DCBDA5"
+    },
+    "$description": "Light blush"
+  },
+  "swatch/nude-6": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0.8745098039,
+        0.7333333333,
+        0.6470588235
+      ],
+      "alpha": 1,
+      "hex": "#DFBBA5"
+    },
+    "$description": "Pale blush"
+  },
+  "swatch/nude-7": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0.8784313725,
+        0.7803921569,
+        0.7176470588
+      ],
+      "alpha": 1,
+      "hex": "#E0C7B7"
+    },
+    "$description": "Pale warm blush"
+  },
+  "swatch/nude-8": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0.8823529412,
+        0.7960784314,
+        0.6901960784
+      ],
+      "alpha": 1,
+      "hex": "#E1CBB0"
+    },
+    "$description": "Pale peach"
+  },
+  "swatch/nude-9": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0.8980392157,
+        0.7803921569,
+        0.7333333333
+      ],
+      "alpha": 1,
+      "hex": "#E5C7BB"
+    },
+    "$description": "Light rose-nude"
+  },
+  "swatch/nude-10": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0.9137254902,
+        0.7450980392,
+        0.6352941176
+      ],
+      "alpha": 1,
+      "hex": "#E9BEA2"
+    },
+    "$description": "Blush-peach"
+  },
+  "swatch/nude-11": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0.9254901961,
+        0.8588235294,
+        0.7568627451
+      ],
+      "alpha": 1,
+      "hex": "#ECDBC1"
+    },
+    "$description": "Near-skin warm ivory"
+  },
+  "swatch/nude-12": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        0.9568627451,
+        0.8941176471,
+        0.8549019608
+      ],
+      "alpha": 1,
+      "hex": "#F4E4DA"
+    },
+    "$description": "Palest blush highlight"
+  }
+}

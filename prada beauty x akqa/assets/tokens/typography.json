@@ -1,0 +1,190 @@
+{
+  "$description": "Prada Beauty type scale — Inter, from Figma Text Styles frame (node 113:644). For Tokens Studio for Figma.",
+  "fontFamily": {
+    "sans": {
+      "value": "Inter, system-ui, sans-serif",
+      "type": "fontFamilies",
+      "description": "Primary typeface for Prada Beauty"
+    }
+  },
+  "fontWeight": {
+    "regular": { "value": "400", "type": "fontWeights" },
+    "medium":  { "value": "500", "type": "fontWeights" },
+    "semibold": { "value": "600", "type": "fontWeights" },
+    "bold":   { "value": "700", "type": "fontWeights" }
+  },
+  "fontSize": {
+    "xs":   { "value": "0.75rem",  "type": "fontSizes", "description": "12px" },
+    "sm":   { "value": "0.875rem", "type": "fontSizes", "description": "14px" },
+    "base": { "value": "1rem",    "type": "fontSizes", "description": "16px" },
+    "lg":   { "value": "1.125rem", "type": "fontSizes", "description": "18px" },
+    "xl":   { "value": "1.25rem",  "type": "fontSizes", "description": "20px" },
+    "2xl":  { "value": "1.5rem",   "type": "fontSizes", "description": "24px" },
+    "3xl":  { "value": "1.875rem", "type": "fontSizes", "description": "30px" },
+    "4xl":  { "value": "2.25rem",  "type": "fontSizes", "description": "36px" },
+    "5xl":  { "value": "3rem",     "type": "fontSizes", "description": "48px" },
+    "6xl":  { "value": "3.75rem",  "type": "fontSizes", "description": "60px" },
+    "7xl":  { "value": "4.5rem",   "type": "fontSizes", "description": "72px" },
+    "8xl":  { "value": "6rem",     "type": "fontSizes", "description": "96px" },
+    "9xl":  { "value": "8rem",     "type": "fontSizes", "description": "128px" }
+  },
+  "lineHeight": {
+    "xs":   { "value": "1rem",    "type": "lineHeights", "description": "16px — text-xs" },
+    "sm":   { "value": "1.25rem", "type": "lineHeights", "description": "20px — text-sm" },
+    "base": { "value": "1.5rem",  "type": "lineHeights", "description": "24px — text-base" },
+    "lg":   { "value": "1.75rem", "type": "lineHeights", "description": "28px — text-lg" },
+    "xl":   { "value": "1.75rem", "type": "lineHeights", "description": "28px — text-xl" },
+    "2xl":  { "value": "2rem",    "type": "lineHeights", "description": "32px — text-2xl" },
+    "3xl":  { "value": "2.25rem", "type": "lineHeights", "description": "36px — text-3xl" },
+    "4xl":  { "value": "2.5rem",  "type": "lineHeights", "description": "40px — text-4xl" },
+    "tight": { "value": "1",      "type": "lineHeights", "description": "Unitless — text-5xl and above" }
+  },
+  "letterSpacing": {
+    "normal": { "value": "0", "type": "letterSpacing" }
+  },
+  "typography": {
+    "text-xs": {
+      "value": {
+        "fontFamily": "{fontFamily.sans}",
+        "fontSize": "{fontSize.xs}",
+        "fontWeight": "{fontWeight.regular}",
+        "lineHeight": "{lineHeight.xs}",
+        "letterSpacing": "{letterSpacing.normal}"
+      },
+      "type": "typography",
+      "description": "0.75rem / 1rem"
+    },
+    "text-sm": {
+      "value": {
+        "fontFamily": "{fontFamily.sans}",
+        "fontSize": "{fontSize.sm}",
+        "fontWeight": "{fontWeight.regular}",
+        "lineHeight": "{lineHeight.sm}",
+        "letterSpacing": "{letterSpacing.normal}"
+      },
+      "type": "typography",
+      "description": "0.875rem / 1.25rem"
+    },
+    "text-base": {
+      "value": {
+        "fontFamily": "{fontFamily.sans}",
+        "fontSize": "{fontSize.base}",
+        "fontWeight": "{fontWeight.regular}",
+        "lineHeight": "{lineHeight.base}",
+        "letterSpacing": "{letterSpacing.normal}"
+      },
+      "type": "typography",
+      "description": "1rem / 1.5rem"
+    },
+    "text-lg": {
+      "value": {
+        "fontFamily": "{fontFamily.sans}",
+        "fontSize": "{fontSize.lg}",
+        "fontWeight": "{fontWeight.regular}",
+        "lineHeight": "{lineHeight.lg}",
+        "letterSpacing": "{letterSpacing.normal}"
+      },
+      "type": "typography",
+      "description": "1.125rem / 1.75rem"
+    },
+    "text-xl": {
+      "value": {
+        "fontFamily": "{fontFamily.sans}",
+        "fontSize": "{fontSize.xl}",
+        "fontWeight": "{fontWeight.regular}",
+        "lineHeight": "{lineHeight.xl}",
+        "letterSpacing": "{letterSpacing.normal}"
+      },
+      "type": "typography",
+      "description": "1.25rem / 1.75rem"
+    },
+    "text-2xl": {
+      "value": {
+        "fontFamily": "{fontFamily.sans}",
+        "fontSize": "{fontSize.2xl}",
+        "fontWeight": "{fontWeight.regular}",
+        "lineHeight": "{lineHeight.2xl}",
+        "letterSpacing": "{letterSpacing.normal}"
+      },
+      "type": "typography",
+      "description": "1.5rem / 2rem"
+    },
+    "text-3xl": {
+      "value": {
+        "fontFamily": "{fontFamily.sans}",
+        "fontSize": "{fontSize.3xl}",
+        "fontWeight": "{fontWeight.regular}",
+        "lineHeight": "{lineHeight.3xl}",
+        "letterSpacing": "{letterSpacing.normal}"
+      },
+      "type": "typography",
+      "description": "1.875rem / 2.25rem"
+    },
+    "text-4xl": {
+      "value": {
+        "fontFamily": "{fontFamily.sans}",
+        "fontSize": "{fontSize.4xl}",
+        "fontWeight": "{fontWeight.regular}",
+        "lineHeight": "{lineHeight.4xl}",
+        "letterSpacing": "{letterSpacing.normal}"
+      },
+      "type": "typography",
+      "description": "2.25rem / 2.5rem"
+    },
+    "text-5xl": {
+      "value": {
+        "fontFamily": "{fontFamily.sans}",
+        "fontSize": "{fontSize.5xl}",
+        "fontWeight": "{fontWeight.regular}",
+        "lineHeight": "{lineHeight.tight}",
+        "letterSpacing": "{letterSpacing.normal}"
+      },
+      "type": "typography",
+      "description": "3rem / 1"
+    },
+    "text-6xl": {
+      "value": {
+        "fontFamily": "{fontFamily.sans}",
+        "fontSize": "{fontSize.6xl}",
+        "fontWeight": "{fontWeight.regular}",
+        "lineHeight": "{lineHeight.tight}",
+        "letterSpacing": "{letterSpacing.normal}"
+      },
+      "type": "typography",
+      "description": "3.75rem / 1"
+    },
+    "text-7xl": {
+      "value": {
+        "fontFamily": "{fontFamily.sans}",
+        "fontSize": "{fontSize.7xl}",
+        "fontWeight": "{fontWeight.regular}",
+        "lineHeight": "{lineHeight.tight}",
+        "letterSpacing": "{letterSpacing.normal}"
+      },
+      "type": "typography",
+      "description": "4.5rem / 1"
+    },
+    "text-8xl": {
+      "value": {
+        "fontFamily": "{fontFamily.sans}",
+        "fontSize": "{fontSize.8xl}",
+        "fontWeight": "{fontWeight.regular}",
+        "lineHeight": "{lineHeight.tight}",
+        "letterSpacing": "{letterSpacing.normal}"
+      },
+      "type": "typography",
+      "description": "6rem / 1"
+    },
+    "text-9xl": {
+      "value": {
+        "fontFamily": "{fontFamily.sans}",
+        "fontSize": "{fontSize.9xl}",
+        "fontWeight": "{fontWeight.regular}",
+        "lineHeight": "{lineHeight.tight}",
+        "letterSpacing": "{letterSpacing.normal}"
+      },
+      "type": "typography",
+      "description": "8rem / 1"
+    }
+  }
+}

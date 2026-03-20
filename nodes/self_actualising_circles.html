@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Self-Actualising Circles</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #080806;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+  canvas { display: block; }
+  #controls {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+  .ctrl {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  label {
+    color: rgba(255,255,255,0.25);
+    font-family: 'Courier New', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  input[type=range] {
+    -webkit-appearance: none;
+    width: 80px;
+    height: 1px;
+    background: rgba(255,255,255,0.15);
+    outline: none;
+    cursor: pointer;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.6);
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<div id="controls">
+  <div class="ctrl">
+    <label>nodes</label>
+    <input type="range" id="nodeCount" min="2" max="6" step="1" value="3">
+  </div>
+  <div class="ctrl">
+    <label>speed</label>
+    <input type="range" id="speed" min="0.1" max="3" step="0.1" value="0.8">
+  </div>
+  <div class="ctrl">
+    <label>trails</label>
+    <input type="range" id="trailLen" min="20" max="300" step="10" value="120">
+  </div>
+  <div class="ctrl">
+    <label>radius</label>
+    <input type="range" id="radius" min="60" max="220" step="10" value="140">
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+<script>
+new p5(function(p) {
+
+  let nodes = [];
+  let trails = [];
+  let curves = [];
+  let t = 0;
+
+  let cfg = {
+    nodeCount: 3,
+    speed: 0.8,
+    trailLen: 120,
+    radius: 140
+  };
+
+  // Each node orbits at its own frequency and phase
+  // When two nodes are "close" in angle, draw a connecting arc — the self-actualising link
+  // Trails persist with fade, creating the layered ribbon effect from references
+
+  function buildNodes() {
+    nodes = [];
+    trails = [];
+    curves = [];
+    let n = cfg.nodeCount;
+    for (let i = 0; i < n; i++) {
+      let freq = 1 + i * 0.618; // golden ratio frequency spacing
+      let phase = (p.TWO_PI / n) * i;
+      let r = cfg.radius * (0.7 + 0.3 * (i % 2 === 0 ? 1 : -1) * 0.2);
+      nodes.push({ freq, phase, r, trail: [] });
+    }
+  }
+
+  p.setup = function() {
+    let size = Math.min(p.windowWidth, p.windowHeight, 680);
+    p.createCanvas(size, size);
+    p.colorMode(p.RGB, 255, 255, 255, 255);
+    buildNodes();
+
+    document.getElementById('nodeCount').addEventListener('input', e => {
+      cfg.nodeCount = parseInt(e.target.value); buildNodes();
+    });
+    document.getElementById('speed').addEventListener('input', e => {
+      cfg.speed = parseFloat(e.target.value);
+    });
+    document.getElementById('trailLen').addEventListener('input', e => {
+      cfg.trailLen = parseInt(e.target.value);
+    });
+    document.getElementById('radius').addEventListener('input', e => {
+      cfg.radius = parseInt(e.target.value); buildNodes();
+    });
+  };
+
+  p.draw = function() {
+    // Soft fade instead of clear — creates trail persistence
+    p.fill(8, 8, 6, 18);
+    p.noStroke();
+    p.rect(0, 0, p.width, p.height);
+
+    p.push();
+    p.translate(p.width / 2, p.height / 2);
+
+    t += 0.008 * cfg.speed;
+
+    // Update node positions
+    for (let i = 0; i < nodes.length; i++) {
+      let nd = nodes[i];
+      let angle = nd.phase + t * nd.freq * p.TWO_PI;
+      let x = Math.cos(angle) * nd.r;
+      let y = Math.sin(angle) * nd.r;
+      nd.x = x;
+      nd.y = y;
+      nd.angle = angle;
+
+      // Maintain trail
+      nd.trail.push({ x, y, age: 0 });
+      if (nd.trail.length > cfg.trailLen) nd.trail.shift();
+      for (let pt of nd.trail) pt.age++;
+    }
+
+    // Draw connecting curves between every pair of nodes
+    // The curve is a bezier that bows outward — creating the orbital ribbon
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        let a = nodes[i];
+        let b = nodes[j];
+
+        // Control point bows outward proportional to distance
+        let mx = (a.x + b.x) / 2;
+        let my = (a.y + b.y) / 2;
+        let dist = Math.sqrt((b.x - a.x) ** 2 + (b.y - a.y) ** 2);
+        let bow = dist * 0.55;
+        // Perpendicular direction
+        let dx = b.x - a.x;
+        let dy = b.y - a.y;
+        let len = Math.sqrt(dx * dx + dy * dy) || 1;
+        let px = -dy / len;
+        let py = dx / len;
+        // Alternate bow direction per pair
+        let dir = ((i + j) % 2 === 0) ? 1 : -1;
+        let cx1 = mx + px * bow * dir;
+        let cy1 = my + py * bow * dir;
+
+        // Fade based on angular proximity — brighter when nodes are separating
+        let angleDiff = Math.abs(a.angle - b.angle) % p.TWO_PI;
+        if (angleDiff > p.PI) angleDiff = p.TWO_PI - angleDiff;
+        let proximity = 1 - angleDiff / p.PI;
+        let alpha = p.map(proximity, 0, 1, 40, 180);
+
+        p.noFill();
+        p.stroke(220, 218, 208, alpha);
+        p.strokeWeight(0.6);
+        p.beginShape();
+        p.vertex(a.x, a.y);
+        p.quadraticVertex(cx1, cy1, b.x, b.y);
+        p.endShape();
+      }
+    }
+
+    // Draw trails for each node
+    for (let nd of nodes) {
+      for (let k = 1; k < nd.trail.length; k++) {
+        let pt = nd.trail[k];
+        let prev = nd.trail[k - 1];
+        let prog = k / nd.trail.length;
+        let alpha = prog * prog * 200;
+        let weight = prog * 2.5;
+        p.stroke(230, 226, 210, alpha);
+        p.strokeWeight(weight);
+        p.line(prev.x, prev.y, pt.x, pt.y);
+      }
+    }
+
+    // Draw node dots — bright cores
+    for (let nd of nodes) {
+      // Outer glow ring
+      p.noFill();
+      p.stroke(255, 255, 248, 30);
+      p.strokeWeight(1);
+      p.circle(nd.x, nd.y, 20);
+
+      // Core dot
+      p.noStroke();
+      p.fill(255, 255, 252, 240);
+      p.circle(nd.x, nd.y, 6);
+
+      // Inner bright point
+      p.fill(255, 255, 255, 255);
+      p.circle(nd.x, nd.y, 2.5);
+    }
+
+    // Faint orbital guide circles — like the large arcs in reference 2
+    p.noFill();
+    for (let i = 0; i < nodes.length; i++) {
+      let nd = nodes[i];
+      let alpha = 12;
+      p.stroke(180, 178, 160, alpha);
+      p.strokeWeight(0.4);
+      p.circle(0, 0, nd.r * 2);
+    }
+
+    // Secondary large arcs: each node traces an arc from its current position
+    // sweeping backward through recent history — the long ribbon arcs in ref 2
+    for (let nd of nodes) {
+      if (nd.trail.length < 4) continue;
+      p.noFill();
+      p.stroke(200, 196, 180, 22);
+      p.strokeWeight(0.5);
+      p.beginShape();
+      for (let pt of nd.trail) {
+        p.vertex(pt.x, pt.y);
+      }
+      p.endShape();
+    }
+
+    p.pop();
+  };
+
+  p.windowResized = function() {
+    let size = Math.min(p.windowWidth, p.windowHeight, 680);
+    p.resizeCanvas(size, size);
+  };
+});
+</script>
+</body>
+</html>
