@@ -1,0 +1,339 @@
+{
+  "$description": "Three-tier typography for Prada Beauty x AKQA. Primitives → semantic → component. Values mirror the live PDP type styles captured in Figma 535:6303 (prada/Semantic/* and www.prada.com/Semantic/*). Sizes in rem (1rem = 16px) so web translates directly; px equivalents in $description for native iOS/Android sp/dp mapping.",
+
+  "typography": {
+    "primitives": {
+      "$description": "Tier 1 — raw values. No semantic meaning. Use only inside semantic tokens.",
+
+      "fontFamily": {
+        "primary": {
+          "$type": "fontFamily",
+          "$value": "Inter",
+          "$description": "Brand typeface — Inter (web + native)."
+        },
+        "fallback": {
+          "$type": "fontFamily",
+          "$value": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Helvetica, Arial, sans-serif",
+          "$description": "System fallback stack for environments where Inter hasn't loaded."
+        }
+      },
+
+      "fontWeight": {
+        "regular": { "$type": "fontWeight", "$value": "400" },
+        "medium":  { "$type": "fontWeight", "$value": "500" },
+        "semibold":{ "$type": "fontWeight", "$value": "600" },
+        "bold":    { "$type": "fontWeight", "$value": "700" }
+      },
+
+      "fontSize": {
+        "9":   { "$type": "dimension", "$value": "0.588rem",  "$description": "9.4px — prada/Inter/Regular upper (smallest disclaimer)" },
+        "10":  { "$type": "dimension", "$value": "0.625rem",  "$description": "10px — www.prada.com/Inter/Regular" },
+        "10-5":{ "$type": "dimension", "$value": "0.675rem",  "$description": "10.8px — prada/Semantic/Item upper" },
+        "11":  { "$type": "dimension", "$value": "0.6875rem", "$description": "11px — prada/Semantic/Link upper" },
+        "11-3":{ "$type": "dimension", "$value": "0.706rem",  "$description": "11.3px — prada/Semantic/Link" },
+        "11-6":{ "$type": "dimension", "$value": "0.725rem",  "$description": "11.6px — prada/Inter/Medium title" },
+        "11-8":{ "$type": "dimension", "$value": "0.738rem",  "$description": "11.8px — prada/Semantic/Heading 4 upper" },
+        "12":  { "$type": "dimension", "$value": "0.75rem",   "$description": "12px — prada/Inter/Medium upper" },
+        "13-1":{ "$type": "dimension", "$value": "0.819rem",  "$description": "13.1px — prada/Semantic/Label" },
+        "13-3":{ "$type": "dimension", "$value": "0.831rem",  "$description": "13.3px — prada/Inter/Regular underline" },
+        "13-5":{ "$type": "dimension", "$value": "0.844rem",  "$description": "13.5px — prada/Semantic/Heading 3" },
+        "13-7":{ "$type": "dimension", "$value": "0.856rem",  "$description": "13.7px — www.prada.com/Semantic/Heading 1" },
+        "14":  { "$type": "dimension", "$value": "0.875rem",  "$description": "14px — prada/Semantic/Item + prada/Semantic/Button upper" },
+        "15-1":{ "$type": "dimension", "$value": "0.944rem",  "$description": "15.1px — prada/Inter/Regular" },
+        "15-3":{ "$type": "dimension", "$value": "0.956rem",  "$description": "15.3px — prada/Inter/Medium" },
+        "15-4":{ "$type": "dimension", "$value": "0.963rem",  "$description": "15.4px — www.prada.com/Inter/Medium" },
+        "19-5":{ "$type": "dimension", "$value": "1.219rem",  "$description": "19.5px — prada/Semantic/Heading 1" },
+        "23-3":{ "$type": "dimension", "$value": "1.456rem",  "$description": "23.3px — prada/Semantic/Heading 2" }
+      },
+
+      "lineHeight": {
+        "14":   { "$type": "dimension", "$value": "0.875rem", "$description": "14px" },
+        "16":   { "$type": "dimension", "$value": "1rem",     "$description": "16px" },
+        "16-5": { "$type": "dimension", "$value": "1.031rem", "$description": "16.5px" },
+        "18":   { "$type": "dimension", "$value": "1.125rem", "$description": "18px" },
+        "20":   { "$type": "dimension", "$value": "1.25rem",  "$description": "20px" },
+        "21":   { "$type": "dimension", "$value": "1.313rem", "$description": "21px" },
+        "22":   { "$type": "dimension", "$value": "1.375rem", "$description": "22px" },
+        "24":   { "$type": "dimension", "$value": "1.5rem",   "$description": "24px" },
+        "28":   { "$type": "dimension", "$value": "1.75rem",  "$description": "28px" }
+      },
+
+      "letterSpacing": {
+        "default": { "$type": "dimension", "$value": "0" },
+        "tracked": { "$type": "dimension", "$value": "0.0125em", "$description": "0.2 letter-spacing in Figma (prada/Semantic/*)." }
+      }
+    },
+
+    "semantic": {
+      "$description": "Tier 2 — usage tokens. Each composes a primitive set into a re-usable typography object. Component tokens reference these.",
+
+      "display": {
+        "lg": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily":   "{typography.primitives.fontFamily.primary}",
+            "fontWeight":   "{typography.primitives.fontWeight.medium}",
+            "fontSize":     "{typography.primitives.fontSize.23-3}",
+            "lineHeight":   "{typography.primitives.lineHeight.28}",
+            "letterSpacing":"{typography.primitives.letterSpacing.tracked}"
+          },
+          "$description": "Hero / landing heroes. Live PDP Heading 2 (23.3 / 28, Medium, +0.2 tracking)."
+        }
+      },
+
+      "heading": {
+        "h1": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily":   "{typography.primitives.fontFamily.primary}",
+            "fontWeight":   "{typography.primitives.fontWeight.medium}",
+            "fontSize":     "{typography.primitives.fontSize.19-5}",
+            "lineHeight":   "{typography.primitives.lineHeight.24}",
+            "letterSpacing":"{typography.primitives.letterSpacing.tracked}"
+          },
+          "$description": "Page title (PDP product name). Live PDP Heading 1 (19.5 / 24, Medium, +0.2 tracking)."
+        },
+        "h2": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily":   "{typography.primitives.fontFamily.primary}",
+            "fontWeight":   "{typography.primitives.fontWeight.medium}",
+            "fontSize":     "{typography.primitives.fontSize.15-3}",
+            "lineHeight":   "{typography.primitives.lineHeight.24}",
+            "letterSpacing":"{typography.primitives.letterSpacing.default}"
+          },
+          "$description": "Section title (accordion header). Live PDP Inter Medium (15.3 / 24)."
+        },
+        "h3": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily":   "{typography.primitives.fontFamily.primary}",
+            "fontWeight":   "{typography.primitives.fontWeight.medium}",
+            "fontSize":     "{typography.primitives.fontSize.13-5}",
+            "lineHeight":   "{typography.primitives.lineHeight.18}",
+            "letterSpacing":"{typography.primitives.letterSpacing.default}"
+          },
+          "$description": "Sub-section heading. Live PDP Heading 3 (13.5 / 18, Medium)."
+        },
+        "h4-upper": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily":   "{typography.primitives.fontFamily.primary}",
+            "fontWeight":   "{typography.primitives.fontWeight.medium}",
+            "fontSize":     "{typography.primitives.fontSize.11-8}",
+            "lineHeight":   "{typography.primitives.lineHeight.14}",
+            "letterSpacing":"{typography.primitives.letterSpacing.tracked}"
+          },
+          "$description": "Uppercase eyebrow heading (rendered with text-transform: uppercase). Live PDP Heading 4 upper (11.8 / 14, Medium, +0.2 tracking)."
+        }
+      },
+
+      "body": {
+        "lg": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily":   "{typography.primitives.fontFamily.primary}",
+            "fontWeight":   "{typography.primitives.fontWeight.regular}",
+            "fontSize":     "{typography.primitives.fontSize.15-1}",
+            "lineHeight":   "{typography.primitives.lineHeight.22}",
+            "letterSpacing":"{typography.primitives.letterSpacing.default}"
+          },
+          "$description": "Primary body copy. Live PDP Inter Regular (15.1 / 22)."
+        },
+        "md": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily":   "{typography.primitives.fontFamily.primary}",
+            "fontWeight":   "{typography.primitives.fontWeight.regular}",
+            "fontSize":     "{typography.primitives.fontSize.14}",
+            "lineHeight":   "{typography.primitives.lineHeight.20}",
+            "letterSpacing":"{typography.primitives.letterSpacing.default}"
+          },
+          "$description": "Default body — formulation / care benefits. Live PDP Semantic Item (14 / 20)."
+        },
+        "sm": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily":   "{typography.primitives.fontFamily.primary}",
+            "fontWeight":   "{typography.primitives.fontWeight.regular}",
+            "fontSize":     "{typography.primitives.fontSize.13-1}",
+            "lineHeight":   "{typography.primitives.lineHeight.18}",
+            "letterSpacing":"{typography.primitives.letterSpacing.default}"
+          },
+          "$description": "Compact body (legal / disclaimer paragraphs). Live PDP Semantic Label (13.1 / 18)."
+        }
+      },
+
+      "label": {
+        "default": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily":   "{typography.primitives.fontFamily.primary}",
+            "fontWeight":   "{typography.primitives.fontWeight.regular}",
+            "fontSize":     "{typography.primitives.fontSize.13-1}",
+            "lineHeight":   "{typography.primitives.lineHeight.18}",
+            "letterSpacing":"{typography.primitives.letterSpacing.default}"
+          },
+          "$description": "Form labels and meta labels. Live PDP Semantic Label."
+        },
+        "small": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily":   "{typography.primitives.fontFamily.primary}",
+            "fontWeight":   "{typography.primitives.fontWeight.regular}",
+            "fontSize":     "{typography.primitives.fontSize.11-3}",
+            "lineHeight":   "{typography.primitives.lineHeight.18}",
+            "letterSpacing":"{typography.primitives.letterSpacing.default}"
+          },
+          "$description": "Helper text under labels. Live PDP Semantic Link."
+        }
+      },
+
+      "button": {
+        "lg": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily":   "{typography.primitives.fontFamily.primary}",
+            "fontWeight":   "{typography.primitives.fontWeight.medium}",
+            "fontSize":     "{typography.primitives.fontSize.14}",
+            "lineHeight":   "{typography.primitives.lineHeight.16}",
+            "letterSpacing":"{typography.primitives.letterSpacing.tracked}"
+          },
+          "$description": "Primary CTA — Add to shopping bag. Live PDP Semantic Button upper (14 / 16, Medium, +0.2 tracking, uppercase)."
+        },
+        "sm": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily":   "{typography.primitives.fontFamily.primary}",
+            "fontWeight":   "{typography.primitives.fontWeight.medium}",
+            "fontSize":     "{typography.primitives.fontSize.12}",
+            "lineHeight":   "{typography.primitives.lineHeight.14}",
+            "letterSpacing":"{typography.primitives.letterSpacing.tracked}"
+          },
+          "$description": "Secondary buttons. Live PDP Inter Medium upper (12 / 14, Medium, +0.2 tracking)."
+        }
+      },
+
+      "link": {
+        "default": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily":   "{typography.primitives.fontFamily.primary}",
+            "fontWeight":   "{typography.primitives.fontWeight.regular}",
+            "fontSize":     "{typography.primitives.fontSize.11-3}",
+            "lineHeight":   "{typography.primitives.lineHeight.18}",
+            "letterSpacing":"{typography.primitives.letterSpacing.default}"
+          },
+          "$description": "Inline links — Find in store, Shop refill, Notify me. Live PDP Semantic Link (11.3 / 18)."
+        },
+        "underline": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily":   "{typography.primitives.fontFamily.primary}",
+            "fontWeight":   "{typography.primitives.fontWeight.regular}",
+            "fontSize":     "{typography.primitives.fontSize.13-3}",
+            "lineHeight":   "{typography.primitives.lineHeight.21}",
+            "letterSpacing":"{typography.primitives.letterSpacing.tracked}"
+          },
+          "$description": "Underlined link variant. Live PDP Inter Regular underline (13.3 / 21, +0.2 tracking)."
+        },
+        "upper": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily":   "{typography.primitives.fontFamily.primary}",
+            "fontWeight":   "{typography.primitives.fontWeight.medium}",
+            "fontSize":     "{typography.primitives.fontSize.11}",
+            "lineHeight":   "{typography.primitives.lineHeight.16-5}",
+            "letterSpacing":"{typography.primitives.letterSpacing.tracked}"
+          },
+          "$description": "Uppercase link (footer nav). Live PDP Semantic Link upper."
+        }
+      },
+
+      "eyebrow": {
+        "default": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily":   "{typography.primitives.fontFamily.primary}",
+            "fontWeight":   "{typography.primitives.fontWeight.medium}",
+            "fontSize":     "{typography.primitives.fontSize.10-5}",
+            "lineHeight":   "{typography.primitives.lineHeight.16-5}",
+            "letterSpacing":"{typography.primitives.letterSpacing.tracked}"
+          },
+          "$description": "Tiny uppercase category tag (e.g. \"NEW\" / \"EXCLUSIVE\"). Live PDP Semantic Item upper (10.8 / 16.5, Medium, +0.2 tracking)."
+        }
+      },
+
+      "caption": {
+        "default": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily":   "{typography.primitives.fontFamily.primary}",
+            "fontWeight":   "{typography.primitives.fontWeight.regular}",
+            "fontSize":     "{typography.primitives.fontSize.11-6}",
+            "lineHeight":   "{typography.primitives.lineHeight.18}",
+            "letterSpacing":"{typography.primitives.letterSpacing.default}"
+          },
+          "$description": "Product price meta / image captions. Live PDP Inter Medium title (11.6 / 18)."
+        }
+      }
+    },
+
+    "component": {
+      "$description": "Tier 3 — component-level overrides. Each component references the semantic tokens. Add new entries here as new components are scoped.",
+
+      "pdp": {
+        "product-title": {
+          "$type": "typography",
+          "$value": "{typography.semantic.heading.h1}",
+          "$description": "PDP product name H1."
+        },
+        "price": {
+          "$type": "typography",
+          "$value": "{typography.semantic.body.lg}",
+          "$description": "PDP price (£ 52). Defaults to body-lg; can be re-pointed to a price-specific style if needed."
+        },
+        "section-heading": {
+          "$type": "typography",
+          "$value": "{typography.semantic.heading.h2}",
+          "$description": "Accordion headers — Product details, Free shipping and returns."
+        },
+        "accordion-body": {
+          "$type": "typography",
+          "$value": "{typography.semantic.body.md}",
+          "$description": "Accordion body copy."
+        },
+        "shade-label": {
+          "$type": "typography",
+          "$value": "{typography.semantic.label.default}",
+          "$description": "\"Color: LC10 - LIGHT COOL\" label above shade chips."
+        },
+        "primary-cta": {
+          "$type": "typography",
+          "$value": "{typography.semantic.button.lg}",
+          "$description": "Add to shopping bag button label."
+        },
+        "secondary-action": {
+          "$type": "typography",
+          "$value": "{typography.semantic.link.default}",
+          "$description": "Start personalization / Find in store / Shop refill / Notify me when available."
+        },
+        "breadcrumb": {
+          "$type": "typography",
+          "$value": "{typography.semantic.link.small}",
+          "$description": "Prada / Perfumes and beauty / Beauty / Face."
+        },
+        "input-label": {
+          "$type": "typography",
+          "$value": "{typography.semantic.label.default}",
+          "$description": "Notify-me email label, size selector label."
+        },
+        "input-text": {
+          "$type": "typography",
+          "$value": "{typography.semantic.body.md}",
+          "$description": "Typed value inside notify-me / size selector inputs."
+        }
+      }
+    }
+  }
+}

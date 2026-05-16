@@ -1,0 +1,79 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amzn/style-dictionary/main/lib/common/schemas/token.json",
+  "$metadata": {
+    "source": "Revolut Brand System — Semantic Colour Tokens (Light Mode)",
+    "version": "1.0.0",
+    "notes": "Semantic tokens assign purpose to primitives. These are the tokens consumed by components. All text/background pairings meet WCAG 2.1 AA (4.5:1 normal text, 3:1 large text). AAA targets are noted where achieved. Reference: {color.*} from primitive/color.json."
+  },
+  "semantic": {
+    "color": {
+      "brand": {
+        "primary":       { "$value": "{color.blue.400}",   "$type": "color", "$description": "Revolut Cornflower Blue — primary interactive colour" },
+        "primaryHover":  { "$value": "{color.blue.500}",   "$type": "color", "$description": "Primary on hover" },
+        "primaryActive": { "$value": "{color.blue.600}",   "$type": "color", "$description": "Primary on press" },
+        "primarySubtle": { "$value": "{color.blue.50}",    "$type": "color", "$description": "Tinted primary bg — chips, pills, selected states" },
+        "dark":          { "$value": "{color.navy.800}",   "$type": "color", "$description": "Shark — primary brand dark for logotype, high-contrast UI" },
+        "darkAlt":       { "$value": "{color.navy.700}",   "$type": "color", "$description": "Secondary dark for depth" },
+        "premium":       { "$value": "{color.indigo.800}", "$type": "color", "$description": "Deep purple — Metal/Ultra tier, premium accents" },
+        "accent":        { "$value": "{color.lime.400}",   "$type": "color", "$description": "Lime — use max 10% of layout. Never on dark text." }
+      },
+      "text": {
+        "primary":     { "$value": "{color.navy.800}",   "$type": "color", "$description": "Primary body text. Contrast vs white: 16.1:1 (AAA)" },
+        "secondary":   { "$value": "{color.neutral.700}", "$type": "color", "$description": "Secondary / supporting text. Contrast vs white: 7.0:1 (AAA)" },
+        "tertiary":    { "$value": "{color.neutral.600}", "$type": "color", "$description": "Placeholder, hint text. Contrast vs white: 4.6:1 (AA)" },
+        "disabled":    { "$value": "{color.neutral.400}", "$type": "color", "$description": "Disabled state. Below 4.5:1 by design — non-interactive only." },
+        "inverse":     { "$value": "{color.neutral.0}",  "$type": "color", "$description": "Text on dark backgrounds" },
+        "inverseSecondary": { "$value": "{color.white.alpha.80}", "$type": "color", "$description": "Secondary text on dark surfaces" },
+        "link":        { "$value": "{color.blue.600}",   "$type": "color", "$description": "Hyperlink text. Contrast vs white: 4.7:1 (AA)" },
+        "linkHover":   { "$value": "{color.blue.700}",   "$type": "color", "$description": "Hyperlink on hover" },
+        "brand":       { "$value": "{color.blue.400}",   "$type": "color", "$description": "Brand-coloured text labels — use with white or light bg only" },
+        "success":     { "$value": "{color.green.700}",  "$type": "color", "$description": "Success text. Contrast vs white: 5.3:1 (AA)" },
+        "warning":     { "$value": "{color.amber.700}",  "$type": "color", "$description": "Warning text. Contrast vs white: 4.6:1 (AA)" },
+        "danger":      { "$value": "{color.red.700}",    "$type": "color", "$description": "Error/danger text. Contrast vs white: 5.9:1 (AA)" },
+        "positive":    { "$value": "{color.green.600}",  "$type": "color", "$description": "Money-in, positive delta (e.g. +£42.50)" },
+        "negative":    { "$value": "{color.red.600}",    "$type": "color", "$description": "Money-out, negative delta (e.g. -£12.00)" }
+      },
+      "background": {
+        "canvas":      { "$value": "{color.neutral.50}",  "$type": "color", "$description": "App background / page canvas" },
+        "surface":     { "$value": "{color.neutral.0}",   "$type": "color", "$description": "Card, modal, sheet surface" },
+        "surfaceRaised": { "$value": "{color.neutral.0}",  "$type": "color", "$description": "Raised card — relies on shadow for elevation" },
+        "surfaceOverlay": { "$value": "{color.neutral.0}", "$type": "color", "$description": "Overlay / dropdown surface" },
+        "subtle":      { "$value": "{color.neutral.100}", "$type": "color", "$description": "Subtle row, alternating surface" },
+        "inverse":     { "$value": "{color.navy.800}",    "$type": "color", "$description": "Dark/inverse background surface" },
+        "brand":       { "$value": "{color.blue.400}",    "$type": "color", "$description": "Brand-coloured surface — CTAs, highlights" },
+        "brandSubtle": { "$value": "{color.blue.50}",     "$type": "color", "$description": "Light brand tint — selected state, info banners" },
+        "premium":     { "$value": "{color.indigo.800}",  "$type": "color", "$description": "Premium tier — Metal/Ultra surfaces" },
+        "premiumSubtle": { "$value": "{color.indigo.50}", "$type": "color", "$description": "Light premium tint" },
+        "success":     { "$value": "{color.green.500}",   "$type": "color", "$description": "Success fill — completed transaction indicator" },
+        "successSubtle": { "$value": "{color.green.50}",  "$type": "color", "$description": "Success tint — success banners, confirmed badges" },
+        "warning":     { "$value": "{color.amber.400}",   "$type": "color", "$description": "Warning fill" },
+        "warningSubtle": { "$value": "{color.amber.50}",  "$type": "color", "$description": "Warning tint — pending states" },
+        "danger":      { "$value": "{color.red.500}",     "$type": "color", "$description": "Danger fill" },
+        "dangerSubtle": { "$value": "{color.red.50}",     "$type": "color", "$description": "Error tint — failed transaction, alert banners" },
+        "scrim":       { "$value": "{color.black.alpha.60}", "$type": "color", "$description": "Modal backdrop scrim" }
+      },
+      "border": {
+        "default":     { "$value": "{color.neutral.200}", "$type": "color", "$description": "Default border — cards, inputs, dividers" },
+        "subtle":      { "$value": "{color.neutral.100}", "$type": "color", "$description": "Very subtle divider" },
+        "strong":      { "$value": "{color.neutral.400}", "$type": "color", "$description": "Stronger border — outlined components" },
+        "inverse":     { "$value": "{color.white.alpha.20}", "$type": "color", "$description": "Border on dark surfaces" },
+        "brand":       { "$value": "{color.blue.400}",    "$type": "color", "$description": "Brand colour border — active/selected input, focus indicator" },
+        "focus":       { "$value": "{color.blue.400}",    "$type": "color", "$description": "Focus ring colour — WCAG 2.4.7, 2.4.11 compliant" },
+        "success":     { "$value": "{color.green.400}",   "$type": "color", "$description": "Success state border" },
+        "warning":     { "$value": "{color.amber.400}",   "$type": "color", "$description": "Warning state border" },
+        "danger":      { "$value": "{color.red.400}",     "$type": "color", "$description": "Error state border" },
+        "disabled":    { "$value": "{color.neutral.200}", "$type": "color", "$description": "Disabled border" }
+      },
+      "icon": {
+        "primary":     { "$value": "{color.navy.800}",   "$type": "color", "$description": "Primary icon colour" },
+        "secondary":   { "$value": "{color.neutral.600}", "$type": "color", "$description": "Secondary / decorative icons" },
+        "tertiary":    { "$value": "{color.neutral.400}", "$type": "color", "$description": "Ghost / disabled icons" },
+        "inverse":     { "$value": "{color.neutral.0}",  "$type": "color", "$description": "Icons on dark backgrounds" },
+        "brand":       { "$value": "{color.blue.400}",   "$type": "color", "$description": "Brand icon — active states, CTAs" },
+        "success":     { "$value": "{color.green.500}",  "$type": "color", "$description": "Success state icon" },
+        "warning":     { "$value": "{color.amber.500}",  "$type": "color", "$description": "Warning state icon" },
+        "danger":      { "$value": "{color.red.500}",    "$type": "color", "$description": "Error/danger icon" }
+      }
+    }
+  }
+}

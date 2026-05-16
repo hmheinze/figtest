@@ -1,0 +1,43 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amzn/style-dictionary/main/lib/common/schemas/token.json",
+  "$metadata": {
+    "source": "Revolut Brand System — Semantic Spacing Tokens",
+    "version": "1.0.0",
+    "notes": "Semantic spacing maps purpose-based names to primitive spacing scale. Components and layouts consume these named tokens — never raw pixel values directly. This ensures global spacing changes propagate consistently."
+  },
+  "semantic": {
+    "spacing": {
+      "component": {
+        "paddingXs":  { "$value": "{spacing.2}",  "$type": "dimension", "$description": "8px — compact chip / badge inner padding" },
+        "paddingSm":  { "$value": "{spacing.3}",  "$type": "dimension", "$description": "12px — small button / input inner padding" },
+        "paddingMd":  { "$value": "{spacing.4}",  "$type": "dimension", "$description": "16px — standard button / input / list item padding" },
+        "paddingLg":  { "$value": "{spacing.6}",  "$type": "dimension", "$description": "24px — card inner padding" },
+        "paddingXl":  { "$value": "{spacing.8}",  "$type": "dimension", "$description": "32px — large card / panel padding" },
+        "gapXs":      { "$value": "{spacing.1}",  "$type": "dimension", "$description": "4px — icon-to-label gap, inline element gap" },
+        "gapSm":      { "$value": "{spacing.2}",  "$type": "dimension", "$description": "8px — tight list row gap" },
+        "gapMd":      { "$value": "{spacing.3}",  "$type": "dimension", "$description": "12px — standard list row gap" },
+        "gapLg":      { "$value": "{spacing.4}",  "$type": "dimension", "$description": "16px — card section gap" },
+        "gapXl":      { "$value": "{spacing.6}",  "$type": "dimension", "$description": "24px — panel section gap" }
+      },
+      "layout": {
+        "pagePaddingMobile":  { "$value": "{spacing.4}",  "$type": "dimension", "$description": "16px — page edge padding mobile" },
+        "pagePaddingTablet":  { "$value": "{spacing.8}",  "$type": "dimension", "$description": "32px — page edge padding tablet" },
+        "pagePaddingDesktop": { "$value": "{spacing.16}", "$type": "dimension", "$description": "64px — page edge padding desktop" },
+        "sectionGapSm":  { "$value": "{spacing.8}",  "$type": "dimension", "$description": "32px — tight section gap" },
+        "sectionGapMd":  { "$value": "{spacing.12}", "$type": "dimension", "$description": "48px — standard section gap" },
+        "sectionGapLg":  { "$value": "{spacing.16}", "$type": "dimension", "$description": "64px — spacious section gap" },
+        "sectionGapXl":  { "$value": "{spacing.24}", "$type": "dimension", "$description": "96px — hero section vertical padding" },
+        "navHeight":     { "$value": "{spacing.12}", "$type": "dimension", "$description": "48px — mobile tab bar / nav height" },
+        "headerHeight":  { "$value": "{spacing.16}", "$type": "dimension", "$description": "64px — web header height" },
+        "maxContent":    { "$value": "1280px",       "$type": "dimension", "$description": "Max content width — Revolut web layouts" },
+        "maxReadable":   { "$value": "720px",        "$type": "dimension", "$description": "Max readable text block width" }
+      },
+      "interactive": {
+        "touchTargetMin":  { "$value": "{spacing.11}", "$type": "dimension", "$description": "44px — WCAG 2.5.5 minimum touch target" },
+        "touchTargetIdeal":{ "$value": "{spacing.12}", "$type": "dimension", "$description": "48px — preferred touch target size" },
+        "focusRingWidth":  { "$value": "{borderWidth.thick}", "$type": "dimension", "$description": "2px — WCAG 2.4.11 compliant focus ring" },
+        "focusRingOffset": { "$value": "{spacing.0.5}", "$type": "dimension", "$description": "2px — focus ring offset from component edge" }
+      }
+    }
+  }
+}

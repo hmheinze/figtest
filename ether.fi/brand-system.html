@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ether.fi — Brand System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --purple-300: #BB85FF;
+  --purple-400: #A060F0;
+  --purple-500: #7B40D4;
+  --purple-600: #5E28B0;
+  --teal-300: #5EEAD4;
+  --teal-500: #14B8A6;
+  --blue-400: #60A5FA;
+  --neutral-0:   #FFFFFF;
+  --neutral-100: #F0EDE4;
+  --neutral-200: #D8D4C8;
+  --neutral-300: #B8B3A8;
+  --neutral-400: #9B97A8;
+  --neutral-500: #6E6A7C;
+  --neutral-600: #4A4759;
+  --neutral-700: #2E2C3E;
+  --neutral-750: #252438;
+  --neutral-800: #1C1B2E;
+  --neutral-850: #14131F;
+  --neutral-900: #0D0C18;
+  --neutral-950: #070611;
+  --success: #4ADE80;
+  --warning: #FBBF24;
+  --error:   #F87171;
+  --font-display: 'Crimson Pro', Georgia, serif;
+  --font-body:    'DM Sans', -apple-system, sans-serif;
+  --font-mono:    'JetBrains Mono', monospace;
+  --radius-sm: 4px;
+  --radius-base: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-2xl: 24px;
+  --radius-full: 9999px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; }
+body {
+  background: var(--neutral-950);
+  color: var(--neutral-100);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Layout ── */
+.layout { display: flex; min-height: 100vh; }
+
+.sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  position: fixed;
+  top: 0; bottom: 0; left: 0;
+  background: var(--neutral-900);
+  border-right: 1px solid rgba(255,255,255,0.06);
+  padding: 28px 0;
+  overflow-y: auto;
+  z-index: 10;
+}
+
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 20px 28px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  margin-bottom: 16px;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--neutral-100);
+}
+
+.sidebar-logo-mark {
+  width: 28px; height: 28px;
+  background: linear-gradient(135deg, var(--purple-300), var(--purple-500));
+  border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; color: white; font-weight: 700; font-family: var(--font-body);
+}
+
+.nav-section-label {
+  padding: 4px 20px 6px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--neutral-600);
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  font-size: 13px;
+  color: var(--neutral-400);
+  cursor: pointer;
+  transition: color 150ms, background 150ms;
+  text-decoration: none;
+}
+.nav-item:hover { color: var(--neutral-100); background: rgba(255,255,255,0.04); }
+.nav-item.active { color: var(--purple-300); background: rgba(187,133,255,0.08); border-right: 2px solid var(--purple-300); }
+
+.main {
+  margin-left: 240px;
+  flex: 1;
+  min-width: 0;
+}
+
+.main-header {
+  padding: 40px 48px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  padding-bottom: 32px;
+  margin-bottom: 48px;
+}
+
+.page-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--purple-300);
+  margin-bottom: 8px;
+}
+
+.page-title {
+  font-family: var(--font-display);
+  font-size: 40px;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  color: var(--neutral-100);
+  margin-bottom: 8px;
+}
+
+.page-desc {
+  font-size: 15px;
+  color: var(--neutral-400);
+  max-width: 600px;
+}
+
+.content { padding: 0 48px 80px; }
+
+/* ── Section ── */
+.brand-section { margin-bottom: 64px; }
+
+.brand-section-title {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 400;
+  color: var(--neutral-100);
+  margin-bottom: 6px;
+  letter-spacing: -0.01em;
+}
+
+.brand-section-desc {
+  font-size: 13px;
+  color: var(--neutral-500);
+  margin-bottom: 28px;
+  line-height: 1.6;
+}
+
+.section-divider {
+  height: 1px;
+  background: rgba(255,255,255,0.06);
+  margin: 64px 0;
+}
+
+/* ── Color Swatches ── */
+.color-row { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+
+.swatch {
+  display: flex;
+  flex-direction: column;
+  min-width: 80px;
+}
+
+.swatch-block {
+  height: 60px;
+  border-radius: var(--radius-md);
+  margin-bottom: 8px;
+  position: relative;
+  cursor: pointer;
+  transition: transform 150ms;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.swatch-block:hover { transform: scale(1.04); }
+.swatch-block:hover::after {
+  content: attr(data-hex);
+  position: absolute;
+  bottom: 6px; left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.75);
+  color: white;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.swatch-name { font-size: 11px; color: var(--neutral-400); font-weight: 500; }
+.swatch-hex  { font-family: var(--font-mono); font-size: 10px; color: var(--neutral-600); }
+
+.color-scale {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 4px;
+  margin-bottom: 24px;
+}
+
+.scale-swatch { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.scale-swatch-block {
+  width: 100%; height: 40px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: transform 120ms;
+  position: relative;
+}
+.scale-swatch-block:hover { transform: scaleY(1.15); }
+.scale-swatch-label { font-size: 9px; color: var(--neutral-600); font-family: var(--font-mono); }
+
+/* ── Typography Showcase ── */
+.type-specimen-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.type-specimen {
+  padding: 24px;
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--radius-lg);
+  display: grid;
+  grid-template-columns: 1fr 200px;
+  gap: 16px;
+  align-items: center;
+}
+
+.type-sample { overflow: hidden; }
+.type-meta { border-left: 1px solid rgba(255,255,255,0.07); padding-left: 16px; }
+.type-meta-row { margin-bottom: 6px; }
+.type-meta-label { font-size: 10px; color: var(--neutral-600); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1px; }
+.type-meta-value { font-family: var(--font-mono); font-size: 11px; color: var(--neutral-400); }
+
+/* ── Component Grid ── */
+.component-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.component-card {
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: var(--radius-2xl);
+  padding: 28px;
+}
+
+.component-card-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--neutral-600);
+  margin-bottom: 20px;
+}
+
+.component-demo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+/* Buttons */
+.btn-demo-primary {
+  padding: 10px 24px; border-radius: 9999px;
+  background: linear-gradient(135deg, var(--purple-300), var(--purple-500));
+  color: white; font-size: 14px; font-weight: 600;
+  border: none; cursor: pointer;
+  box-shadow: 0 0 0 1px rgba(187,133,255,0.3), 0 6px 24px rgba(187,133,255,0.25);
+  transition: transform 100ms, box-shadow 200ms;
+}
+.btn-demo-primary:hover { transform: translateY(-1px); box-shadow: 0 0 0 1px rgba(187,133,255,0.5), 0 10px 32px rgba(187,133,255,0.35); }
+
+.btn-demo-secondary {
+  padding: 10px 24px; border-radius: 9999px;
+  background: rgba(187,133,255,0.08);
+  border: 1px solid rgba(187,133,255,0.3);
+  color: var(--purple-300); font-size: 14px; font-weight: 500;
+  cursor: pointer; transition: background 200ms, border-color 200ms;
+}
+.btn-demo-secondary:hover { background: rgba(187,133,255,0.14); border-color: rgba(187,133,255,0.55); }
+
+.btn-demo-ghost {
+  padding: 10px 24px; border-radius: 9999px;
+  background: transparent; border: none;
+  color: var(--neutral-300); font-size: 14px; font-weight: 500;
+  cursor: pointer; transition: background 200ms;
+}
+.btn-demo-ghost:hover { background: rgba(255,255,255,0.05); }
+
+.btn-demo-destructive {
+  padding: 10px 24px; border-radius: 9999px;
+  background: rgba(248,113,113,0.1); border: 1px solid rgba(248,113,113,0.3);
+  color: var(--error); font-size: 14px; font-weight: 500;
+  cursor: pointer;
+}
+
+/* Badges */
+.badge-demo {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 4px 10px; border-radius: 9999px;
+  font-size: 11px; font-weight: 600;
+}
+.badge-success { background: rgba(74,222,128,0.12); color: var(--success); border: 1px solid rgba(74,222,128,0.2); }
+.badge-purple  { background: rgba(187,133,255,0.12); color: var(--purple-300); border: 1px solid rgba(187,133,255,0.2); }
+.badge-warning { background: rgba(251,191,36,0.12); color: var(--warning); border: 1px solid rgba(251,191,36,0.2); }
+.badge-neutral { background: rgba(255,255,255,0.07); color: var(--neutral-300); border: 1px solid rgba(255,255,255,0.1); }
+.badge-error   { background: rgba(248,113,113,0.1); color: var(--error); border: 1px solid rgba(248,113,113,0.2); }
+
+/* Input */
+.input-demo {
+  padding: 10px 14px; border-radius: 12px;
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+  color: var(--neutral-100); font-family: var(--font-body); font-size: 14px;
+  width: 100%; outline: none; transition: border-color 200ms, box-shadow 200ms;
+}
+.input-demo:focus { border-color: rgba(187,133,255,0.5); box-shadow: 0 0 0 3px rgba(187,133,255,0.1); }
+.input-demo::placeholder { color: var(--neutral-600); }
+
+/* Card demos */
+.card-demo-default {
+  padding: 20px; background: var(--neutral-800);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: var(--radius-2xl);
+  font-size: 13px; color: var(--neutral-400); line-height: 1.6;
+  margin-bottom: 12px;
+}
+.card-demo-elevated {
+  padding: 20px; background: var(--neutral-750);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: var(--radius-2xl);
+  font-size: 13px; color: var(--neutral-400); line-height: 1.6;
+  margin-bottom: 12px;
+}
+.card-demo-product {
+  padding: 20px;
+  background: linear-gradient(145deg, rgba(37,36,56,0.9), rgba(20,19,31,0.9));
+  border: 1px solid rgba(187,133,255,0.15);
+  border-radius: var(--radius-2xl);
+  font-size: 13px; color: var(--neutral-400); line-height: 1.6;
+  box-shadow: 0 0 0 1px rgba(187,133,255,0.08), 0 12px 32px rgba(187,133,255,0.1);
+}
+
+/* Progress bar */
+.progress-track {
+  height: 6px; border-radius: 9999px;
+  background: rgba(255,255,255,0.08);
+  overflow: hidden; margin-bottom: 8px;
+}
+.progress-fill {
+  height: 100%; border-radius: 9999px;
+  background: linear-gradient(90deg, var(--purple-300), var(--teal-300));
+  transition: width 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ── Spacing ── */
+.spacing-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.spacing-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.spacing-visual {
+  height: 24px;
+  background: rgba(187,133,255,0.2);
+  border-radius: 3px;
+  border-right: 2px solid var(--purple-300);
+  flex-shrink: 0;
+}
+.spacing-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--neutral-400);
+  width: 80px;
+  flex-shrink: 0;
+}
+.spacing-val {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--neutral-600);
+}
+
+/* ── Motion ── */
+.motion-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.motion-card {
+  padding: 16px; background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(255,255,255,0.07); border-radius: var(--radius-lg);
+}
+.motion-label { font-size: 11px; color: var(--neutral-500); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; }
+.motion-value { font-family: var(--font-mono); font-size: 13px; color: var(--neutral-300); }
+.motion-demo-dot {
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--purple-300); margin-top: 12px;
+  cursor: pointer;
+}
+
+/* ── Shadow ── */
+.shadow-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.shadow-card {
+  padding: 20px; border-radius: var(--radius-xl);
+  background: var(--neutral-800);
+  border: 1px solid rgba(255,255,255,0.06);
+  font-size: 12px; font-family: var(--font-mono); color: var(--neutral-500);
+  text-align: center;
+}
+
+/* ── Token table ── */
+.token-table { width: 100%; border-collapse: collapse; }
+.token-table th {
+  padding: 10px 12px; text-align: left;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--neutral-600); border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+.token-table td {
+  padding: 10px 12px;
+  font-size: 12px; color: var(--neutral-400);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.token-table tr:last-child td { border-bottom: none; }
+.token-table tr:hover td { background: rgba(255,255,255,0.02); }
+.token-name { font-family: var(--font-mono); color: var(--purple-300); }
+.token-val { font-family: var(--font-mono); color: var(--neutral-300); }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--neutral-700); border-radius: 3px; }
+
+/* ── Gradient samples ── */
+.gradient-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.gradient-swatch {
+  height: 80px; border-radius: var(--radius-lg);
+  border: 1px solid rgba(255,255,255,0.06);
+  margin-bottom: 8px;
+}
+.gradient-name { font-size: 12px; color: var(--neutral-400); font-weight: 500; }
+.gradient-val  { font-family: var(--font-mono); font-size: 10px; color: var(--neutral-600); word-break: break-all; }
+
+</style>
+</head>
+<body>
+<div class="layout">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="sidebar-logo-mark">⟠</div>
+    Brand System
+  </div>
+
+  <div class="nav-section-label">Foundation</div>
+  <a href="#overview"    class="nav-item active">📋 Overview</a>
+  <a href="#colors"      class="nav-item">🎨 Color</a>
+  <a href="#typography"  class="nav-item">Aa Typography</a>
+  <a href="#spacing"     class="nav-item">⬜ Spacing</a>
+  <a href="#radius"      class="nav-item">◻ Border Radius</a>
+  <a href="#shadow"      class="nav-item">🌑 Shadow</a>
+  <a href="#motion"      class="nav-item">⚡ Motion</a>
+
+  <div class="nav-section-label" style="margin-top:12px">Components</div>
+  <a href="#buttons"    class="nav-item">⬡ Buttons</a>
+  <a href="#badges"     class="nav-item">◉ Badges</a>
+  <a href="#inputs"     class="nav-item">⬭ Inputs</a>
+  <a href="#cards"      class="nav-item">▭ Cards</a>
+  <a href="#progress"   class="nav-item">― Progress</a>
+
+  <div class="nav-section-label" style="margin-top:12px">Brand</div>
+  <a href="#voice"      class="nav-item">✍ Voice & Tone</a>
+  <a href="#gradients"  class="nav-item">⬟ Gradients</a>
+  <a href="#tokens-ref" class="nav-item">{ } Token Reference</a>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+  <div class="main-header">
+    <div class="page-label">Design System v1.0</div>
+    <div class="page-title">ether.fi Brand System</div>
+    <div class="page-desc">The visual language, component library, and design tokens that power the ether.fi product family — weETH, eBTC, eUSD, Cash, and Liquid.</div>
+  </div>
+
+  <div class="content">
+
+    <!-- ── OVERVIEW ── -->
+    <div class="brand-section" id="overview">
+      <div class="brand-section-title">Design Principles</div>
+      <div class="brand-section-desc">Three principles guide every design decision in the ether.fi system.</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+        <div style="padding:24px;background:rgba(187,133,255,0.05);border:1px solid rgba(187,133,255,0.15);border-radius:var(--radius-xl)">
+          <div style="font-size:24px;margin-bottom:12px">✦</div>
+          <div style="font-size:15px;font-weight:600;color:var(--neutral-100);margin-bottom:6px">Clarity over complexity</div>
+          <div style="font-size:13px;color:var(--neutral-500);line-height:1.6">DeFi is complex. Our UI isn't. Progressive disclosure, plain language, and obvious paths forward at every step.</div>
+        </div>
+        <div style="padding:24px;background:rgba(94,234,212,0.05);border:1px solid rgba(94,234,212,0.12);border-radius:var(--radius-xl)">
+          <div style="font-size:24px;margin-bottom:12px">⬡</div>
+          <div style="font-size:15px;font-weight:600;color:var(--neutral-100);margin-bottom:6px">Confidence through control</div>
+          <div style="font-size:13px;color:var(--neutral-500);line-height:1.6">Non-custodial by architecture. Design communicates user ownership and control at every touchpoint.</div>
+        </div>
+        <div style="padding:24px;background:rgba(96,165,250,0.05);border:1px solid rgba(96,165,250,0.12);border-radius:var(--radius-xl)">
+          <div style="font-size:24px;margin-bottom:12px">◎</div>
+          <div style="font-size:15px;font-weight:600;color:var(--neutral-100);margin-bottom:6px">Earn, don't explain</div>
+          <div style="font-size:13px;color:var(--neutral-500);line-height:1.6">Show yield, rewards, and real-world utility upfront. Justify complexity only after trust is established.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- ── COLOR ── -->
+    <div class="brand-section" id="colors">
+      <div class="brand-section-title">Color</div>
+      <div class="brand-section-desc">Built on a deep dark foundation with purple as the primary brand signal. Teal indicates yield and success; blue is used sparingly for information.</div>
+
+      <div style="margin-bottom:32px">
+        <div style="font-size:12px;font-weight:600;color:var(--neutral-500);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:12px">Brand Purple — Primary</div>
+        <div class="color-scale">
+          <div class="scale-swatch"><div class="scale-swatch-block" style="background:#F5EEFF"></div><span class="scale-swatch-label">50</span></div>
+          <div class="scale-swatch"><div class="scale-swatch-block" style="background:#E8D5FF"></div><span class="scale-swatch-label">100</span></div>
+          <div class="scale-swatch"><div class="scale-swatch-block" style="background:#D4AAFF"></div><span class="scale-swatch-label">200</span></div>
+          <div class="scale-swatch"><div class="scale-swatch-block" style="background:#BB85FF;box-shadow:0 0 0 2px rgba(255,255,255,0.3)"></div><span class="scale-swatch-label" style="color:var(--purple-300);font-weight:700">300 ●</span></div>
+          <div class="scale-swatch"><div class="scale-swatch-block" style="background:#A060F0"></div><span class="scale-swatch-label">400</span></div>
+          <div class="scale-swatch"><div class="scale-swatch-block" style="background:#7B40D4"></div><span class="scale-swatch-label">500</span></div>
+          <div class="scale-swatch"><div class="scale-swatch-block" style="background:#5E28B0"></div><span class="scale-swatch-label">600</span></div>
+          <div class="scale-swatch"><div class="scale-swatch-block" style="background:#46178C"></div><span class="scale-swatch-label">700</span></div>
+          <div class="scale-swatch"><div class="scale-swatch-block" style="background:#2F0E65"></div><span class="scale-swatch-label">800</span></div>
+          <div class="scale-swatch"><div class="scale-swatch-block" style="background:#1A073A"></div><span class="scale-swatch-label">900</span></div>
+        </div>
+      </div>
+
+      <div style="margin-bottom:32px">
+        <div style="font-size:12px;font-weight:600;color:var(--neutral-500);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:12px">Brand Teal — Secondary Accent</div>
+        <div class="color-scale">
+          <div class="scale-swatch"><div class="scale-swatch-block" style="background:#EDFDFB"></div><span class="scale-swatch-label">50</span></div>
+          <div class="scale-swatch"><div class="scale-swatch-block" style="background:#CCFBF1"></div><span class="scale-swatch-label">100</span></div>
+          <div class="scale-swatch"><div class="scale-swatch-block" style="background:#99F6E4"></div><span class="scale-swatch-label">200</span></div>
+          <div class="scale-swatch"><div class="scale-swatch-block" style="background:#5EEAD4;box-shadow:0 0 0 2px rgba(255,255,255,0.3)"></div><span class="scale-swatch-label" style="color:var(--teal-300);font-weight:700">300 ●</span></div>
+          <div class="scale-swatch"><div class="scale-swatch-block" style="background:#2DD4BF"></div><span class="scale-swatch-label">400</span></div>
+          <div class="scale-swatch"><div class="scale-swatch-block" style="background:#14B8A6"></div><span class="scale-swatch-label">500</span></div>
+          <div class="scale-swatch"><div class="scale-swatch-block" style="background:#0D9488"></div><span class="scale-swatch-label">600</span></div>
+          <div class="scale-swatch"><div class="scale-swatch-block" style="background:#0F766E"></div><span class="scale-swatch-label">700</span></div>
+          <div class="scale-swatch"><div class="scale-swatch-block" style="background:#115E59"></div><span class="scale-swatch-label">800</span></div>
+          <div class="scale-swatch"><div class="scale-swatch-block" style="background:#134E4A"></div><span class="scale-swatch-label">900</span></div>
+        </div>
+      </div>
+
+      <div style="margin-bottom:32px">
+        <div style="font-size:12px;font-weight:600;color:var(--neutral-500);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:12px">Neutral — Background & Text</div>
+        <div class="color-scale">
+          <div class="scale-swatch"><div class="scale-swatch-block" style="background:#FFFFFF;border:1px solid rgba(0,0,0,0.1)"></div><span class="scale-swatch-label">0</span></div>
+          <div class="scale-swatch"><div class="scale-swatch-block" style="background:#F0EDE4"></div><span class="scale-swatch-label">100</span></div>
+          <div class="scale-swatch"><div class="scale-swatch-block" style="background:#D8D4C8"></div><span class="scale-swatch-label">200</span></div>
+          <div class="scale-swatch"><div class="scale-swatch-block" style="background:#B8B3A8"></div><span class="scale-swatch-label">300</span></div>
+          <div class="scale-swatch"><div class="scale-swatch-block" style="background:#9B97A8"></div><span class="scale-swatch-label">400</span></div>
+          <div class="scale-swatch"><div class="scale-swatch-block" style="background:#6E6A7C"></div><span class="scale-swatch-label">500</span></div>
+          <div class="scale-swatch"><div class="scale-swatch-block" style="background:#4A4759"></div><span class="scale-swatch-label">600</span></div>
+          <div class="scale-swatch"><div class="scale-swatch-block" style="background:#2E2C3E"></div><span class="scale-swatch-label">700</span></div>
+          <div class="scale-swatch"><div class="scale-swatch-block" style="background:#1C1B2E"></div><span class="scale-swatch-label">800</span></div>
+          <div class="scale-swatch"><div class="scale-swatch-block" style="background:#070611"></div><span class="scale-swatch-label">950</span></div>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size:12px;font-weight:600;color:var(--neutral-500);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:12px">Semantic & Asset Colors</div>
+        <div class="color-row">
+          <div class="swatch">
+            <div class="swatch-block" style="background:#4ADE80" data-hex="#4ADE80"></div>
+            <div class="swatch-name">Success</div>
+            <div class="swatch-hex">#4ADE80</div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-block" style="background:#FBBF24" data-hex="#FBBF24"></div>
+            <div class="swatch-name">Warning</div>
+            <div class="swatch-hex">#FBBF24</div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-block" style="background:#F87171" data-hex="#F87171"></div>
+            <div class="swatch-name">Error</div>
+            <div class="swatch-hex">#F87171</div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-block" style="background:#60A5FA" data-hex="#60A5FA"></div>
+            <div class="swatch-name">Info</div>
+            <div class="swatch-hex">#60A5FA</div>
+          </div>
+          <div style="width:1px;background:rgba(255,255,255,0.07);margin:0 4px"></div>
+          <div class="swatch">
+            <div class="swatch-block" style="background:#627EEA" data-hex="#627EEA"></div>
+            <div class="swatch-name">ETH</div>
+            <div class="swatch-hex">#627EEA</div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-block" style="background:#F7931A" data-hex="#F7931A"></div>
+            <div class="swatch-name">BTC</div>
+            <div class="swatch-hex">#F7931A</div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-block" style="background:#BB85FF" data-hex="#BB85FF"></div>
+            <div class="swatch-name">weETH</div>
+            <div class="swatch-hex">#BB85FF</div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-block" style="background:#F7931A" data-hex="#F7931A"></div>
+            <div class="swatch-name">eBTC</div>
+            <div class="swatch-hex">#F7931A</div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-block" style="background:#5EEAD4" data-hex="#5EEAD4"></div>
+            <div class="swatch-name">eUSD</div>
+            <div class="swatch-hex">#5EEAD4</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- ── TYPOGRAPHY ── -->
+    <div class="brand-section" id="typography">
+      <div class="brand-section-title">Typography</div>
+      <div class="brand-section-desc">Two complementary typefaces. Crimson Pro (serif) for display and editorial moments; DM Sans for all UI text. JetBrains Mono for data, addresses, and financial figures.</div>
+
+      <div class="type-specimen-grid">
+        <div class="type-specimen">
+          <div class="type-sample">
+            <div style="font-family:'Crimson Pro',serif;font-size:52px;font-weight:300;line-height:1.1;letter-spacing:-0.03em;color:var(--neutral-100)">Stake, Earn,<br><em>Spend.</em></div>
+          </div>
+          <div class="type-meta">
+            <div class="type-meta-row"><div class="type-meta-label">Role</div><div class="type-meta-value">Hero Display</div></div>
+            <div class="type-meta-row"><div class="type-meta-label">Family</div><div class="type-meta-value">Crimson Pro</div></div>
+            <div class="type-meta-row"><div class="type-meta-label">Weight</div><div class="type-meta-value">300 Light</div></div>
+            <div class="type-meta-row"><div class="type-meta-label">Size</div><div class="type-meta-value">72px / clamp</div></div>
+            <div class="type-meta-row"><div class="type-meta-label">Leading</div><div class="type-meta-value">1.1</div></div>
+            <div class="type-meta-row"><div class="type-meta-label">Tracking</div><div class="type-meta-value">-0.03em</div></div>
+          </div>
+        </div>
+
+        <div class="type-specimen">
+          <div class="type-sample">
+            <div style="font-family:'Crimson Pro',serif;font-size:36px;font-weight:400;line-height:1.2;letter-spacing:-0.02em;color:var(--neutral-100)">Your keys.<br>Your assets.</div>
+          </div>
+          <div class="type-meta">
+            <div class="type-meta-row"><div class="type-meta-label">Role</div><div class="type-meta-value">Heading 1</div></div>
+            <div class="type-meta-row"><div class="type-meta-label">Family</div><div class="type-meta-value">Crimson Pro</div></div>
+            <div class="type-meta-row"><div class="type-meta-label">Weight</div><div class="type-meta-value">400 Regular</div></div>
+            <div class="type-meta-row"><div class="type-meta-label">Size</div><div class="type-meta-value">48px</div></div>
+            <div class="type-meta-row"><div class="type-meta-label">Leading</div><div class="type-meta-value">1.15</div></div>
+          </div>
+        </div>
+
+        <div class="type-specimen">
+          <div class="type-sample">
+            <div style="font-family:'DM Sans',sans-serif;font-size:22px;font-weight:600;line-height:1.3;color:var(--neutral-100)">Stake any amount of ETH</div>
+          </div>
+          <div class="type-meta">
+            <div class="type-meta-row"><div class="type-meta-label">Role</div><div class="type-meta-value">Heading 3</div></div>
+            <div class="type-meta-row"><div class="type-meta-label">Family</div><div class="type-meta-value">DM Sans</div></div>
+            <div class="type-meta-row"><div class="type-meta-label">Weight</div><div class="type-meta-value">600 SemiBold</div></div>
+            <div class="type-meta-row"><div class="type-meta-label">Size</div><div class="type-meta-value">24px</div></div>
+          </div>
+        </div>
+
+        <div class="type-specimen">
+          <div class="type-sample">
+            <div style="font-family:'DM Sans',sans-serif;font-size:15px;font-weight:400;line-height:1.65;color:var(--neutral-400)">Non-custodial liquid restaking for ETH, BTC, and stablecoins. Earn multiple reward streams while staying liquid across 400+ DeFi protocols.</div>
+          </div>
+          <div class="type-meta">
+            <div class="type-meta-row"><div class="type-meta-label">Role</div><div class="type-meta-value">Body</div></div>
+            <div class="type-meta-row"><div class="type-meta-label">Family</div><div class="type-meta-value">DM Sans</div></div>
+            <div class="type-meta-row"><div class="type-meta-label">Weight</div><div class="type-meta-value">400 Regular</div></div>
+            <div class="type-meta-row"><div class="type-meta-label">Size</div><div class="type-meta-value">15px</div></div>
+            <div class="type-meta-row"><div class="type-meta-label">Leading</div><div class="type-meta-value">1.65</div></div>
+          </div>
+        </div>
+
+        <div class="type-specimen">
+          <div class="type-sample">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:28px;font-weight:700;letter-spacing:-0.04em;color:var(--purple-300)">$9,312.40</div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--neutral-500);margin-top:4px;letter-spacing:-0.02em">0x71Cf…3d4A</div>
+          </div>
+          <div class="type-meta">
+            <div class="type-meta-row"><div class="type-meta-label">Role</div><div class="type-meta-value">Data / Mono</div></div>
+            <div class="type-meta-row"><div class="type-meta-label">Family</div><div class="type-meta-value">JetBrains Mono</div></div>
+            <div class="type-meta-row"><div class="type-meta-label">Use for</div><div class="type-meta-value">Numbers, addresses, hashes, APY values</div></div>
+          </div>
+        </div>
+
+        <div class="type-specimen">
+          <div class="type-sample">
+            <div style="font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--purple-300)">Total Value Locked</div>
+            <div style="font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--neutral-500);margin-top:8px">PRODUCTS</div>
+          </div>
+          <div class="type-meta">
+            <div class="type-meta-row"><div class="type-meta-label">Role</div><div class="type-meta-value">Label / Eyebrow</div></div>
+            <div class="type-meta-row"><div class="type-meta-label">Family</div><div class="type-meta-value">DM Sans</div></div>
+            <div class="type-meta-row"><div class="type-meta-label">Weight</div><div class="type-meta-value">600–700</div></div>
+            <div class="type-meta-row"><div class="type-meta-label">Case</div><div class="type-meta-value">ALL CAPS</div></div>
+            <div class="type-meta-row"><div class="type-meta-label">Tracking</div><div class="type-meta-value">0.08–0.1em</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- ── SPACING ── -->
+    <div class="brand-section" id="spacing">
+      <div class="brand-section-title">Spacing</div>
+      <div class="brand-section-desc">4px base unit. All spacing values are multiples of 4. Use the named tokens rather than raw pixel values.</div>
+      <div class="spacing-grid">
+        <div class="spacing-row"><span class="spacing-label">spacing.1</span><div class="spacing-visual" style="width:4px"></div><span class="spacing-val">4px</span></div>
+        <div class="spacing-row"><span class="spacing-label">spacing.2</span><div class="spacing-visual" style="width:8px"></div><span class="spacing-val">8px</span></div>
+        <div class="spacing-row"><span class="spacing-label">spacing.3</span><div class="spacing-visual" style="width:12px"></div><span class="spacing-val">12px</span></div>
+        <div class="spacing-row"><span class="spacing-label">spacing.4</span><div class="spacing-visual" style="width:16px"></div><span class="spacing-val">16px — Default inner padding</span></div>
+        <div class="spacing-row"><span class="spacing-label">spacing.6</span><div class="spacing-visual" style="width:24px"></div><span class="spacing-val">24px — Card padding (small)</span></div>
+        <div class="spacing-row"><span class="spacing-label">spacing.8</span><div class="spacing-visual" style="width:32px"></div><span class="spacing-val">32px — Card padding (default)</span></div>
+        <div class="spacing-row"><span class="spacing-label">spacing.12</span><div class="spacing-visual" style="width:48px"></div><span class="spacing-val">48px — Section inner gap</span></div>
+        <div class="spacing-row"><span class="spacing-label">spacing.20</span><div class="spacing-visual" style="width:80px"></div><span class="spacing-val">80px — Section padding</span></div>
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- ── BORDER RADIUS ── -->
+    <div class="brand-section" id="radius">
+      <div class="brand-section-title">Border Radius</div>
+      <div class="brand-section-desc">Generous rounding signals approachability. Cards use 24px (2xl), buttons use full (pill).</div>
+      <div style="display:flex;gap:16px;flex-wrap:wrap">
+        <div style="text-align:center">
+          <div style="width:60px;height:60px;background:rgba(187,133,255,0.15);border:1px solid rgba(187,133,255,0.25);border-radius:4px;margin:0 auto 8px"></div>
+          <div style="font-size:11px;color:var(--neutral-400)">sm</div>
+          <div style="font-size:10px;font-family:var(--font-mono);color:var(--neutral-600)">4px</div>
+        </div>
+        <div style="text-align:center">
+          <div style="width:60px;height:60px;background:rgba(187,133,255,0.15);border:1px solid rgba(187,133,255,0.25);border-radius:8px;margin:0 auto 8px"></div>
+          <div style="font-size:11px;color:var(--neutral-400)">base</div>
+          <div style="font-size:10px;font-family:var(--font-mono);color:var(--neutral-600)">8px</div>
+        </div>
+        <div style="text-align:center">
+          <div style="width:60px;height:60px;background:rgba(187,133,255,0.15);border:1px solid rgba(187,133,255,0.25);border-radius:12px;margin:0 auto 8px"></div>
+          <div style="font-size:11px;color:var(--neutral-400)">md</div>
+          <div style="font-size:10px;font-family:var(--font-mono);color:var(--neutral-600)">12px</div>
+        </div>
+        <div style="text-align:center">
+          <div style="width:60px;height:60px;background:rgba(187,133,255,0.15);border:1px solid rgba(187,133,255,0.25);border-radius:16px;margin:0 auto 8px"></div>
+          <div style="font-size:11px;color:var(--neutral-400)">lg</div>
+          <div style="font-size:10px;font-family:var(--font-mono);color:var(--neutral-600)">16px</div>
+        </div>
+        <div style="text-align:center">
+          <div style="width:60px;height:60px;background:rgba(187,133,255,0.15);border:1px solid rgba(187,133,255,0.25);border-radius:20px;margin:0 auto 8px"></div>
+          <div style="font-size:11px;color:var(--neutral-400)">xl</div>
+          <div style="font-size:10px;font-family:var(--font-mono);color:var(--neutral-600)">20px</div>
+        </div>
+        <div style="text-align:center">
+          <div style="width:60px;height:60px;background:rgba(187,133,255,0.15);border:1px solid rgba(187,133,255,0.25);border-radius:24px;margin:0 auto 8px"></div>
+          <div style="font-size:11px;color:var(--neutral-400)">2xl</div>
+          <div style="font-size:10px;font-family:var(--font-mono);color:var(--neutral-600)">24px — cards</div>
+        </div>
+        <div style="text-align:center">
+          <div style="width:60px;height:60px;background:rgba(187,133,255,0.15);border:1px solid rgba(187,133,255,0.25);border-radius:32px;margin:0 auto 8px"></div>
+          <div style="font-size:11px;color:var(--neutral-400)">3xl</div>
+          <div style="font-size:10px;font-family:var(--font-mono);color:var(--neutral-600)">32px</div>
+        </div>
+        <div style="text-align:center">
+          <div style="width:80px;height:40px;background:rgba(187,133,255,0.15);border:1px solid rgba(187,133,255,0.25);border-radius:9999px;margin:0 auto 18px"></div>
+          <div style="font-size:11px;color:var(--neutral-400)">full</div>
+          <div style="font-size:10px;font-family:var(--font-mono);color:var(--neutral-600)">9999px — buttons</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- ── SHADOW ── -->
+    <div class="brand-section" id="shadow">
+      <div class="brand-section-title">Shadow & Glow</div>
+      <div class="brand-section-desc">Shadows use deep blacks. Brand elements use colored glows (purple/teal) to reinforce identity at interactive moments.</div>
+      <div class="shadow-grid">
+        <div class="shadow-card" style="box-shadow:0 1px 3px rgba(0,0,0,0.4),0 1px 2px rgba(0,0,0,0.24)">shadow.sm</div>
+        <div class="shadow-card" style="box-shadow:0 4px 12px rgba(0,0,0,0.5),0 2px 6px rgba(0,0,0,0.3)">shadow.base</div>
+        <div class="shadow-card" style="box-shadow:0 8px 24px rgba(0,0,0,0.55),0 4px 12px rgba(0,0,0,0.35)">shadow.md</div>
+        <div class="shadow-card" style="box-shadow:0 0 0 1px rgba(187,133,255,0.3),0 4px 24px rgba(187,133,255,0.15)">shadow.purpleGlow</div>
+        <div class="shadow-card" style="box-shadow:0 0 0 2px rgba(187,133,255,0.5),0 8px 40px rgba(187,133,255,0.25)">shadow.purpleGlowStrong</div>
+        <div class="shadow-card" style="box-shadow:0 0 0 1px rgba(94,234,212,0.3),0 4px 24px rgba(94,234,212,0.12)">shadow.tealGlow</div>
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- ── MOTION ── -->
+    <div class="brand-section" id="motion">
+      <div class="brand-section-title">Motion</div>
+      <div class="brand-section-desc">Motion reinforces responsiveness. Interactive elements use spring easing for physical feedback; page transitions use ease-out for directionality.</div>
+      <div class="motion-grid">
+        <div class="motion-card"><div class="motion-label">Duration / Fast</div><div class="motion-value">100ms</div><div class="motion-label" style="margin-top:8px">Use for</div><div class="motion-value" style="font-size:11px;color:var(--neutral-500)">Hover states, active/pressed</div></div>
+        <div class="motion-card"><div class="motion-label">Duration / Normal</div><div class="motion-value">200ms</div><div class="motion-label" style="margin-top:8px">Use for</div><div class="motion-value" style="font-size:11px;color:var(--neutral-500)">Color transitions, fades</div></div>
+        <div class="motion-card"><div class="motion-label">Duration / Slow</div><div class="motion-value">350ms</div><div class="motion-label" style="margin-top:8px">Use for</div><div class="motion-value" style="font-size:11px;color:var(--neutral-500)">Card lifts, entrances</div></div>
+        <div class="motion-card"><div class="motion-label">Easing / Spring</div><div class="motion-value">cubic-bezier(0.34, 1.56, 0.64, 1)</div><div class="motion-label" style="margin-top:8px">Use for</div><div class="motion-value" style="font-size:11px;color:var(--neutral-500)">Button press, card hover, interactive feedback</div></div>
+        <div class="motion-card"><div class="motion-label">Easing / Ease-Out</div><div class="motion-value">cubic-bezier(0, 0, 0.2, 1)</div><div class="motion-label" style="margin-top:8px">Use for</div><div class="motion-value" style="font-size:11px;color:var(--neutral-500)">Panels entering, modals, drawers</div></div>
+        <div class="motion-card"><div class="motion-label">Easing / Ease-In-Out</div><div class="motion-value">cubic-bezier(0.4, 0, 0.2, 1)</div><div class="motion-label" style="margin-top:8px">Use for</div><div class="motion-value" style="font-size:11px;color:var(--neutral-500)">Loading states, skeleton pulses</div></div>
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- ── COMPONENTS: BUTTONS ── -->
+    <div class="brand-section" id="buttons">
+      <div class="brand-section-title">Buttons</div>
+      <div class="brand-section-desc">Always pill-shaped (border-radius: full). Primary uses the brand gradient. Secondary is ghost with purple border. Use sparingly — one primary action per view.</div>
+      <div class="component-grid">
+        <div class="component-card">
+          <div class="component-card-title">Button Variants</div>
+          <div class="component-demo" style="flex-direction:column;align-items:flex-start">
+            <button class="btn-demo-primary">Stake ETH →</button>
+            <button class="btn-demo-secondary">Learn More</button>
+            <button class="btn-demo-ghost">View Docs</button>
+            <button class="btn-demo-destructive">Disconnect Wallet</button>
+          </div>
+        </div>
+        <div class="component-card">
+          <div class="component-card-title">Button Sizes</div>
+          <div class="component-demo" style="flex-direction:column;align-items:flex-start">
+            <button class="btn-demo-primary" style="font-size:12px;padding:8px 18px">Small — 12px / py8 px18</button>
+            <button class="btn-demo-primary">Default — 14px / py10 px24</button>
+            <button class="btn-demo-primary" style="font-size:16px;padding:14px 32px">Large — 16px / py14 px32</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- ── BADGES ── -->
+    <div class="brand-section" id="badges">
+      <div class="brand-section-title">Badges</div>
+      <div class="brand-section-desc">Used for status indicators, labels, and tags. Always pill-shaped, always uppercase.</div>
+      <div class="component-demo" style="flex-wrap:wrap">
+        <span class="badge-demo badge-success">● Live</span>
+        <span class="badge-demo badge-purple">weETH</span>
+        <span class="badge-demo badge-warning">⚠ Beta</span>
+        <span class="badge-demo badge-neutral">EigenLayer</span>
+        <span class="badge-demo badge-error">Paused</span>
+        <span class="badge-demo badge-success">↑ +2.8% APY</span>
+        <span class="badge-demo badge-purple">Audited</span>
+        <span class="badge-demo badge-neutral">Non-custodial</span>
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- ── INPUTS ── -->
+    <div class="brand-section" id="inputs">
+      <div class="brand-section-title">Inputs</div>
+      <div class="brand-section-desc">Dark-glass treatment. On focus, the border brightens to brand purple and a soft glow appears.</div>
+      <div style="display:flex;flex-direction:column;gap:12px;max-width:400px">
+        <input class="input-demo" placeholder="Amount (ETH)" type="number" />
+        <input class="input-demo" placeholder="Wallet address (0x…)" />
+        <input class="input-demo" value="4.823" type="number" />
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- ── CARDS ── -->
+    <div class="brand-section" id="cards">
+      <div class="brand-section-title">Cards</div>
+      <div class="brand-section-desc">Three elevation levels. Product cards use the purple-tinted gradient with colored border for brand alignment.</div>
+      <div class="card-demo-default">
+        <div style="font-size:12px;font-weight:600;color:var(--neutral-500);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px">card.default</div>
+        Background: neutral-800 · Border: rgba(255,255,255, 0.07) · Radius: 24px
+      </div>
+      <div class="card-demo-elevated">
+        <div style="font-size:12px;font-weight:600;color:var(--neutral-500);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px">card.elevated</div>
+        Background: neutral-750 · Border: rgba(255,255,255, 0.09) · Elevated above default
+      </div>
+      <div class="card-demo-product">
+        <div style="font-size:12px;font-weight:600;color:var(--purple-300);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px">card.product</div>
+        Background: dark gradient · Border: rgba(purple, 0.15) · Purple glow shadow — for weETH/eBTC/eUSD product cards
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- ── PROGRESS ── -->
+    <div class="brand-section" id="progress">
+      <div class="brand-section-title">Progress Bar</div>
+      <div class="brand-section-desc">Purple-to-teal gradient fill. Used for reward progress, TVL fill, and step completion.</div>
+      <div style="display:flex;flex-direction:column;gap:16px;max-width:500px">
+        <div><div class="progress-track"><div class="progress-fill" id="pb1" style="width:82%"></div></div><div style="font-size:12px;color:var(--neutral-500);margin-top:4px">Rewards accrued — 82%</div></div>
+        <div><div class="progress-track"><div class="progress-fill" id="pb2" style="width:45%"></div></div><div style="font-size:12px;color:var(--neutral-500);margin-top:4px">eBTC rewards — 45%</div></div>
+        <div><div class="progress-track"><div class="progress-fill" id="pb3" style="width:23%"></div></div><div style="font-size:12px;color:var(--neutral-500);margin-top:4px">eUSD rewards — 23%</div></div>
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- ── VOICE ── -->
+    <div class="brand-section" id="voice">
+      <div class="brand-section-title">Voice & Tone</div>
+      <div class="brand-section-desc">ether.fi speaks with quiet confidence. No hype. No jargon walls. Direct, honest, and user-empowering.</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div style="padding:24px;background:rgba(74,222,128,0.04);border:1px solid rgba(74,222,128,0.12);border-radius:var(--radius-xl)">
+          <div style="font-size:12px;font-weight:700;color:var(--success);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:16px">✓ Do</div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="font-size:13px;color:var(--neutral-300)">"Stake any amount of ETH. No 32 ETH required."</div>
+            <div style="font-size:13px;color:var(--neutral-300)">"Your validator keys, your ETH — always."</div>
+            <div style="font-size:13px;color:var(--neutral-300)">"Earn 2.8% APY + EigenLayer points + loyalty rewards."</div>
+            <div style="font-size:13px;color:var(--neutral-300)">"Withdraw anytime. No lock-up period."</div>
+          </div>
+        </div>
+        <div style="padding:24px;background:rgba(248,113,113,0.04);border:1px solid rgba(248,113,113,0.12);border-radius:var(--radius-xl)">
+          <div style="font-size:12px;font-weight:700;color:var(--error);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:16px">✗ Don't</div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="font-size:13px;color:var(--neutral-500)">"Leverage the paradigm-shifting LRT yield stack."</div>
+            <div style="font-size:13px;color:var(--neutral-500)">"Maximize your AVS-sourced restaking alpha."</div>
+            <div style="font-size:13px;color:var(--neutral-500)">"WAGMI. Stake now for 100x rewards!!!"</div>
+            <div style="font-size:13px;color:var(--neutral-500)">"Decentralized, permissionless, trustless, non-custodial paradigm."</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- ── GRADIENTS ── -->
+    <div class="brand-section" id="gradients">
+      <div class="brand-section-title">Gradients</div>
+      <div class="brand-section-desc">Gradients are used purposefully — hero backgrounds, product token identities, CTA buttons.</div>
+      <div class="gradient-grid">
+        <div>
+          <div class="gradient-swatch" style="background:linear-gradient(135deg,#070611 0%,#0D0C18 40%,#14131F 100%)"></div>
+          <div class="gradient-name">Hero Background</div>
+          <div class="gradient-val">135° #070611 → #14131F</div>
+        </div>
+        <div>
+          <div class="gradient-swatch" style="background:radial-gradient(ellipse 60% 40% at 50% 0%,rgba(187,133,255,0.35) 0%,transparent 70%)"></div>
+          <div class="gradient-name">Purple Glow</div>
+          <div class="gradient-val">radial, purple 300 @ 18% opacity</div>
+        </div>
+        <div>
+          <div class="gradient-swatch" style="background:linear-gradient(135deg,#BB85FF 0%,#7B40D4 100%)"></div>
+          <div class="gradient-name">Primary Button</div>
+          <div class="gradient-val">135° #BB85FF → #7B40D4</div>
+        </div>
+        <div>
+          <div class="gradient-swatch" style="background:linear-gradient(135deg,#BB85FF 0%,#5E28B0 100%)"></div>
+          <div class="gradient-name">weETH Token</div>
+          <div class="gradient-val">135° #BB85FF → #5E28B0</div>
+        </div>
+        <div>
+          <div class="gradient-swatch" style="background:linear-gradient(135deg,#F7931A 0%,#C2620A 100%)"></div>
+          <div class="gradient-name">eBTC Token</div>
+          <div class="gradient-val">135° #F7931A → #C2620A</div>
+        </div>
+        <div>
+          <div class="gradient-swatch" style="background:linear-gradient(135deg,#5EEAD4 0%,#0D9488 100%)"></div>
+          <div class="gradient-name">eUSD Token</div>
+          <div class="gradient-val">135° #5EEAD4 → #0D9488</div>
+        </div>
+        <div>
+          <div class="gradient-swatch" style="background:linear-gradient(90deg,#BB85FF 0%,#5EEAD4 100%)"></div>
+          <div class="gradient-name">Progress Fill</div>
+          <div class="gradient-val">90° purple → teal</div>
+        </div>
+        <div>
+          <div class="gradient-swatch" style="background:linear-gradient(145deg,rgba(37,36,56,0.9) 0%,rgba(20,19,31,0.9) 100%)"></div>
+          <div class="gradient-name">Card Surface</div>
+          <div class="gradient-val">145° neutral-750 → neutral-850</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- ── TOKEN REFERENCE ── -->
+    <div class="brand-section" id="tokens-ref">
+      <div class="brand-section-title">Token Reference</div>
+      <div class="brand-section-desc">Key tokens from <code style="font-family:var(--font-mono);font-size:12px;color:var(--purple-300);background:rgba(187,133,255,0.1);padding:2px 6px;border-radius:4px">design-tokens.json</code>. Import into your tool of choice via Style Dictionary, Theo, or Tokens Studio.</div>
+      <table class="token-table">
+        <thead>
+          <tr>
+            <th>Token</th>
+            <th>Value</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="token-name">color.brand.purple.300</td><td class="token-val">#BB85FF</td><td>Primary brand purple — CTAs, highlights</td></tr>
+          <tr><td class="token-name">color.brand.teal.300</td><td class="token-val">#5EEAD4</td><td>Yield & success signal</td></tr>
+          <tr><td class="token-name">color.neutral.850</td><td class="token-val">#14131F</td><td>App background</td></tr>
+          <tr><td class="token-name">color.neutral.800</td><td class="token-val">#1C1B2E</td><td>Card surface</td></tr>
+          <tr><td class="token-name">color.neutral.100</td><td class="token-val">#F0EDE4</td><td>Primary text (cream)</td></tr>
+          <tr><td class="token-name">color.semantic.success.default</td><td class="token-val">#22C55E</td><td>Positive yield, confirmations</td></tr>
+          <tr><td class="token-name">typography.fontFamily.display</td><td class="token-val">Crimson Pro, Georgia, serif</td><td>Headlines & display text</td></tr>
+          <tr><td class="token-name">typography.fontFamily.body</td><td class="token-val">DM Sans, -apple-system, sans-serif</td><td>All UI text</td></tr>
+          <tr><td class="token-name">typography.fontFamily.mono</td><td class="token-val">JetBrains Mono, Fira Code, monospace</td><td>Numbers, addresses</td></tr>
+          <tr><td class="token-name">borderRadius.2xl</td><td class="token-val">24px</td><td>Default card radius</td></tr>
+          <tr><td class="token-name">borderRadius.full</td><td class="token-val">9999px</td><td>Button pill shape</td></tr>
+          <tr><td class="token-name">shadow.purpleGlow</td><td class="token-val">0 0 0 1px rgba(187,133,255,0.3)…</td><td>Active brand element glow</td></tr>
+          <tr><td class="token-name">motion.duration.normal</td><td class="token-val">200ms</td><td>Default transition duration</td></tr>
+          <tr><td class="token-name">motion.easing.spring</td><td class="token-val">cubic-bezier(0.34, 1.56, 0.64, 1)</td><td>Interactive spring feedback</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</main>
+</div>
+
+<script>
+// Sidebar active link
+document.querySelectorAll('.nav-item').forEach(link => {
+  link.addEventListener('click', () => {
+    document.querySelectorAll('.nav-item').forEach(l => l.classList.remove('active'));
+    link.classList.add('active');
+  });
+});
+
+// Scroll spy
+const ids = ['overview','colors','typography','spacing','radius','shadow','motion','buttons','badges','inputs','cards','progress','voice','gradients','tokens-ref'];
+window.addEventListener('scroll', () => {
+  for (let i = ids.length - 1; i >= 0; i--) {
+    const el = document.getElementById(ids[i]);
+    if (el && el.getBoundingClientRect().top <= 120) {
+      document.querySelectorAll('.nav-item').forEach(l => l.classList.remove('active'));
+      const active = document.querySelector(`.nav-item[href="#${ids[i]}"]`);
+      if (active) active.classList.add('active');
+      break;
+    }
+  }
+});
+
+// Copy hex on swatch click
+document.querySelectorAll('.swatch-block').forEach(el => {
+  el.addEventListener('click', () => {
+    const hex = el.dataset.hex;
+    if (hex) navigator.clipboard.writeText(hex).then(() => {
+      const orig = el.style.outline;
+      el.style.outline = '2px solid #BB85FF';
+      setTimeout(() => el.style.outline = orig, 800);
+    });
+  });
+});
+</script>
+</body>
+</html>

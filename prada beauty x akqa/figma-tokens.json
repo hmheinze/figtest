@@ -1,0 +1,1577 @@
+{
+  "primitives": {
+    "color": {
+      "neutral": {
+        "50": {
+          "$type": "color",
+          "$value": "#FFFFFF",
+          "$description": "W01 Bianco"
+        },
+        "75": {
+          "$type": "color",
+          "$value": "#F7F7F7",
+          "$description": "Wild Sand (live prada.com \u2014 soft surface fill). Source: Figma 535:6303."
+        },
+        "100": {
+          "$type": "color",
+          "$value": "#F4F5F7",
+          "$description": "G06 Ghiaccio"
+        },
+        "125": {
+          "$type": "color",
+          "$value": "#F3F3F7",
+          "$description": "Athens Gray (live prada.com \u2014 alternate light surface). Source: Figma 535:6303."
+        },
+        "175": {
+          "$type": "color",
+          "$value": "#EBEBED",
+          "$description": "Live prada.com hairline weight. Source: Figma 535:6303 (color/grey/93)."
+        },
+        "200": {
+          "$type": "color",
+          "$value": "#E0E0E0",
+          "$description": "G05 Perla"
+        },
+        "250": {
+          "$type": "color",
+          "$value": "#D9DCE0",
+          "$description": "Iron (live prada.com \u2014 dividers and input borders). Source: Figma 535:6303."
+        },
+        "300": {
+          "$type": "color",
+          "$value": "#D8D8D8",
+          "$description": "G04 Fumo"
+        },
+        "400": {
+          "$type": "color",
+          "$value": "#CCCCCC",
+          "$description": "G03 Pietra"
+        },
+        "500": {
+          "$type": "color",
+          "$value": "#BCBCBD",
+          "$description": "G02 Cenere"
+        },
+        "550": {
+          "$type": "color",
+          "$value": "#949494",
+          "$description": "Dusty Gray (live prada.com \u2014 placeholder text). 3.03:1 on white \u2014 passes AA Large only. Use 580 for body-sized helper copy. Source: Figma 535:6303."
+        },
+        "580": {
+          "$type": "color",
+          "$value": "#6F6F6F",
+          "$description": "AA counterpart of 550. 4.73:1 on white \u2014 passes WCAG AA for body text. Added during AA review; no existing colour style was modified."
+        },
+        "600": {
+          "$type": "color",
+          "$value": "#696969",
+          "$description": "G01 Grafite"
+        },
+        "650": {
+          "$type": "color",
+          "$value": "#4E555A",
+          "$description": "Abbey (live prada.com \u2014 supporting body copy and link colour). 7.58:1 on white \u2014 AAA pass. Source: Figma 535:6303."
+        },
+        "700": {
+          "$type": "color",
+          "$value": "#454437",
+          "$description": "K04 Tabacco"
+        },
+        "800": {
+          "$type": "color",
+          "$value": "#333333",
+          "$description": "K03 Carbone"
+        },
+        "900": {
+          "$type": "color",
+          "$value": "#202020",
+          "$description": "K02 Ombra"
+        },
+        "920": {
+          "$type": "color",
+          "$value": "#191B1C",
+          "$description": "Woodsmoke (live prada.com \u2014 near-black). Source: Figma 535:6303."
+        },
+        "940": {
+          "$type": "color",
+          "$value": "#0B051D",
+          "$description": "Violet (live prada.com \u2014 deepest dark background tint). Source: Figma 535:6303."
+        },
+        "950": {
+          "$type": "color",
+          "$value": "#000000",
+          "$description": "K01 Nero"
+        }
+      },
+      "red": {
+        "50": {
+          "$type": "color",
+          "$value": "#FFEDE9"
+        },
+        "100": {
+          "$type": "color",
+          "$value": "#FFD9D2"
+        },
+        "200": {
+          "$type": "color",
+          "$value": "#FFB7AB"
+        },
+        "300": {
+          "$type": "color",
+          "$value": "#FF8F82"
+        },
+        "400": {
+          "$type": "color",
+          "$value": "#F6675B"
+        },
+        "500": {
+          "$type": "color",
+          "$value": "#DB423A"
+        },
+        "600": {
+          "$type": "color",
+          "$value": "#AB000D"
+        },
+        "700": {
+          "$type": "color",
+          "$value": "#8F1615"
+        },
+        "800": {
+          "$type": "color",
+          "$value": "#610C0B"
+        },
+        "900": {
+          "$type": "color",
+          "$value": "#370504"
+        }
+      },
+      "yellow": {
+        "50": {
+          "$type": "color",
+          "$value": "#FBF5E2"
+        },
+        "100": {
+          "$type": "color",
+          "$value": "#FEDA64"
+        },
+        "200": {
+          "$type": "color",
+          "$value": "#E3D096"
+        },
+        "300": {
+          "$type": "color",
+          "$value": "#D0B560"
+        },
+        "400": {
+          "$type": "color",
+          "$value": "#B8981F"
+        },
+        "500": {
+          "$type": "color",
+          "$value": "#9E7C00"
+        },
+        "600": {
+          "$type": "color",
+          "$value": "#816200"
+        },
+        "700": {
+          "$type": "color",
+          "$value": "#634900"
+        },
+        "800": {
+          "$type": "color",
+          "$value": "#433000"
+        },
+        "900": {
+          "$type": "color",
+          "$value": "#241900"
+        }
+      },
+      "blue": {
+        "50": {
+          "$type": "color",
+          "$value": "#F1F6F9"
+        },
+        "100": {
+          "$type": "color",
+          "$value": "#CCE4F6"
+        },
+        "200": {
+          "$type": "color",
+          "$value": "#C6D3DD"
+        },
+        "300": {
+          "$type": "color",
+          "$value": "#A8BAC8"
+        },
+        "400": {
+          "$type": "color",
+          "$value": "#899FAE"
+        },
+        "500": {
+          "$type": "color",
+          "$value": "#6E8394"
+        },
+        "600": {
+          "$type": "color",
+          "$value": "#556978"
+        },
+        "700": {
+          "$type": "color",
+          "$value": "#3F4F5C"
+        },
+        "800": {
+          "$type": "color",
+          "$value": "#29353D"
+        },
+        "900": {
+          "$type": "color",
+          "$value": "#141C21"
+        }
+      },
+      "green": {
+        "50": {
+          "$type": "color",
+          "$value": "#E7FCE5"
+        },
+        "100": {
+          "$type": "color",
+          "$value": "#DEEBC9"
+        },
+        "200": {
+          "$type": "color",
+          "$value": "#CFDCB7"
+        },
+        "300": {
+          "$type": "color",
+          "$value": "#73D16C"
+        },
+        "400": {
+          "$type": "color",
+          "$value": "#3EB839"
+        },
+        "500": {
+          "$type": "color",
+          "$value": "#10A70D"
+        },
+        "600": {
+          "$type": "color",
+          "$value": "#007F00"
+        },
+        "700": {
+          "$type": "color",
+          "$value": "#006200"
+        },
+        "800": {
+          "$type": "color",
+          "$value": "#004100"
+        },
+        "900": {
+          "$type": "color",
+          "$value": "#002400"
+        }
+      },
+      "lilac": {
+        "50": {
+          "$type": "color",
+          "$value": "#F7F4F7"
+        },
+        "100": {
+          "$type": "color",
+          "$value": "#ECE5EB"
+        },
+        "200": {
+          "$type": "color",
+          "$value": "#E5D1E2"
+        },
+        "300": {
+          "$type": "color",
+          "$value": "#C1B2BF"
+        },
+        "400": {
+          "$type": "color",
+          "$value": "#A795A4"
+        },
+        "500": {
+          "$type": "color",
+          "$value": "#8C7A89"
+        },
+        "600": {
+          "$type": "color",
+          "$value": "#71606E"
+        },
+        "700": {
+          "$type": "color",
+          "$value": "#564854"
+        },
+        "800": {
+          "$type": "color",
+          "$value": "#392F38"
+        },
+        "900": {
+          "$type": "color",
+          "$value": "#1E181D"
+        }
+      },
+      "brown": {
+        "50": {
+          "$type": "color",
+          "$value": "#FAF3F1"
+        },
+        "100": {
+          "$type": "color",
+          "$value": "#F1E5E0"
+        },
+        "200": {
+          "$type": "color",
+          "$value": "#E0CCC5"
+        },
+        "300": {
+          "$type": "color",
+          "$value": "#CCB1A6"
+        },
+        "400": {
+          "$type": "color",
+          "$value": "#B39487"
+        },
+        "500": {
+          "$type": "color",
+          "$value": "#98786B"
+        },
+        "600": {
+          "$type": "color",
+          "$value": "#75574B"
+        },
+        "700": {
+          "$type": "color",
+          "$value": "#5F473D"
+        },
+        "800": {
+          "$type": "color",
+          "$value": "#3F2E28"
+        },
+        "900": {
+          "$type": "color",
+          "$value": "#221814"
+        }
+      },
+      "nude": {
+        "50": {
+          "$type": "color",
+          "$value": "#FAF4EF"
+        },
+        "100": {
+          "$type": "color",
+          "$value": "#F0E6DE"
+        },
+        "200": {
+          "$type": "color",
+          "$value": "#DFCDC0"
+        },
+        "300": {
+          "$type": "color",
+          "$value": "#DCBDA5"
+        },
+        "400": {
+          "$type": "color",
+          "$value": "#B19580"
+        },
+        "500": {
+          "$type": "color",
+          "$value": "#967A63"
+        },
+        "600": {
+          "$type": "color",
+          "$value": "#7A604C"
+        },
+        "700": {
+          "$type": "color",
+          "$value": "#5E4837"
+        },
+        "800": {
+          "$type": "color",
+          "$value": "#3E2F23"
+        },
+        "900": {
+          "$type": "color",
+          "$value": "#221811"
+        }
+      },
+      "shade": {
+        "dark": {
+          "1": {
+            "$type": "color",
+            "$value": "#502720"
+          },
+          "2": {
+            "$type": "color",
+            "$value": "#583B35"
+          },
+          "3": {
+            "$type": "color",
+            "$value": "#62423D"
+          },
+          "4": {
+            "$type": "color",
+            "$value": "#663F29"
+          },
+          "5": {
+            "$type": "color",
+            "$value": "#684C44"
+          },
+          "6": {
+            "$type": "color",
+            "$value": "#75574B"
+          }
+        },
+        "mid": {
+          "1": {
+            "$type": "color",
+            "$value": "#7E3B31"
+          },
+          "2": {
+            "$type": "color",
+            "$value": "#8A6759"
+          },
+          "3": {
+            "$type": "color",
+            "$value": "#9C7764"
+          },
+          "4": {
+            "$type": "color",
+            "$value": "#9D4B3C"
+          },
+          "5": {
+            "$type": "color",
+            "$value": "#A88567"
+          },
+          "6": {
+            "$type": "color",
+            "$value": "#AC5949"
+          },
+          "7": {
+            "$type": "color",
+            "$value": "#B49077"
+          }
+        },
+        "nude": {
+          "1": {
+            "$type": "color",
+            "$value": "#BF8F75"
+          },
+          "2": {
+            "$type": "color",
+            "$value": "#C09E83"
+          },
+          "3": {
+            "$type": "color",
+            "$value": "#C7A48B"
+          },
+          "4": {
+            "$type": "color",
+            "$value": "#D9B79F"
+          },
+          "5": {
+            "$type": "color",
+            "$value": "#DCBDA5"
+          },
+          "6": {
+            "$type": "color",
+            "$value": "#E0C7B7"
+          },
+          "7": {
+            "$type": "color",
+            "$value": "#E5C7BB"
+          },
+          "8": {
+            "$type": "color",
+            "$value": "#E9BEA2"
+          },
+          "9": {
+            "$type": "color",
+            "$value": "#ECDBC1"
+          },
+          "10": {
+            "$type": "color",
+            "$value": "#F4E4DA"
+          }
+        }
+      }
+    }
+  },
+  "semantic": {
+    "brand": {
+      "k01-nero": {
+        "$type": "color",
+        "$value": "{color.neutral.950}",
+        "$description": "Brand black \u2014 K01 Nero"
+      },
+      "k02-ombra": {
+        "$type": "color",
+        "$value": "{color.neutral.900}",
+        "$description": "Brand off-black \u2014 K02 Ombra"
+      },
+      "k03-carbone": {
+        "$type": "color",
+        "$value": "{color.neutral.800}",
+        "$description": "Brand charcoal \u2014 K03 Carbone"
+      },
+      "k04-tabacco": {
+        "$type": "color",
+        "$value": "{color.neutral.700}",
+        "$description": "Brand warm dark \u2014 K04 Tabacco"
+      },
+      "g01-grafite": {
+        "$type": "color",
+        "$value": "{color.neutral.600}",
+        "$description": "Brand graphite \u2014 G01 Grafite"
+      },
+      "g02-cenere": {
+        "$type": "color",
+        "$value": "{color.neutral.500}",
+        "$description": "Brand ash \u2014 G02 Cenere"
+      },
+      "g03-pietra": {
+        "$type": "color",
+        "$value": "{color.neutral.400}",
+        "$description": "Brand stone \u2014 G03 Pietra"
+      },
+      "g04-fumo": {
+        "$type": "color",
+        "$value": "{color.neutral.300}",
+        "$description": "Brand smoke \u2014 G04 Fumo"
+      },
+      "g05-perla": {
+        "$type": "color",
+        "$value": "{color.neutral.200}",
+        "$description": "Brand pearl \u2014 G05 Perla"
+      },
+      "g06-ghiaccio": {
+        "$type": "color",
+        "$value": "{color.neutral.100}",
+        "$description": "Brand ice \u2014 G06 Ghiaccio"
+      },
+      "w01-bianco": {
+        "$type": "color",
+        "$value": "{color.neutral.50}",
+        "$description": "Brand white \u2014 W01 Bianco"
+      },
+      "fuoco": {
+        "$type": "color",
+        "$value": "{color.red.600}",
+        "$description": "Brand red \u2014 Fuoco #AB000D"
+      },
+      "soleil": {
+        "$type": "color",
+        "$value": "{color.yellow.100}",
+        "$description": "Brand yellow \u2014 Soleil #FEDA64"
+      },
+      "ciel": {
+        "$type": "color",
+        "$value": "{color.blue.100}",
+        "$description": "Brand blue \u2014 Ciel #CCE4F6"
+      },
+      "verde": {
+        "$type": "color",
+        "$value": "{color.green.500}",
+        "$description": "Brand green \u2014 Verde #10A70D"
+      },
+      "salvia": {
+        "$type": "color",
+        "$value": "{color.green.200}",
+        "$description": "Brand sage \u2014 Salvia #CFDCB7"
+      },
+      "menta": {
+        "$type": "color",
+        "$value": "{color.green.100}",
+        "$description": "Brand mint \u2014 Menta #DEEBC9"
+      },
+      "lilac": {
+        "$type": "color",
+        "$value": "{color.lilac.200}",
+        "$description": "Brand lilac \u2014 Lilac #E5D1E2"
+      }
+    },
+    "alias": {
+      "primary": {
+        "default": {
+          "$type": "color",
+          "$value": "{color.neutral.950}",
+          "$description": "Primary CTA fill"
+        },
+        "hover": {
+          "$type": "color",
+          "$value": "{color.neutral.900}",
+          "$description": "Primary CTA hover"
+        },
+        "pressed": {
+          "$type": "color",
+          "$value": "{color.neutral.800}",
+          "$description": "Primary CTA pressed"
+        },
+        "on": {
+          "$type": "color",
+          "$value": "{color.neutral.50}",
+          "$description": "Label on primary CTA"
+        },
+        "subtle": {
+          "$type": "color",
+          "$value": "{color.neutral.100}",
+          "$description": "Quiet primary surface"
+        },
+        "subtle-on": {
+          "$type": "color",
+          "$value": "{color.neutral.950}",
+          "$description": "Text on quiet primary surface"
+        }
+      },
+      "secondary": {
+        "default": {
+          "$type": "color",
+          "$value": "{color.neutral.50}",
+          "$description": "Ghost button background"
+        },
+        "hover": {
+          "$type": "color",
+          "$value": "{color.neutral.100}",
+          "$description": "Ghost hover background"
+        },
+        "pressed": {
+          "$type": "color",
+          "$value": "{color.neutral.200}",
+          "$description": "Ghost pressed background"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{color.neutral.950}",
+          "$description": "Ghost button outline"
+        },
+        "on": {
+          "$type": "color",
+          "$value": "{color.neutral.950}",
+          "$description": "Ghost button label"
+        }
+      },
+      "disabled": {
+        "background": {
+          "$type": "color",
+          "$value": "{color.neutral.100}",
+          "$description": "Disabled control surface"
+        },
+        "foreground": {
+          "$type": "color",
+          "$value": "{color.neutral.500}",
+          "$description": "Disabled label / icon"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{color.neutral.300}",
+          "$description": "Disabled outline"
+        }
+      },
+      "error": {
+        "default": {
+          "$type": "color",
+          "$value": "{color.red.600}",
+          "$description": "Error fill \u2014 7.67:1 on white"
+        },
+        "hover": {
+          "$type": "color",
+          "$value": "{color.red.700}",
+          "$description": "Error fill hover"
+        },
+        "subtle": {
+          "$type": "color",
+          "$value": "{color.red.50}",
+          "$description": "Error banner surface"
+        },
+        "on": {
+          "$type": "color",
+          "$value": "{color.neutral.50}",
+          "$description": "Text on error fill"
+        },
+        "on-subtle": {
+          "$type": "color",
+          "$value": "{color.red.700}",
+          "$description": "Text on error subtle surface"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{color.red.600}",
+          "$description": "Error border / required field"
+        }
+      },
+      "success": {
+        "default": {
+          "$type": "color",
+          "$value": "{color.green.600}",
+          "$description": "Success fill \u2014 5.2:1 on white"
+        },
+        "hover": {
+          "$type": "color",
+          "$value": "{color.green.700}",
+          "$description": "Success fill hover"
+        },
+        "subtle": {
+          "$type": "color",
+          "$value": "{color.green.100}",
+          "$description": "Success banner surface (brand Menta)"
+        },
+        "on": {
+          "$type": "color",
+          "$value": "{color.neutral.50}",
+          "$description": "Text on success fill"
+        },
+        "on-subtle": {
+          "$type": "color",
+          "$value": "{color.green.700}",
+          "$description": "Text on success subtle surface"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{color.green.600}",
+          "$description": "Success border"
+        }
+      },
+      "information": {
+        "default": {
+          "$type": "color",
+          "$value": "{color.blue.700}",
+          "$description": "Info fill \u2014 8.45:1 on white"
+        },
+        "hover": {
+          "$type": "color",
+          "$value": "{color.blue.800}",
+          "$description": "Info fill hover"
+        },
+        "subtle": {
+          "$type": "color",
+          "$value": "{color.blue.100}",
+          "$description": "Info banner surface (brand Ciel)"
+        },
+        "on": {
+          "$type": "color",
+          "$value": "{color.neutral.50}",
+          "$description": "Text on info fill"
+        },
+        "on-subtle": {
+          "$type": "color",
+          "$value": "{color.blue.800}",
+          "$description": "Text on info subtle surface"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{color.blue.700}",
+          "$description": "Info border"
+        }
+      },
+      "warning": {
+        "default": {
+          "$type": "color",
+          "$value": "{color.yellow.700}",
+          "$description": "Warning fill \u2014 8.46:1 on white"
+        },
+        "hover": {
+          "$type": "color",
+          "$value": "{color.yellow.800}",
+          "$description": "Warning fill hover"
+        },
+        "subtle": {
+          "$type": "color",
+          "$value": "{color.yellow.100}",
+          "$description": "Warning surface (brand Soleil)"
+        },
+        "on": {
+          "$type": "color",
+          "$value": "{color.neutral.50}",
+          "$description": "Text on warning fill"
+        },
+        "on-subtle": {
+          "$type": "color",
+          "$value": "{color.yellow.800}",
+          "$description": "Text on warning subtle surface"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{color.yellow.700}",
+          "$description": "Warning border"
+        }
+      },
+      "promo": {
+        "default": {
+          "$type": "color",
+          "$value": "{color.lilac.700}",
+          "$description": "Promo fill \u2014 AAA on white"
+        },
+        "subtle": {
+          "$type": "color",
+          "$value": "{color.lilac.200}",
+          "$description": "Promo surface (brand Lilac)"
+        },
+        "on": {
+          "$type": "color",
+          "$value": "{color.neutral.50}",
+          "$description": "Text on promo fill"
+        },
+        "on-subtle": {
+          "$type": "color",
+          "$value": "{color.lilac.800}",
+          "$description": "Text on promo subtle surface"
+        }
+      }
+    }
+  },
+  "mapped": {
+    "background": {
+      "page": {
+        "$type": "color",
+        "$value": "{color.neutral.50}",
+        "$description": "PDP page background \u2014 #FFFFFF (W01 Bianco). Source: Figma 535:6303."
+      },
+      "surface": {
+        "$type": "color",
+        "$value": "{color.neutral.75}",
+        "$description": "PDP product-imagery panel fill \u2014 #F7F7F7 (Wild Sand). Source: Figma 535:6303."
+      }
+    },
+    "text": {
+      "primary": {
+        "$type": "color",
+        "$value": "{color.neutral.950}",
+        "$description": "PDP product title (H1) and primary body copy \u2014 #000000 (K01 Nero). Source: Figma 535:6303."
+      },
+      "secondary": {
+        "$type": "color",
+        "$value": "{color.neutral.650}",
+        "$description": "Supporting copy below product title \u2014 #4E555A (Abbey). Source: Figma 535:6303."
+      },
+      "tertiary": {
+        "$type": "color",
+        "$value": "{color.neutral.580}",
+        "$description": "Helper / meta text \u2014 #6F6F6F (AA counterpart of Dusty Gray). 4.73:1 on white. Live hex #949494 preserved at neutral.550 for large-UI use."
+      },
+      "on-dark": {
+        "$type": "color",
+        "$value": "{color.neutral.50}",
+        "$description": "Label on dark CTA \u2014 #FFFFFF (W01 Bianco). Source: Figma 535:6303."
+      },
+      "link": {
+        "$type": "color",
+        "$value": "{color.neutral.650}",
+        "$description": "Inline links and accordion triggers \u2014 #4E555A (Abbey). Source: Figma 535:6303."
+      },
+      "availability": {
+        "$type": "color",
+        "$value": "{color.neutral.950}",
+        "$description": "Size / availability confirmation copy (\"The size you selected is available\") \u2014 #000000. Source: live PDP text."
+      }
+    },
+    "border": {
+      "subtle": {
+        "$type": "color",
+        "$value": "{color.neutral.250}",
+        "$description": "Hairline dividers between PDP accordion sections \u2014 #D9DCE0 (Iron). Source: Figma 535:6303."
+      },
+      "input": {
+        "$type": "color",
+        "$value": "{color.neutral.250}",
+        "$description": "Border on the personalization / notify-me / size selector input \u2014 #D9DCE0 (Iron). Source: Figma 535:6303."
+      }
+    },
+    "interactive": {
+      "primary-bg": {
+        "$type": "color",
+        "$value": "{color.neutral.950}",
+        "$description": "PDP primary CTA fill (Add to shopping bag) \u2014 #000000 (K01 Nero). Source: Figma 535:6303."
+      },
+      "primary-text": {
+        "$type": "color",
+        "$value": "{color.neutral.50}",
+        "$description": "Label on PDP primary CTA \u2014 #FFFFFF (W01 Bianco). Source: Figma 535:6303."
+      },
+      "secondary-text": {
+        "$type": "color",
+        "$value": "{color.neutral.950}",
+        "$description": "Text-style secondary action (Start personalization) \u2014 #000000. Source: Figma 535:6303."
+      },
+      "tertiary-link": {
+        "$type": "color",
+        "$value": "{color.neutral.650}",
+        "$description": "Plain text links beneath CTA (Find in store, Shop refill, Notify me when available) \u2014 #4E555A (Abbey). Source: live PDP text + Figma 535:6303."
+      }
+    },
+    "input": {
+      "background": {
+        "$type": "color",
+        "$value": "{color.neutral.50}",
+        "$description": "Personalization / notify-me / size selector input fill \u2014 #FFFFFF. Source: Figma 535:6303."
+      },
+      "placeholder": {
+        "$type": "color",
+        "$value": "{color.neutral.550}",
+        "$description": "Placeholder text inside PDP input fields \u2014 #949494 (Dusty Gray). Placeholders are large-UI by WCAG; AA Large pass at 3.03:1. Source: Figma 535:6303."
+      },
+      "border": {
+        "$type": "color",
+        "$value": "{color.neutral.250}",
+        "$description": "Input field border \u2014 #D9DCE0 (Iron). Source: Figma 535:6303."
+      }
+    }
+  },
+  "typography": {
+    "$description": "Three-tier typography for Prada Beauty x AKQA. Primitives \u2192 semantic \u2192 component. Values mirror the live PDP type styles captured in Figma 535:6303 (prada/Semantic/* and www.prada.com/Semantic/*). Sizes in rem (1rem = 16px) so web translates directly; px equivalents in $description for native iOS/Android sp/dp mapping.",
+    "typography": {
+      "primitives": {
+        "$description": "Tier 1 \u2014 raw values. No semantic meaning. Use only inside semantic tokens.",
+        "fontFamily": {
+          "primary": {
+            "$type": "fontFamily",
+            "$value": "Inter",
+            "$description": "Brand typeface \u2014 Inter (web + native)."
+          },
+          "fallback": {
+            "$type": "fontFamily",
+            "$value": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Helvetica, Arial, sans-serif",
+            "$description": "System fallback stack for environments where Inter hasn't loaded."
+          }
+        },
+        "fontWeight": {
+          "regular": {
+            "$type": "fontWeight",
+            "$value": "400"
+          },
+          "medium": {
+            "$type": "fontWeight",
+            "$value": "500"
+          },
+          "semibold": {
+            "$type": "fontWeight",
+            "$value": "600"
+          },
+          "bold": {
+            "$type": "fontWeight",
+            "$value": "700"
+          }
+        },
+        "fontSize": {
+          "9": {
+            "$type": "dimension",
+            "$value": "0.588rem",
+            "$description": "9.4px \u2014 prada/Inter/Regular upper (smallest disclaimer)"
+          },
+          "10": {
+            "$type": "dimension",
+            "$value": "0.625rem",
+            "$description": "10px \u2014 www.prada.com/Inter/Regular"
+          },
+          "10-5": {
+            "$type": "dimension",
+            "$value": "0.675rem",
+            "$description": "10.8px \u2014 prada/Semantic/Item upper"
+          },
+          "11": {
+            "$type": "dimension",
+            "$value": "0.6875rem",
+            "$description": "11px \u2014 prada/Semantic/Link upper"
+          },
+          "11-3": {
+            "$type": "dimension",
+            "$value": "0.706rem",
+            "$description": "11.3px \u2014 prada/Semantic/Link"
+          },
+          "11-6": {
+            "$type": "dimension",
+            "$value": "0.725rem",
+            "$description": "11.6px \u2014 prada/Inter/Medium title"
+          },
+          "11-8": {
+            "$type": "dimension",
+            "$value": "0.738rem",
+            "$description": "11.8px \u2014 prada/Semantic/Heading 4 upper"
+          },
+          "12": {
+            "$type": "dimension",
+            "$value": "0.75rem",
+            "$description": "12px \u2014 prada/Inter/Medium upper"
+          },
+          "13-1": {
+            "$type": "dimension",
+            "$value": "0.819rem",
+            "$description": "13.1px \u2014 prada/Semantic/Label"
+          },
+          "13-3": {
+            "$type": "dimension",
+            "$value": "0.831rem",
+            "$description": "13.3px \u2014 prada/Inter/Regular underline"
+          },
+          "13-5": {
+            "$type": "dimension",
+            "$value": "0.844rem",
+            "$description": "13.5px \u2014 prada/Semantic/Heading 3"
+          },
+          "13-7": {
+            "$type": "dimension",
+            "$value": "0.856rem",
+            "$description": "13.7px \u2014 www.prada.com/Semantic/Heading 1"
+          },
+          "14": {
+            "$type": "dimension",
+            "$value": "0.875rem",
+            "$description": "14px \u2014 prada/Semantic/Item + prada/Semantic/Button upper"
+          },
+          "15-1": {
+            "$type": "dimension",
+            "$value": "0.944rem",
+            "$description": "15.1px \u2014 prada/Inter/Regular"
+          },
+          "15-3": {
+            "$type": "dimension",
+            "$value": "0.956rem",
+            "$description": "15.3px \u2014 prada/Inter/Medium"
+          },
+          "15-4": {
+            "$type": "dimension",
+            "$value": "0.963rem",
+            "$description": "15.4px \u2014 www.prada.com/Inter/Medium"
+          },
+          "19-5": {
+            "$type": "dimension",
+            "$value": "1.219rem",
+            "$description": "19.5px \u2014 prada/Semantic/Heading 1"
+          },
+          "23-3": {
+            "$type": "dimension",
+            "$value": "1.456rem",
+            "$description": "23.3px \u2014 prada/Semantic/Heading 2"
+          }
+        },
+        "lineHeight": {
+          "14": {
+            "$type": "dimension",
+            "$value": "0.875rem",
+            "$description": "14px"
+          },
+          "16": {
+            "$type": "dimension",
+            "$value": "1rem",
+            "$description": "16px"
+          },
+          "16-5": {
+            "$type": "dimension",
+            "$value": "1.031rem",
+            "$description": "16.5px"
+          },
+          "18": {
+            "$type": "dimension",
+            "$value": "1.125rem",
+            "$description": "18px"
+          },
+          "20": {
+            "$type": "dimension",
+            "$value": "1.25rem",
+            "$description": "20px"
+          },
+          "21": {
+            "$type": "dimension",
+            "$value": "1.313rem",
+            "$description": "21px"
+          },
+          "22": {
+            "$type": "dimension",
+            "$value": "1.375rem",
+            "$description": "22px"
+          },
+          "24": {
+            "$type": "dimension",
+            "$value": "1.5rem",
+            "$description": "24px"
+          },
+          "28": {
+            "$type": "dimension",
+            "$value": "1.75rem",
+            "$description": "28px"
+          }
+        },
+        "letterSpacing": {
+          "default": {
+            "$type": "dimension",
+            "$value": "0"
+          },
+          "tracked": {
+            "$type": "dimension",
+            "$value": "0.0125em",
+            "$description": "0.2 letter-spacing in Figma (prada/Semantic/*)."
+          }
+        }
+      },
+      "semantic": {
+        "$description": "Tier 2 \u2014 usage tokens. Each composes a primitive set into a re-usable typography object. Component tokens reference these.",
+        "display": {
+          "lg": {
+            "$type": "typography",
+            "$value": {
+              "fontFamily": "{typography.primitives.fontFamily.primary}",
+              "fontWeight": "{typography.primitives.fontWeight.medium}",
+              "fontSize": "{typography.primitives.fontSize.23-3}",
+              "lineHeight": "{typography.primitives.lineHeight.28}",
+              "letterSpacing": "{typography.primitives.letterSpacing.tracked}"
+            },
+            "$description": "Hero / landing heroes. Live PDP Heading 2 (23.3 / 28, Medium, +0.2 tracking)."
+          }
+        },
+        "heading": {
+          "h1": {
+            "$type": "typography",
+            "$value": {
+              "fontFamily": "{typography.primitives.fontFamily.primary}",
+              "fontWeight": "{typography.primitives.fontWeight.medium}",
+              "fontSize": "{typography.primitives.fontSize.19-5}",
+              "lineHeight": "{typography.primitives.lineHeight.24}",
+              "letterSpacing": "{typography.primitives.letterSpacing.tracked}"
+            },
+            "$description": "Page title (PDP product name). Live PDP Heading 1 (19.5 / 24, Medium, +0.2 tracking)."
+          },
+          "h2": {
+            "$type": "typography",
+            "$value": {
+              "fontFamily": "{typography.primitives.fontFamily.primary}",
+              "fontWeight": "{typography.primitives.fontWeight.medium}",
+              "fontSize": "{typography.primitives.fontSize.15-3}",
+              "lineHeight": "{typography.primitives.lineHeight.24}",
+              "letterSpacing": "{typography.primitives.letterSpacing.default}"
+            },
+            "$description": "Section title (accordion header). Live PDP Inter Medium (15.3 / 24)."
+          },
+          "h3": {
+            "$type": "typography",
+            "$value": {
+              "fontFamily": "{typography.primitives.fontFamily.primary}",
+              "fontWeight": "{typography.primitives.fontWeight.medium}",
+              "fontSize": "{typography.primitives.fontSize.13-5}",
+              "lineHeight": "{typography.primitives.lineHeight.18}",
+              "letterSpacing": "{typography.primitives.letterSpacing.default}"
+            },
+            "$description": "Sub-section heading. Live PDP Heading 3 (13.5 / 18, Medium)."
+          },
+          "h4-upper": {
+            "$type": "typography",
+            "$value": {
+              "fontFamily": "{typography.primitives.fontFamily.primary}",
+              "fontWeight": "{typography.primitives.fontWeight.medium}",
+              "fontSize": "{typography.primitives.fontSize.11-8}",
+              "lineHeight": "{typography.primitives.lineHeight.14}",
+              "letterSpacing": "{typography.primitives.letterSpacing.tracked}"
+            },
+            "$description": "Uppercase eyebrow heading (rendered with text-transform: uppercase). Live PDP Heading 4 upper (11.8 / 14, Medium, +0.2 tracking)."
+          }
+        },
+        "body": {
+          "lg": {
+            "$type": "typography",
+            "$value": {
+              "fontFamily": "{typography.primitives.fontFamily.primary}",
+              "fontWeight": "{typography.primitives.fontWeight.regular}",
+              "fontSize": "{typography.primitives.fontSize.15-1}",
+              "lineHeight": "{typography.primitives.lineHeight.22}",
+              "letterSpacing": "{typography.primitives.letterSpacing.default}"
+            },
+            "$description": "Primary body copy. Live PDP Inter Regular (15.1 / 22)."
+          },
+          "md": {
+            "$type": "typography",
+            "$value": {
+              "fontFamily": "{typography.primitives.fontFamily.primary}",
+              "fontWeight": "{typography.primitives.fontWeight.regular}",
+              "fontSize": "{typography.primitives.fontSize.14}",
+              "lineHeight": "{typography.primitives.lineHeight.20}",
+              "letterSpacing": "{typography.primitives.letterSpacing.default}"
+            },
+            "$description": "Default body \u2014 formulation / care benefits. Live PDP Semantic Item (14 / 20)."
+          },
+          "sm": {
+            "$type": "typography",
+            "$value": {
+              "fontFamily": "{typography.primitives.fontFamily.primary}",
+              "fontWeight": "{typography.primitives.fontWeight.regular}",
+              "fontSize": "{typography.primitives.fontSize.13-1}",
+              "lineHeight": "{typography.primitives.lineHeight.18}",
+              "letterSpacing": "{typography.primitives.letterSpacing.default}"
+            },
+            "$description": "Compact body (legal / disclaimer paragraphs). Live PDP Semantic Label (13.1 / 18)."
+          }
+        },
+        "label": {
+          "default": {
+            "$type": "typography",
+            "$value": {
+              "fontFamily": "{typography.primitives.fontFamily.primary}",
+              "fontWeight": "{typography.primitives.fontWeight.regular}",
+              "fontSize": "{typography.primitives.fontSize.13-1}",
+              "lineHeight": "{typography.primitives.lineHeight.18}",
+              "letterSpacing": "{typography.primitives.letterSpacing.default}"
+            },
+            "$description": "Form labels and meta labels. Live PDP Semantic Label."
+          },
+          "small": {
+            "$type": "typography",
+            "$value": {
+              "fontFamily": "{typography.primitives.fontFamily.primary}",
+              "fontWeight": "{typography.primitives.fontWeight.regular}",
+              "fontSize": "{typography.primitives.fontSize.11-3}",
+              "lineHeight": "{typography.primitives.lineHeight.18}",
+              "letterSpacing": "{typography.primitives.letterSpacing.default}"
+            },
+            "$description": "Helper text under labels. Live PDP Semantic Link."
+          }
+        },
+        "button": {
+          "lg": {
+            "$type": "typography",
+            "$value": {
+              "fontFamily": "{typography.primitives.fontFamily.primary}",
+              "fontWeight": "{typography.primitives.fontWeight.medium}",
+              "fontSize": "{typography.primitives.fontSize.14}",
+              "lineHeight": "{typography.primitives.lineHeight.16}",
+              "letterSpacing": "{typography.primitives.letterSpacing.tracked}"
+            },
+            "$description": "Primary CTA \u2014 Add to shopping bag. Live PDP Semantic Button upper (14 / 16, Medium, +0.2 tracking, uppercase)."
+          },
+          "sm": {
+            "$type": "typography",
+            "$value": {
+              "fontFamily": "{typography.primitives.fontFamily.primary}",
+              "fontWeight": "{typography.primitives.fontWeight.medium}",
+              "fontSize": "{typography.primitives.fontSize.12}",
+              "lineHeight": "{typography.primitives.lineHeight.14}",
+              "letterSpacing": "{typography.primitives.letterSpacing.tracked}"
+            },
+            "$description": "Secondary buttons. Live PDP Inter Medium upper (12 / 14, Medium, +0.2 tracking)."
+          }
+        },
+        "link": {
+          "default": {
+            "$type": "typography",
+            "$value": {
+              "fontFamily": "{typography.primitives.fontFamily.primary}",
+              "fontWeight": "{typography.primitives.fontWeight.regular}",
+              "fontSize": "{typography.primitives.fontSize.11-3}",
+              "lineHeight": "{typography.primitives.lineHeight.18}",
+              "letterSpacing": "{typography.primitives.letterSpacing.default}"
+            },
+            "$description": "Inline links \u2014 Find in store, Shop refill, Notify me. Live PDP Semantic Link (11.3 / 18)."
+          },
+          "underline": {
+            "$type": "typography",
+            "$value": {
+              "fontFamily": "{typography.primitives.fontFamily.primary}",
+              "fontWeight": "{typography.primitives.fontWeight.regular}",
+              "fontSize": "{typography.primitives.fontSize.13-3}",
+              "lineHeight": "{typography.primitives.lineHeight.21}",
+              "letterSpacing": "{typography.primitives.letterSpacing.tracked}"
+            },
+            "$description": "Underlined link variant. Live PDP Inter Regular underline (13.3 / 21, +0.2 tracking)."
+          },
+          "upper": {
+            "$type": "typography",
+            "$value": {
+              "fontFamily": "{typography.primitives.fontFamily.primary}",
+              "fontWeight": "{typography.primitives.fontWeight.medium}",
+              "fontSize": "{typography.primitives.fontSize.11}",
+              "lineHeight": "{typography.primitives.lineHeight.16-5}",
+              "letterSpacing": "{typography.primitives.letterSpacing.tracked}"
+            },
+            "$description": "Uppercase link (footer nav). Live PDP Semantic Link upper."
+          }
+        },
+        "eyebrow": {
+          "default": {
+            "$type": "typography",
+            "$value": {
+              "fontFamily": "{typography.primitives.fontFamily.primary}",
+              "fontWeight": "{typography.primitives.fontWeight.medium}",
+              "fontSize": "{typography.primitives.fontSize.10-5}",
+              "lineHeight": "{typography.primitives.lineHeight.16-5}",
+              "letterSpacing": "{typography.primitives.letterSpacing.tracked}"
+            },
+            "$description": "Tiny uppercase category tag (e.g. \"NEW\" / \"EXCLUSIVE\"). Live PDP Semantic Item upper (10.8 / 16.5, Medium, +0.2 tracking)."
+          }
+        },
+        "caption": {
+          "default": {
+            "$type": "typography",
+            "$value": {
+              "fontFamily": "{typography.primitives.fontFamily.primary}",
+              "fontWeight": "{typography.primitives.fontWeight.regular}",
+              "fontSize": "{typography.primitives.fontSize.11-6}",
+              "lineHeight": "{typography.primitives.lineHeight.18}",
+              "letterSpacing": "{typography.primitives.letterSpacing.default}"
+            },
+            "$description": "Product price meta / image captions. Live PDP Inter Medium title (11.6 / 18)."
+          }
+        }
+      },
+      "component": {
+        "$description": "Tier 3 \u2014 component-level overrides. Each component references the semantic tokens. Add new entries here as new components are scoped.",
+        "pdp": {
+          "product-title": {
+            "$type": "typography",
+            "$value": "{typography.semantic.heading.h1}",
+            "$description": "PDP product name H1."
+          },
+          "price": {
+            "$type": "typography",
+            "$value": "{typography.semantic.body.lg}",
+            "$description": "PDP price (\u00a3 52). Defaults to body-lg; can be re-pointed to a price-specific style if needed."
+          },
+          "section-heading": {
+            "$type": "typography",
+            "$value": "{typography.semantic.heading.h2}",
+            "$description": "Accordion headers \u2014 Product details, Free shipping and returns."
+          },
+          "accordion-body": {
+            "$type": "typography",
+            "$value": "{typography.semantic.body.md}",
+            "$description": "Accordion body copy."
+          },
+          "shade-label": {
+            "$type": "typography",
+            "$value": "{typography.semantic.label.default}",
+            "$description": "\"Color: LC10 - LIGHT COOL\" label above shade chips."
+          },
+          "primary-cta": {
+            "$type": "typography",
+            "$value": "{typography.semantic.button.lg}",
+            "$description": "Add to shopping bag button label."
+          },
+          "secondary-action": {
+            "$type": "typography",
+            "$value": "{typography.semantic.link.default}",
+            "$description": "Start personalization / Find in store / Shop refill / Notify me when available."
+          },
+          "breadcrumb": {
+            "$type": "typography",
+            "$value": "{typography.semantic.link.small}",
+            "$description": "Prada / Perfumes and beauty / Beauty / Face."
+          },
+          "input-label": {
+            "$type": "typography",
+            "$value": "{typography.semantic.label.default}",
+            "$description": "Notify-me email label, size selector label."
+          },
+          "input-text": {
+            "$type": "typography",
+            "$value": "{typography.semantic.body.md}",
+            "$description": "Typed value inside notify-me / size selector inputs."
+          }
+        }
+      }
+    }
+  },
+  "spacing": {
+    "$description": "Spacing tokens. Three-tier: primitives (raw px values) \u2192 scale (clean 4px base ladder) \u2192 pdp (live PDP item-spacings captured in Figma 535:6303). Component tokens reference scale or pdp depending on which the layout demands.",
+    "space": {
+      "primitives": {
+        "$description": "Tier 1 \u2014 raw px values. No layout meaning. Used inside scale and pdp tokens.",
+        "0": {
+          "$type": "dimension",
+          "$value": "0px"
+        },
+        "2": {
+          "$type": "dimension",
+          "$value": "2px"
+        },
+        "4": {
+          "$type": "dimension",
+          "$value": "4px"
+        },
+        "8": {
+          "$type": "dimension",
+          "$value": "8px"
+        },
+        "10": {
+          "$type": "dimension",
+          "$value": "10px"
+        },
+        "11": {
+          "$type": "dimension",
+          "$value": "11px"
+        },
+        "12": {
+          "$type": "dimension",
+          "$value": "12px"
+        },
+        "16": {
+          "$type": "dimension",
+          "$value": "16px"
+        },
+        "20": {
+          "$type": "dimension",
+          "$value": "20px"
+        },
+        "24": {
+          "$type": "dimension",
+          "$value": "24px"
+        },
+        "27": {
+          "$type": "dimension",
+          "$value": "27px",
+          "$description": "Live PDP item spacing/27 \u2014 not on the clean scale."
+        },
+        "32": {
+          "$type": "dimension",
+          "$value": "32px"
+        },
+        "40": {
+          "$type": "dimension",
+          "$value": "40px"
+        },
+        "48": {
+          "$type": "dimension",
+          "$value": "48px"
+        },
+        "64": {
+          "$type": "dimension",
+          "$value": "64px"
+        },
+        "80": {
+          "$type": "dimension",
+          "$value": "80px"
+        },
+        "96": {
+          "$type": "dimension",
+          "$value": "96px"
+        },
+        "128": {
+          "$type": "dimension",
+          "$value": "128px"
+        }
+      },
+      "scale": {
+        "$description": "Tier 2 \u2014 clean 4px-base scale. Default usage in new components. Use t-shirt sizes for readability; px-named primitives are the source of truth.",
+        "none": {
+          "$type": "dimension",
+          "$value": "{space.primitives.0}",
+          "$description": "0px"
+        },
+        "px": {
+          "$type": "dimension",
+          "$value": "{space.primitives.2}",
+          "$description": "2px \u2014 hairline offsets"
+        },
+        "xxs": {
+          "$type": "dimension",
+          "$value": "{space.primitives.4}",
+          "$description": "4px"
+        },
+        "xs": {
+          "$type": "dimension",
+          "$value": "{space.primitives.8}",
+          "$description": "8px"
+        },
+        "sm": {
+          "$type": "dimension",
+          "$value": "{space.primitives.12}",
+          "$description": "12px"
+        },
+        "md": {
+          "$type": "dimension",
+          "$value": "{space.primitives.16}",
+          "$description": "16px \u2014 default gutter"
+        },
+        "lg": {
+          "$type": "dimension",
+          "$value": "{space.primitives.24}",
+          "$description": "24px"
+        },
+        "xl": {
+          "$type": "dimension",
+          "$value": "{space.primitives.32}",
+          "$description": "32px"
+        },
+        "2xl": {
+          "$type": "dimension",
+          "$value": "{space.primitives.48}",
+          "$description": "48px \u2014 section spacing"
+        },
+        "3xl": {
+          "$type": "dimension",
+          "$value": "{space.primitives.64}",
+          "$description": "64px"
+        },
+        "4xl": {
+          "$type": "dimension",
+          "$value": "{space.primitives.96}",
+          "$description": "96px"
+        },
+        "5xl": {
+          "$type": "dimension",
+          "$value": "{space.primitives.128}",
+          "$description": "128px \u2014 hero / wide page rhythm"
+        }
+      },
+      "pdp": {
+        "$description": "Tier 2-alt \u2014 live PDP item-spacings captured in Figma 535:6303 (item spacing/xs, /xxs, /s+, /m, /10, /11, /12, /20, /27, /40). References scale.* where values match exactly, primitives.* where they don't.",
+        "xxs": {
+          "$type": "dimension",
+          "$value": "{space.scale.xxs}",
+          "$description": "4px \u2014 Figma item spacing/xxs"
+        },
+        "xs": {
+          "$type": "dimension",
+          "$value": "{space.scale.xs}",
+          "$description": "8px \u2014 Figma item spacing/xs"
+        },
+        "10": {
+          "$type": "dimension",
+          "$value": "{space.primitives.10}",
+          "$description": "10px \u2014 Figma item spacing/10 (off the 4px scale)"
+        },
+        "11": {
+          "$type": "dimension",
+          "$value": "{space.primitives.11}",
+          "$description": "11px \u2014 Figma item spacing/11 (off the 4px scale)"
+        },
+        "12": {
+          "$type": "dimension",
+          "$value": "{space.scale.sm}",
+          "$description": "12px \u2014 Figma item spacing/12"
+        },
+        "20": {
+          "$type": "dimension",
+          "$value": "{space.primitives.20}",
+          "$description": "20px \u2014 Figma item spacing/20 (off the 4px scale)"
+        },
+        "s+": {
+          "$type": "dimension",
+          "$value": "{space.scale.lg}",
+          "$description": "24px \u2014 Figma item spacing/s+"
+        },
+        "27": {
+          "$type": "dimension",
+          "$value": "{space.primitives.27}",
+          "$description": "27px \u2014 Figma item spacing/27 (off the 4px scale, layout-specific)"
+        },
+        "m": {
+          "$type": "dimension",
+          "$value": "{space.scale.xl}",
+          "$description": "32px \u2014 Figma item spacing/m"
+        },
+        "40": {
+          "$type": "dimension",
+          "$value": "{space.primitives.40}",
+          "$description": "40px \u2014 Figma item spacing/40 (between scale.xl 32 and scale.2xl 48; kept on the primitive)"
+        }
+      }
+    }
+  },
+  "$themes": [],
+  "$metadata": {
+    "tokenSetOrder": [
+      "primitives",
+      "semantic",
+      "mapped",
+      "typography",
+      "spacing"
+    ]
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "$themes": [
+    {
+      "id": "scanner",
+      "name": "Scanner",
+      "selectedTokenSets": {
+        "primitive":  "enabled",
+        "colour":     "enabled",
+        "typography": "enabled",
+        "spacing":    "enabled",
+        "motion":     "enabled",
+        "mode/colour/scanner":    "enabled",
+        "mode/type/scanner":      "enabled",
+        "mode/spacing/scanner":   "enabled",
+        "mode/motion/scanner":    "enabled"
+      }
+    },
+    {
+      "id": "editorial",
+      "name": "Editorial (PDP)",
+      "selectedTokenSets": {
+        "primitive":  "enabled",
+        "colour":     "enabled",
+        "typography": "enabled",
+        "spacing":    "enabled",
+        "motion":     "enabled",
+        "mode/colour/light":      "enabled",
+        "mode/spacing/pdp":       "enabled",
+        "mode/motion/editorial":  "enabled"
+      }
+    },
+    {
+      "id": "kiosk",
+      "name": "Kiosk",
+      "selectedTokenSets": {
+        "primitive":  "enabled",
+        "colour":     "enabled",
+        "typography": "enabled",
+        "spacing":    "enabled",
+        "motion":     "enabled",
+        "mode/colour/kiosk":      "enabled",
+        "mode/type/kiosk":        "enabled",
+        "mode/spacing/kiosk":     "enabled",
+        "mode/motion/kiosk":      "enabled"
+      }
+    },
+    {
+      "id": "reduced-motion",
+      "name": "Reduced Motion",
+      "selectedTokenSets": {
+        "primitive":  "enabled",
+        "colour":     "enabled",
+        "typography": "enabled",
+        "spacing":    "enabled",
+        "motion":     "enabled",
+        "mode/motion/reduced-motion": "enabled"
+      },
+      "$description": "Apply via @media (prefers-reduced-motion: reduce)"
+    }
+  ],
+  "$metadata": {
+    "tokenSetOrder": [
+      "primitive",
+      "colour",
+      "typography",
+      "spacing",
+      "motion"
+    ]
+  }
+}

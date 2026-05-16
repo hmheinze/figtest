@@ -1,0 +1,47 @@
+{
+  "$themes": [
+    {
+      "id": "prada-scanner",
+      "name": "Prada Beauty — Scanner",
+      "selectedTokenSets": {
+        "primitive": "enabled",
+        "spacing":   "enabled",
+        "semantic":  "enabled",
+        "density/scanner": "enabled"
+      },
+      "$description": "S0–S4 scanner app. Compact density. Dark surfaces."
+    },
+    {
+      "id": "prada-pdp",
+      "name": "Prada Beauty — PDP",
+      "selectedTokenSets": {
+        "primitive": "enabled",
+        "spacing":   "enabled",
+        "semantic":  "enabled",
+        "density/pdp": "enabled"
+      },
+      "$description": "Product detail pages. Editorial density. Light surfaces."
+    },
+    {
+      "id": "prada-kiosk",
+      "name": "Prada Beauty — Kiosk",
+      "selectedTokenSets": {
+        "primitive": "enabled",
+        "spacing":   "enabled",
+        "semantic":  "enabled",
+        "density/kiosk": "enabled"
+      },
+      "$description": "Retail kiosk. Accessible density. Large touch targets."
+    }
+  ],
+  "$metadata": {
+    "tokenSetOrder": [
+      "primitive",
+      "spacing",
+      "semantic",
+      "density/scanner",
+      "density/pdp",
+      "density/kiosk"
+    ]
+  }
+}

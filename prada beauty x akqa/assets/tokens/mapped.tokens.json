@@ -1,0 +1,97 @@
+{
+  "background": {
+    "page": {
+      "$type": "color",
+      "$value": "{color.neutral.50}",
+      "$description": "PDP page background — #FFFFFF (W01 Bianco). Source: Figma 535:6303."
+    },
+    "surface": {
+      "$type": "color",
+      "$value": "{color.neutral.75}",
+      "$description": "PDP product-imagery panel fill — #F7F7F7 (Wild Sand). Source: Figma 535:6303."
+    }
+  },
+  "text": {
+    "primary": {
+      "$type": "color",
+      "$value": "{color.neutral.950}",
+      "$description": "PDP product title (H1) and primary body copy — #000000 (K01 Nero). Source: Figma 535:6303."
+    },
+    "secondary": {
+      "$type": "color",
+      "$value": "{color.neutral.650}",
+      "$description": "Supporting copy below product title — #4E555A (Abbey). Source: Figma 535:6303."
+    },
+    "tertiary": {
+      "$type": "color",
+      "$value": "{color.neutral.580}",
+      "$description": "Helper / meta text — #6F6F6F (AA counterpart of Dusty Gray). 4.73:1 on white. Live hex #949494 preserved at neutral.550 for large-UI use."
+    },
+    "on-dark": {
+      "$type": "color",
+      "$value": "{color.neutral.50}",
+      "$description": "Label on dark CTA — #FFFFFF (W01 Bianco). Source: Figma 535:6303."
+    },
+    "link": {
+      "$type": "color",
+      "$value": "{color.neutral.650}",
+      "$description": "Inline links and accordion triggers — #4E555A (Abbey). Source: Figma 535:6303."
+    },
+    "availability": {
+      "$type": "color",
+      "$value": "{color.neutral.950}",
+      "$description": "Size / availability confirmation copy (\"The size you selected is available\") — #000000. Source: live PDP text."
+    }
+  },
+  "border": {
+    "subtle": {
+      "$type": "color",
+      "$value": "{color.neutral.250}",
+      "$description": "Hairline dividers between PDP accordion sections — #D9DCE0 (Iron). Source: Figma 535:6303."
+    },
+    "input": {
+      "$type": "color",
+      "$value": "{color.neutral.250}",
+      "$description": "Border on the personalization / notify-me / size selector input — #D9DCE0 (Iron). Source: Figma 535:6303."
+    }
+  },
+  "interactive": {
+    "primary-bg": {
+      "$type": "color",
+      "$value": "{color.neutral.950}",
+      "$description": "PDP primary CTA fill (Add to shopping bag) — #000000 (K01 Nero). Source: Figma 535:6303."
+    },
+    "primary-text": {
+      "$type": "color",
+      "$value": "{color.neutral.50}",
+      "$description": "Label on PDP primary CTA — #FFFFFF (W01 Bianco). Source: Figma 535:6303."
+    },
+    "secondary-text": {
+      "$type": "color",
+      "$value": "{color.neutral.950}",
+      "$description": "Text-style secondary action (Start personalization) — #000000. Source: Figma 535:6303."
+    },
+    "tertiary-link": {
+      "$type": "color",
+      "$value": "{color.neutral.650}",
+      "$description": "Plain text links beneath CTA (Find in store, Shop refill, Notify me when available) — #4E555A (Abbey). Source: live PDP text + Figma 535:6303."
+    }
+  },
+  "input": {
+    "background": {
+      "$type": "color",
+      "$value": "{color.neutral.50}",
+      "$description": "Personalization / notify-me / size selector input fill — #FFFFFF. Source: Figma 535:6303."
+    },
+    "placeholder": {
+      "$type": "color",
+      "$value": "{color.neutral.550}",
+      "$description": "Placeholder text inside PDP input fields — #949494 (Dusty Gray). Placeholders are large-UI by WCAG; AA Large pass at 3.03:1. Source: Figma 535:6303."
+    },
+    "border": {
+      "$type": "color",
+      "$value": "{color.neutral.250}",
+      "$description": "Input field border — #D9DCE0 (Iron). Source: Figma 535:6303."
+    }
+  }
+}

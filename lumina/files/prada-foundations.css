@@ -1,0 +1,406 @@
+/*
+ * prada-foundations.css
+ * Prada Beauty — Design System Foundations
+ * Adapted to Prada Beauty brand language + AKQA × R/GA system standards
+ *
+ * Architecture: Primitive → Semantic → Component
+ * Font: Source Sans 3 (confirmed from Figma source)
+ *       → Replace with GT-America in production
+ * Anchored to: prada.com computed styles + Figma node values (lQBItHjmi8XpCLZZoZHnn4)
+ *
+ * File: prada-foundations (standalone library)
+ * Consumed by: prada-components, prada-scanner, prada-pdp-redesign
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap');
+
+
+/* ═══════════════════════════════════════════════════════════════
+   LAYER 1 — PRIMITIVES
+   Never reference in component CSS. Feed into semantics only.
+   ═══════════════════════════════════════════════════════════════ */
+:root {
+
+  /* ── Font ──────────────────────────────────────────────────── */
+  --primitive-font-primary: 'Source Sans 3', 'GT-America', sans-serif;
+
+  /* ── Weight ────────────────────────────────────────────────── */
+  --primitive-weight-light:   300;
+  --primitive-weight-regular: 400;
+  --primitive-weight-medium:  500;
+
+  /* ── Size scale (extracted from Figma text nodes) ─────────── */
+  --primitive-size-76: 76px;   /* desktop display-xl */
+  --primitive-size-46: 46px;   /* S0 hero, S3 processing */
+  --primitive-size-44: 44px;   /* S0 desktop heading (node height) */
+  --primitive-size-35: 35px;   /* S1 heading */
+  --primitive-size-34: 34px;   /* S3 heading mobile */
+  --primitive-size-27: 27px;   /* zone scores, env data */
+  --primitive-size-24: 24px;   /* S4 result title */
+  --primitive-size-20: 20px;   /* desktop nav links */
+  --primitive-size-18: 18px;   /* mobile wordmark "Prada Beauty" */
+  --primitive-size-17: 17px;   /* insight rows, channel names */
+  --primitive-size-16: 16px;   /* prada.com body confirmed */
+  --primitive-size-15: 15px;   /* product sub-desc, condition note */
+  --primitive-size-14: 14px;   /* prada.com secondary confirmed */
+  --primitive-size-12: 12px;   /* S0 body light, "Skin Intelligence" */
+  --primitive-size-11: 11px;   /* brand byline */
+  --primitive-size-10: 10px;   /* CTA label, prada.com footer */
+  --primitive-size-9:   9px;   /* nav sub-label "Skin Intelligence" */
+  --primitive-size-8:   8px;   /* sub-eyebrow "MULTI-CHANNEL…" */
+
+  /* ── Line height ───────────────────────────────────────────── */
+  --primitive-lh-tight:   1.05;
+  --primitive-lh-heading: 1.15;
+  --primitive-lh-snug:    1.30;
+  --primitive-lh-base:    1.50;   /* prada.com 24/16 confirmed */
+  --primitive-lh-loose:   1.70;   /* S0 body descriptor */
+
+  /* ── Letter spacing (extracted from Figma computed CSS) ───── */
+  --primitive-ls-tightest: -0.01em;   /* numeric display */
+  --primitive-ls-normal:    0;
+  --primitive-ls-sm:        0.02em;   /* S0 body-light tracking */
+  --primitive-ls-md:        0.08em;   /* standard eyebrow */
+  --primitive-ls-lg:        0.12em;   /* utility / tertiary text */
+  --primitive-ls-xl:        0.16em;   /* sub-eyebrow caps */
+  --primitive-ls-2xl:       0.18em;   /* nav sub-label */
+  --primitive-ls-3xl:       0.20em;   /* CTA button labels */
+  --primitive-ls-wordmark:  0.30em;   /* "Prada Beauty" — confirmed in Figma */
+
+  /* ── Colour primitives ─────────────────────────────────────── */
+  --primitive-black:         #000000;
+  --primitive-ink:           #0A0A0A;
+  --primitive-white:         #FFFFFF;
+  --primitive-off-white:     #F5F4F0;
+  --primitive-stone:         #E8E6E0;
+  --primitive-mid:           #888780;
+  --primitive-muted:         #5F5E5A;
+
+  --primitive-white-65:      rgba(255, 255, 255, 0.65);
+  --primitive-white-45:      rgba(255, 255, 255, 0.45);
+  --primitive-white-40:      rgba(255, 255, 255, 0.40);
+  --primitive-white-35:      rgba(255, 255, 255, 0.35);
+  --primitive-white-30:      rgba(255, 255, 255, 0.30);
+  --primitive-white-18:      rgba(255, 255, 255, 0.18);
+  --primitive-white-12:      rgba(255, 255, 255, 0.12);
+
+  --primitive-black-40:      rgba(0, 0, 0, 0.40);
+  --primitive-black-12:      rgba(0, 0, 0, 0.12);
+  --primitive-black-08:      rgba(0, 0, 0, 0.08);
+
+  --primitive-score-high:    #2D6A4F;
+  --primitive-score-mid:     #8B6914;
+  --primitive-score-low:     #8B2E26;
+
+  /* ── Spacing (4pt base, confirmed against Figma layout) ───── */
+  --primitive-space-1:   4px;
+  --primitive-space-2:   8px;
+  --primitive-space-3:  12px;
+  --primitive-space-4:  16px;
+  --primitive-space-5:  20px;
+  --primitive-space-6:  24px;
+  --primitive-space-7:  32px;
+  --primitive-space-8:  40px;
+  --primitive-space-9:  48px;
+  --primitive-space-10: 64px;
+
+  /* ── Motion durations ──────────────────────────────────────── */
+  --primitive-motion-instant:    80ms;
+  --primitive-motion-fast:      160ms;
+  --primitive-motion-standard:  280ms;
+  --primitive-motion-expressive:480ms;
+  --primitive-motion-deliberate: 700ms;
+
+  /* ── Easing curves ─────────────────────────────────────────── */
+  --primitive-ease-standard:   cubic-bezier(0.4, 0.0, 0.2, 1);
+  --primitive-ease-enter:      cubic-bezier(0.0, 0.0, 0.2, 1);
+  --primitive-ease-exit:       cubic-bezier(0.4, 0.0, 1.0, 1);
+  --primitive-ease-expressive: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   LAYER 2 — SEMANTIC TOKENS
+   Role-named. Components consume only these, never primitives.
+   ═══════════════════════════════════════════════════════════════ */
+:root {
+
+  /* ── Typography semantics ──────────────────────────────────── */
+  --font-primary: var(--primitive-font-primary);
+
+  --type-display-xl-size:    var(--primitive-size-46);
+  --type-display-xl-lh:      var(--primitive-lh-tight);
+  --type-display-xl-weight:  var(--primitive-weight-regular);
+  --type-display-xl-ls:      var(--primitive-ls-normal);
+  /* Note: italic variant uses same size, font-style:italic, opacity 0.45 */
+
+  --type-display-lg-size:    var(--primitive-size-35);
+  --type-display-lg-lh:      var(--primitive-lh-tight);
+  --type-display-lg-weight:  var(--primitive-weight-regular);
+  --type-display-lg-ls:      var(--primitive-ls-normal);
+
+  --type-display-md-size:    var(--primitive-size-34);
+  --type-display-md-lh:      var(--primitive-lh-heading);
+  --type-display-md-weight:  var(--primitive-weight-regular);
+  --type-display-md-ls:      var(--primitive-ls-normal);
+
+  --type-num-size:           var(--primitive-size-27);
+  --type-num-lh:             var(--primitive-lh-heading);
+  --type-num-weight:         var(--primitive-weight-regular);
+  --type-num-ls:             var(--primitive-ls-tightest);
+  /* Note: apply font-variant-numeric: tabular-nums */
+
+  --type-title-size:         var(--primitive-size-24);
+  --type-title-lh:           var(--primitive-lh-heading);
+  --type-title-weight:       var(--primitive-weight-regular);
+  --type-title-ls:           var(--primitive-ls-normal);
+
+  --type-ui-lg-size:         var(--primitive-size-20);
+  --type-ui-lg-lh:           var(--primitive-lh-base);
+  --type-ui-lg-weight:       var(--primitive-weight-regular);
+  --type-ui-lg-ls:           var(--primitive-ls-normal);
+
+  --type-wordmark-size:      var(--primitive-size-12);
+  --type-wordmark-lh:        var(--primitive-lh-base);
+  --type-wordmark-weight:    var(--primitive-weight-regular);
+  --type-wordmark-ls:        var(--primitive-ls-wordmark);
+  /* "Prada Beauty" — 12px / ls 0.30em confirmed in Figma CSS output */
+
+  --type-ui-md-size:         var(--primitive-size-17);
+  --type-ui-md-lh:           var(--primitive-lh-snug);
+  --type-ui-md-weight:       var(--primitive-weight-regular);
+  --type-ui-md-ls:           var(--primitive-ls-normal);
+
+  --type-body-size:          var(--primitive-size-16);
+  --type-body-lh:            var(--primitive-lh-base);
+  --type-body-weight:        var(--primitive-weight-regular);
+  --type-body-ls:            var(--primitive-ls-normal);
+  /* prada.com 16px / 400 / 24px confirmed */
+
+  --type-body-light-size:    var(--primitive-size-12);
+  --type-body-light-lh:      var(--primitive-lh-loose);
+  --type-body-light-weight:  var(--primitive-weight-light);
+  --type-body-light-ls:      var(--primitive-ls-sm);
+  /* S0 descriptor — 12px / 300 / 1.70 / opacity 0.40 on dark */
+
+  --type-body-sm-size:       var(--primitive-size-15);
+  --type-body-sm-lh:         var(--primitive-lh-snug);
+  --type-body-sm-weight:     var(--primitive-weight-regular);
+  --type-body-sm-ls:         var(--primitive-ls-normal);
+
+  --type-eyebrow-size:       var(--primitive-size-10);
+  --type-eyebrow-lh:         var(--primitive-lh-base);
+  --type-eyebrow-weight:     var(--primitive-weight-regular);
+  --type-eyebrow-ls:         var(--primitive-ls-3xl);
+  /* CTA labels, section headers — all uppercase */
+
+  --type-meta-size:          var(--primitive-size-9);
+  --type-meta-lh:            var(--primitive-lh-base);
+  --type-meta-weight:        var(--primitive-weight-regular);
+  --type-meta-ls:            var(--primitive-ls-2xl);
+  /* "Skin Intelligence" nav sub-label — confirmed 9px / ls 0.18em */
+
+  --type-caption-size:       var(--primitive-size-8);
+  --type-caption-lh:         var(--primitive-lh-base);
+  --type-caption-weight:     var(--primitive-weight-regular);
+  --type-caption-ls:         var(--primitive-ls-xl);
+  /* "MULTI-CHANNEL LIVE SCANNER" — confirmed 8px / ls 0.16em */
+
+  --type-micro-size:         var(--primitive-size-11);
+  --type-micro-lh:           var(--primitive-lh-snug);
+  --type-micro-weight:       var(--primitive-weight-regular);
+  --type-micro-ls:           var(--primitive-ls-normal);
+
+  --type-nano-size:          var(--primitive-size-10);
+  --type-nano-lh:            var(--primitive-lh-base);
+  --type-nano-weight:        var(--primitive-weight-regular);
+  --type-nano-ls:            var(--primitive-ls-lg);
+
+  /* ── Colour semantics — light mode (S4, PDP) ───────────────── */
+  --color-background:           var(--primitive-off-white);
+  --color-surface:              var(--primitive-white);
+  --color-surface-secondary:    var(--primitive-stone);
+  --color-foreground:           var(--primitive-ink);
+  --color-foreground-muted:     var(--primitive-black-40);
+  --color-border:               var(--primitive-black-08);
+  --color-border-strong:        var(--primitive-black-12);
+
+  /* ── Colour semantics — dark mode (S0, S2, S3, nav) ────────── */
+  --color-background-dark:      var(--primitive-black);
+  --color-surface-dark:         var(--primitive-ink);
+  --color-foreground-dark:      var(--primitive-white);
+  --color-foreground-muted-dark:var(--primitive-white-40);
+  --color-border-dark:          var(--primitive-white-12);
+  --color-border-dark-strong:   var(--primitive-white-18);
+
+  /* ── Colour semantics — accent opacities ───────────────────── */
+  --color-accent-high:          var(--primitive-white-65);   /* crosshair */
+  --color-accent-mid:           var(--primitive-white-45);   /* italic hero */
+  --color-accent-low:           var(--primitive-white-35);   /* eyebrow dark */
+  --color-accent-faint:         var(--primitive-white-30);   /* utility links */
+  --color-btn-secondary-border: var(--primitive-white-18);   /* ghost btn */
+
+  /* ── Colour semantics — score system ──────────────────────── */
+  --color-score-high:           var(--primitive-score-high);
+  --color-score-mid:            var(--primitive-score-mid);
+  --color-score-low:            var(--primitive-score-low);
+
+  /* ── Spacing semantics ─────────────────────────────────────── */
+  --space-hairline:             var(--primitive-space-1);
+  --space-tight:                var(--primitive-space-2);
+  --space-component:            var(--primitive-space-3);
+  --space-section:              var(--primitive-space-4);
+  --space-screen-margin:        var(--primitive-space-5);
+  --space-row:                  var(--primitive-space-6);
+  --space-breathe:              var(--primitive-space-7);
+  --space-hero:                 var(--primitive-space-8);
+  --space-nav:                  var(--primitive-space-9);
+  --space-desktop-margin:       var(--primitive-space-10);
+
+  /* ── Motion semantics ──────────────────────────────────────── */
+  --motion-feedback:            var(--primitive-motion-instant);
+  --motion-state:               var(--primitive-motion-fast);
+  --motion-transition:          var(--primitive-motion-standard);
+  --motion-reveal:              var(--primitive-motion-expressive);
+  --motion-hero:                var(--primitive-motion-deliberate);
+
+  --ease-ui:                    var(--primitive-ease-standard);
+  --ease-enter:                 var(--primitive-ease-enter);
+  --ease-exit:                  var(--primitive-ease-exit);
+  --ease-spring:                var(--primitive-ease-expressive);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   LAYER 3 — RESPONSIVE OVERRIDES
+   Desktop tokens override mobile at 1024px+.
+   ═══════════════════════════════════════════════════════════════ */
+@media (min-width: 1024px) {
+  :root {
+    --type-display-xl-size: var(--primitive-size-76);
+    --type-display-lg-size: var(--primitive-size-46);
+    --type-display-md-size: var(--primitive-size-46);
+    --type-num-size:        var(--primitive-size-35);
+    --type-title-size:      var(--primitive-size-27);
+    --space-screen-margin:  var(--primitive-space-10);
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   LAYER 4 — UTILITY CLASSES
+   Components apply these. Direct semantic token consumption.
+   ═══════════════════════════════════════════════════════════════ */
+
+.type-base {
+  font-family: var(--font-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.type-display-xl {
+  font-size:      var(--type-display-xl-size);
+  line-height:    var(--type-display-xl-lh);
+  font-weight:    var(--type-display-xl-weight);
+  letter-spacing: var(--type-display-xl-ls);
+}
+.type-display-xl-italic {
+  font-size:      var(--type-display-xl-size);
+  line-height:    var(--type-display-xl-lh);
+  font-weight:    var(--type-display-xl-weight);
+  font-style:     italic;
+  opacity:        0.45;
+}
+.type-display-lg {
+  font-size:      var(--type-display-lg-size);
+  line-height:    var(--type-display-lg-lh);
+  font-weight:    var(--type-display-lg-weight);
+  letter-spacing: var(--type-display-lg-ls);
+}
+.type-display-md {
+  font-size:      var(--type-display-md-size);
+  line-height:    var(--type-display-md-lh);
+  font-weight:    var(--type-display-md-weight);
+  letter-spacing: var(--type-display-md-ls);
+}
+.type-num {
+  font-size:             var(--type-num-size);
+  line-height:           var(--type-num-lh);
+  font-weight:           var(--type-num-weight);
+  letter-spacing:        var(--type-num-ls);
+  font-variant-numeric:  tabular-nums;
+}
+.type-title {
+  font-size:      var(--type-title-size);
+  line-height:    var(--type-title-lh);
+  font-weight:    var(--type-title-weight);
+  letter-spacing: var(--type-title-ls);
+}
+.type-ui-lg {
+  font-size:      var(--type-ui-lg-size);
+  line-height:    var(--type-ui-lg-lh);
+  font-weight:    var(--type-ui-lg-weight);
+  letter-spacing: var(--type-ui-lg-ls);
+}
+.type-wordmark {
+  font-size:      var(--type-wordmark-size);
+  line-height:    var(--type-wordmark-lh);
+  font-weight:    var(--type-wordmark-weight);
+  letter-spacing: var(--type-wordmark-ls);
+}
+.type-ui-md {
+  font-size:      var(--type-ui-md-size);
+  line-height:    var(--type-ui-md-lh);
+  font-weight:    var(--type-ui-md-weight);
+  letter-spacing: var(--type-ui-md-ls);
+}
+.type-body {
+  font-size:      var(--type-body-size);
+  line-height:    var(--type-body-lh);
+  font-weight:    var(--type-body-weight);
+  letter-spacing: var(--type-body-ls);
+}
+.type-body-light {
+  font-size:      var(--type-body-light-size);
+  line-height:    var(--type-body-light-lh);
+  font-weight:    var(--type-body-light-weight);
+  letter-spacing: var(--type-body-light-ls);
+}
+.type-body-sm {
+  font-size:      var(--type-body-sm-size);
+  line-height:    var(--type-body-sm-lh);
+  font-weight:    var(--type-body-sm-weight);
+  letter-spacing: var(--type-body-sm-ls);
+}
+.type-eyebrow {
+  font-size:      var(--type-eyebrow-size);
+  line-height:    var(--type-eyebrow-lh);
+  font-weight:    var(--type-eyebrow-weight);
+  letter-spacing: var(--type-eyebrow-ls);
+  text-transform: uppercase;
+}
+.type-meta {
+  font-size:      var(--type-meta-size);
+  line-height:    var(--type-meta-lh);
+  font-weight:    var(--type-meta-weight);
+  letter-spacing: var(--type-meta-ls);
+}
+.type-caption {
+  font-size:      var(--type-caption-size);
+  line-height:    var(--type-caption-lh);
+  font-weight:    var(--type-caption-weight);
+  letter-spacing: var(--type-caption-ls);
+  text-transform: uppercase;
+}
+.type-micro {
+  font-size:      var(--type-micro-size);
+  line-height:    var(--type-micro-lh);
+  font-weight:    var(--type-micro-weight);
+  letter-spacing: var(--type-micro-ls);
+}
+.type-nano {
+  font-size:      var(--type-nano-size);
+  line-height:    var(--type-nano-lh);
+  font-weight:    var(--type-nano-weight);
+  letter-spacing: var(--type-nano-ls);
+}

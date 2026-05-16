@@ -1,0 +1,17 @@
+{
+  "name": "@prada-beauty/design-system",
+  "version": "1.0.0",
+  "description": "Prada Beauty design tokens — single source of truth for web, iOS, Android",
+  "private": true,
+  "scripts": {
+    "build": "style-dictionary build --config style-dictionary.config.js",
+    "build:watch": "nodemon --watch tokens/ --ext json --exec 'npm run build'",
+    "validate": "node scripts/validate-tokens.js",
+    "prepare": "npm run validate && npm run build"
+  },
+  "devDependencies": {
+    "style-dictionary": "^4.0.0",
+    "@tokens-studio/sd-transforms": "^1.0.0",
+    "nodemon": "^3.0.0"
+  }
+}

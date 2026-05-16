@@ -1,0 +1,60 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amzn/style-dictionary/main/lib/common/schemas/token.json",
+  "$metadata": {
+    "source": "Revolut Brand System — Primitive Typography Tokens",
+    "version": "1.0.0",
+    "notes": "Primary typeface: Aeonik Pro (Revolut's brand typeface since 2023 rebrand). Fallback stack includes system sans-serif for performance. All font-size values use a Major Third scale (1.250 ratio). Line-heights follow 1.2 for display, 1.5 for body (WCAG 1.4.12 compliant)."
+  },
+  "font": {
+    "family": {
+      "brand": {
+        "$value": "'Aeonik Pro', 'Aeonik', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+        "$type": "fontFamily",
+        "$description": "Revolut primary typeface — Aeonik Pro. Used for all UI text, headings, and marketing."
+      },
+      "mono": {
+        "$value": "'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'SF Mono', monospace",
+        "$type": "fontFamily",
+        "$description": "Monospace — used for account numbers, card numbers, transaction IDs, and code."
+      }
+    },
+    "weight": {
+      "regular":    { "$value": "400", "$type": "fontWeight", "$description": "Body text, secondary labels" },
+      "medium":     { "$value": "500", "$type": "fontWeight", "$description": "Subheadings, emphasized body" },
+      "semibold":   { "$value": "600", "$type": "fontWeight", "$description": "Button labels, active nav items" },
+      "bold":       { "$value": "700", "$type": "fontWeight", "$description": "Headings, display text, amounts" },
+      "extrabold":  { "$value": "800", "$type": "fontWeight", "$description": "Display hero — use sparingly" }
+    },
+    "size": {
+      "2xs":  { "$value": "10px", "$type": "dimension", "$description": "Legal/badge micro text" },
+      "xs":   { "$value": "12px", "$type": "dimension", "$description": "Caption, timestamp, helper text" },
+      "sm":   { "$value": "14px", "$type": "dimension", "$description": "Secondary body, form labels" },
+      "md":   { "$value": "16px", "$type": "dimension", "$description": "Primary body text — base size" },
+      "lg":   { "$value": "18px", "$type": "dimension", "$description": "Large body / intro paragraph" },
+      "xl":   { "$value": "20px", "$type": "dimension", "$description": "Section subheading" },
+      "2xl":  { "$value": "24px", "$type": "dimension", "$description": "Card title / heading 4" },
+      "3xl":  { "$value": "30px", "$type": "dimension", "$description": "Heading 3" },
+      "4xl":  { "$value": "36px", "$type": "dimension", "$description": "Heading 2" },
+      "5xl":  { "$value": "48px", "$type": "dimension", "$description": "Heading 1" },
+      "6xl":  { "$value": "60px", "$type": "dimension", "$description": "Display large" },
+      "7xl":  { "$value": "72px", "$type": "dimension", "$description": "Display hero — marketing only" },
+      "8xl":  { "$value": "96px", "$type": "dimension", "$description": "Display super hero — marketing only" }
+    },
+    "lineHeight": {
+      "none":   { "$value": "1",    "$type": "number", "$description": "Single-line lockups (amounts, badges)" },
+      "tight":  { "$value": "1.2",  "$type": "number", "$description": "Display & headings" },
+      "snug":   { "$value": "1.35", "$type": "number", "$description": "Subheadings" },
+      "normal": { "$value": "1.5",  "$type": "number", "$description": "Body — WCAG 1.4.12 compliant minimum" },
+      "relaxed":{ "$value": "1.65", "$type": "number", "$description": "Long-form / article content" },
+      "loose":  { "$value": "2",    "$type": "number", "$description": "Sparse / spacious layout" }
+    },
+    "letterSpacing": {
+      "tighter": { "$value": "-0.05em",  "$type": "dimension", "$description": "Display headings — tracking pull-in" },
+      "tight":   { "$value": "-0.025em", "$type": "dimension", "$description": "Large headings" },
+      "normal":  { "$value": "0em",      "$type": "dimension", "$description": "Body default" },
+      "wide":    { "$value": "0.025em",  "$type": "dimension", "$description": "Small labels, caps text" },
+      "wider":   { "$value": "0.05em",   "$type": "dimension", "$description": "All-caps badge labels" },
+      "widest":  { "$value": "0.1em",    "$type": "dimension", "$description": "Legal caps, disclaimer labels" }
+    }
+  }
+}

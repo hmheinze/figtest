@@ -1,0 +1,131 @@
+{
+  "_comment": "Prada Beauty — Colour Tokens. Primitive → Semantic → Surface Mode.",
+  "_comment_2": "Three modes: scanner (S0/S2/S3 — deep dark), light (S4/PDP — off-white), dark (editorial dark — pure black). Components reference semantic tokens. Modes override semantics.",
+
+  "color": {
+    "_layer": "primitive",
+
+    "black":      { "value": "#000000",  "type": "color" },
+    "ink":        { "value": "#0A0A0A",  "type": "color" },
+    "scanner-bg": { "value": "#202020",  "type": "color", "_note": "Confirmed S2 bg-[#202020] — camera viewfinder warm dark" },
+    "surface":    { "value": "#FFFFFF",  "type": "color" },
+    "off-white":  { "value": "#F5F4F0",  "type": "color" },
+    "cloud":      { "value": "#F4F5F7",  "type": "color", "_note": "Confirmed S4 bg-[#f4f5f7] — secondary surface" },
+    "stone":      { "value": "#E8E6E0",  "type": "color" },
+    "rule":       { "value": "#E0E0E0",  "type": "color", "_note": "Confirmed zone row rule bg-[#e0e0e0]" },
+    "mid":        { "value": "#696969",  "type": "color", "_note": "Confirmed S4 text-[#696969] — muted text on light" },
+    "muted":      { "value": "#5F5E5A",  "type": "color" },
+    "ghost":      { "value": "#D8D8D8",  "type": "color", "_note": "Confirmed routine step numbers text-[#d8d8d8]" },
+    "rule-light": { "value": "#CCCCCC",  "type": "color", "_note": "Confirmed product divider bg-[#ccc]" },
+
+    "white-65":   { "value": "rgba(255,255,255,0.65)", "type": "color" },
+    "white-55":   { "value": "rgba(255,255,255,0.55)", "type": "color", "_note": "Confirmed S2 scanner controls text-[rgba(255,255,255,0.55)]" },
+    "white-45":   { "value": "rgba(255,255,255,0.45)", "type": "color" },
+    "white-40":   { "value": "rgba(255,255,255,0.40)", "type": "color" },
+    "white-38":   { "value": "rgba(255,255,255,0.38)", "type": "color", "_note": "Confirmed S2 channel labels text-[rgba(255,255,255,0.38)]" },
+    "white-35":   { "value": "rgba(255,255,255,0.35)", "type": "color" },
+    "white-30":   { "value": "rgba(255,255,255,0.30)", "type": "color" },
+    "white-28":   { "value": "rgba(255,255,255,0.28)", "type": "color", "_note": "Confirmed S2 button borders border-[rgba(255,255,255,0.28)]" },
+    "white-22":   { "value": "rgba(255,255,255,0.22)", "type": "color", "_note": "Confirmed S2 status badge border-[rgba(255,255,255,0.22)]" },
+    "white-18":   { "value": "rgba(255,255,255,0.18)", "type": "color" },
+    "white-14":   { "value": "rgba(255,255,255,0.14)", "type": "color", "_note": "Confirmed S2 dividers bg-[rgba(255,255,255,0.14)]" },
+    "white-12":   { "value": "rgba(255,255,255,0.12)", "type": "color" },
+
+    "black-72":   { "value": "rgba(0,0,0,0.72)", "type": "color", "_note": "Confirmed S2 nav scrim bg-[rgba(0,0,0,0.72)]" },
+    "black-90":   { "value": "rgba(0,0,0,0.90)", "type": "color", "_note": "Confirmed S2 data panel bg-[rgba(0,0,0,0.9)]" },
+    "black-40":   { "value": "rgba(0,0,0,0.40)", "type": "color" },
+    "black-12":   { "value": "rgba(0,0,0,0.12)", "type": "color" },
+    "black-10":   { "value": "rgba(0,0,0,0.10)", "type": "color", "_note": "Confirmed S4 dividers bg-[rgba(0,0,0,0.1)]" },
+    "black-08":   { "value": "rgba(0,0,0,0.08)", "type": "color" },
+
+    "score-high": { "value": "#2D6A4F", "type": "color" },
+    "score-mid":  { "value": "#8B6914", "type": "color" },
+    "score-low":  { "value": "#8B2E26", "type": "color" }
+  },
+
+  "surface": {
+    "_layer": "semantic",
+    "_comment": "Surface tokens. These are what components reference. Never reference color.* directly in components.",
+
+    "page":           { "value": "{color.off-white}",  "type": "color", "_note": "Default page background" },
+    "primary":        { "value": "{color.surface}",    "type": "color" },
+    "secondary":      { "value": "{color.cloud}",      "type": "color", "_note": "Section headers, image placeholders — confirmed #f4f5f7" },
+    "tertiary":       { "value": "{color.stone}",      "type": "color" },
+    "inverse":        { "value": "{color.ink}",        "type": "color" },
+    "scanner":        { "value": "{color.scanner-bg}", "type": "color", "_note": "Live camera viewfinder — #202020" },
+    "scrim-nav":      { "value": "{color.black-72}",   "type": "color", "_note": "Nav overlay on camera — confirmed rgba(0,0,0,0.72)" },
+    "scrim-data":     { "value": "{color.black-90}",   "type": "color", "_note": "Data panel on camera — confirmed rgba(0,0,0,0.9)" }
+  },
+
+  "foreground": {
+    "_layer": "semantic",
+
+    "primary":        { "value": "{color.ink}",       "type": "color" },
+    "secondary":      { "value": "{color.mid}",       "type": "color", "_note": "Confirmed #696969 — muted labels, meta, secondary text" },
+    "ghost":          { "value": "{color.ghost}",     "type": "color", "_note": "Confirmed #d8d8d8 — step numbers, de-emphasised numerals" },
+    "inverse":        { "value": "{color.surface}",   "type": "color" },
+    "inverse-muted":  { "value": "{color.white-40}",  "type": "color" },
+    "scanner-primary":{ "value": "{color.surface}",   "type": "color" },
+    "scanner-muted":  { "value": "{color.white-38}",  "type": "color", "_note": "Confirmed rgba(255,255,255,0.38) — channel labels, instruction text" },
+    "scanner-control":{ "value": "{color.white-55}",  "type": "color", "_note": "Confirmed rgba(255,255,255,0.55) — button labels, status badge text" }
+  },
+
+  "border": {
+    "_layer": "semantic",
+
+    "light":            { "value": "{color.black-10}",  "type": "color", "_note": "Confirmed rgba(0,0,0,0.1) — S4 dividers" },
+    "light-strong":     { "value": "{color.black-12}",  "type": "color", "_note": "Confirmed rgba(0,0,0,0.12) — product image borders" },
+    "rule":             { "value": "{color.rule}",      "type": "color", "_note": "Confirmed #e0e0e0 — zone row progress tracks" },
+    "rule-light":       { "value": "{color.rule-light}","type": "color", "_note": "Confirmed #ccc — product section dividers" },
+    "scanner-divider":  { "value": "{color.white-14}",  "type": "color", "_note": "Confirmed rgba(255,255,255,0.14) — data panel dividers" },
+    "scanner-control":  { "value": "{color.white-28}",  "type": "color", "_note": "Confirmed rgba(255,255,255,0.28) — control button borders" },
+    "scanner-badge":    { "value": "{color.white-22}",  "type": "color", "_note": "Confirmed rgba(255,255,255,0.22) — status badge border" },
+    "crosshair":        { "value": "{color.white-65}",  "type": "color", "_note": "Scanner guide corner brackets" }
+  },
+
+  "feedback": {
+    "_layer": "semantic",
+
+    "score-high":  { "value": "{color.score-high}", "type": "color", "_note": "70–100" },
+    "score-mid":   { "value": "{color.score-mid}",  "type": "color", "_note": "50–69" },
+    "score-low":   { "value": "{color.score-low}",  "type": "color", "_note": "0–49" }
+  },
+
+  "mode": {
+    "_layer": "context",
+    "_comment": "Mode overrides. Activate one set per product context in Tokens Studio themes. Components always reference surface.* and foreground.* — modes swap the underlying values.",
+
+    "scanner": {
+      "_comment": "Live camera screens S0/S2/S3. Deep dark. RGB data display.",
+      "surface-page":      { "value": "{color.black}",      "type": "color" },
+      "surface-primary":   { "value": "{color.ink}",        "type": "color" },
+      "surface-secondary": { "value": "{color.scanner-bg}", "type": "color" },
+      "foreground-primary":{ "value": "{color.surface}",    "type": "color" },
+      "foreground-secondary":{ "value": "{color.white-38}", "type": "color" },
+      "border-primary":    { "value": "{color.white-14}",   "type": "color" },
+      "border-strong":     { "value": "{color.white-28}",   "type": "color" }
+    },
+
+    "light": {
+      "_comment": "Results S4, PDP, setup S1. Off-white. Editorial.",
+      "surface-page":      { "value": "{color.off-white}",  "type": "color" },
+      "surface-primary":   { "value": "{color.surface}",    "type": "color" },
+      "surface-secondary": { "value": "{color.cloud}",      "type": "color" },
+      "foreground-primary":{ "value": "{color.ink}",        "type": "color" },
+      "foreground-secondary":{ "value": "{color.mid}",      "type": "color" },
+      "border-primary":    { "value": "{color.black-10}",   "type": "color" },
+      "border-strong":     { "value": "{color.black-12}",   "type": "color" }
+    },
+
+    "kiosk": {
+      "_comment": "Retail kiosk. High-contrast. Accessibility first.",
+      "surface-page":      { "value": "{color.off-white}",  "type": "color" },
+      "surface-primary":   { "value": "{color.surface}",    "type": "color" },
+      "surface-secondary": { "value": "{color.stone}",      "type": "color" },
+      "foreground-primary":{ "value": "{color.black}",      "type": "color" },
+      "foreground-secondary":{ "value": "{color.muted}",    "type": "color" },
+      "border-primary":    { "value": "{color.black-12}",   "type": "color" },
+      "border-strong":     { "value": "{color.black-40}",   "type": "color" }
+    }
+  }
+}

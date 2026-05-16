@@ -1,0 +1,57 @@
+{
+  "$description": "Spacing tokens. Three-tier: primitives (raw px values) → scale (clean 4px base ladder) → pdp (live PDP item-spacings captured in Figma 535:6303). Component tokens reference scale or pdp depending on which the layout demands.",
+
+  "space": {
+    "primitives": {
+      "$description": "Tier 1 — raw px values. No layout meaning. Used inside scale and pdp tokens.",
+      "0":   { "$type": "dimension", "$value": "0px" },
+      "2":   { "$type": "dimension", "$value": "2px" },
+      "4":   { "$type": "dimension", "$value": "4px" },
+      "8":   { "$type": "dimension", "$value": "8px" },
+      "10":  { "$type": "dimension", "$value": "10px" },
+      "11":  { "$type": "dimension", "$value": "11px" },
+      "12":  { "$type": "dimension", "$value": "12px" },
+      "16":  { "$type": "dimension", "$value": "16px" },
+      "20":  { "$type": "dimension", "$value": "20px" },
+      "24":  { "$type": "dimension", "$value": "24px" },
+      "27":  { "$type": "dimension", "$value": "27px", "$description": "Live PDP item spacing/27 — not on the clean scale." },
+      "32":  { "$type": "dimension", "$value": "32px" },
+      "40":  { "$type": "dimension", "$value": "40px" },
+      "48":  { "$type": "dimension", "$value": "48px" },
+      "64":  { "$type": "dimension", "$value": "64px" },
+      "80":  { "$type": "dimension", "$value": "80px" },
+      "96":  { "$type": "dimension", "$value": "96px" },
+      "128": { "$type": "dimension", "$value": "128px" }
+    },
+
+    "scale": {
+      "$description": "Tier 2 — clean 4px-base scale. Default usage in new components. Use t-shirt sizes for readability; px-named primitives are the source of truth.",
+      "none": { "$type": "dimension", "$value": "{space.primitives.0}",   "$description": "0px" },
+      "px":   { "$type": "dimension", "$value": "{space.primitives.2}",   "$description": "2px — hairline offsets" },
+      "xxs":  { "$type": "dimension", "$value": "{space.primitives.4}",   "$description": "4px" },
+      "xs":   { "$type": "dimension", "$value": "{space.primitives.8}",   "$description": "8px" },
+      "sm":   { "$type": "dimension", "$value": "{space.primitives.12}",  "$description": "12px" },
+      "md":   { "$type": "dimension", "$value": "{space.primitives.16}",  "$description": "16px — default gutter" },
+      "lg":   { "$type": "dimension", "$value": "{space.primitives.24}",  "$description": "24px" },
+      "xl":   { "$type": "dimension", "$value": "{space.primitives.32}",  "$description": "32px" },
+      "2xl":  { "$type": "dimension", "$value": "{space.primitives.48}",  "$description": "48px — section spacing" },
+      "3xl":  { "$type": "dimension", "$value": "{space.primitives.64}",  "$description": "64px" },
+      "4xl":  { "$type": "dimension", "$value": "{space.primitives.96}",  "$description": "96px" },
+      "5xl":  { "$type": "dimension", "$value": "{space.primitives.128}", "$description": "128px — hero / wide page rhythm" }
+    },
+
+    "pdp": {
+      "$description": "Tier 2-alt — live PDP item-spacings captured in Figma 535:6303 (item spacing/xs, /xxs, /s+, /m, /10, /11, /12, /20, /27, /40). References scale.* where values match exactly, primitives.* where they don't.",
+      "xxs":  { "$type": "dimension", "$value": "{space.scale.xxs}",       "$description": "4px — Figma item spacing/xxs" },
+      "xs":   { "$type": "dimension", "$value": "{space.scale.xs}",        "$description": "8px — Figma item spacing/xs" },
+      "10":   { "$type": "dimension", "$value": "{space.primitives.10}",   "$description": "10px — Figma item spacing/10 (off the 4px scale)" },
+      "11":   { "$type": "dimension", "$value": "{space.primitives.11}",   "$description": "11px — Figma item spacing/11 (off the 4px scale)" },
+      "12":   { "$type": "dimension", "$value": "{space.scale.sm}",        "$description": "12px — Figma item spacing/12" },
+      "20":   { "$type": "dimension", "$value": "{space.primitives.20}",   "$description": "20px — Figma item spacing/20 (off the 4px scale)" },
+      "s+":   { "$type": "dimension", "$value": "{space.scale.lg}",        "$description": "24px — Figma item spacing/s+" },
+      "27":   { "$type": "dimension", "$value": "{space.primitives.27}",   "$description": "27px — Figma item spacing/27 (off the 4px scale, layout-specific)" },
+      "m":    { "$type": "dimension", "$value": "{space.scale.xl}",        "$description": "32px — Figma item spacing/m" },
+      "40":   { "$type": "dimension", "$value": "{space.primitives.40}",   "$description": "40px — Figma item spacing/40 (between scale.xl 32 and scale.2xl 48; kept on the primitive)" }
+    }
+  }
+}

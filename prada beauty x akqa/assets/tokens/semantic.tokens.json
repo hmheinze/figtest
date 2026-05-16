@@ -1,0 +1,322 @@
+{
+  "brand": {
+    "k01-nero": {
+      "$type": "color",
+      "$value": "{color.neutral.950}",
+      "$description": "Brand black \u2014 K01 Nero"
+    },
+    "k02-ombra": {
+      "$type": "color",
+      "$value": "{color.neutral.900}",
+      "$description": "Brand off-black \u2014 K02 Ombra"
+    },
+    "k03-carbone": {
+      "$type": "color",
+      "$value": "{color.neutral.800}",
+      "$description": "Brand charcoal \u2014 K03 Carbone"
+    },
+    "k04-tabacco": {
+      "$type": "color",
+      "$value": "{color.neutral.700}",
+      "$description": "Brand warm dark \u2014 K04 Tabacco"
+    },
+    "g01-grafite": {
+      "$type": "color",
+      "$value": "{color.neutral.600}",
+      "$description": "Brand graphite \u2014 G01 Grafite"
+    },
+    "g02-cenere": {
+      "$type": "color",
+      "$value": "{color.neutral.500}",
+      "$description": "Brand ash \u2014 G02 Cenere"
+    },
+    "g03-pietra": {
+      "$type": "color",
+      "$value": "{color.neutral.400}",
+      "$description": "Brand stone \u2014 G03 Pietra"
+    },
+    "g04-fumo": {
+      "$type": "color",
+      "$value": "{color.neutral.300}",
+      "$description": "Brand smoke \u2014 G04 Fumo"
+    },
+    "g05-perla": {
+      "$type": "color",
+      "$value": "{color.neutral.200}",
+      "$description": "Brand pearl \u2014 G05 Perla"
+    },
+    "g06-ghiaccio": {
+      "$type": "color",
+      "$value": "{color.neutral.100}",
+      "$description": "Brand ice \u2014 G06 Ghiaccio"
+    },
+    "w01-bianco": {
+      "$type": "color",
+      "$value": "{color.neutral.50}",
+      "$description": "Brand white \u2014 W01 Bianco"
+    },
+    "fuoco": {
+      "$type": "color",
+      "$value": "{color.red.600}",
+      "$description": "Brand red \u2014 Fuoco #AB000D"
+    },
+    "soleil": {
+      "$type": "color",
+      "$value": "{color.yellow.100}",
+      "$description": "Brand yellow \u2014 Soleil #FEDA64"
+    },
+    "ciel": {
+      "$type": "color",
+      "$value": "{color.blue.100}",
+      "$description": "Brand blue \u2014 Ciel #CCE4F6"
+    },
+    "verde": {
+      "$type": "color",
+      "$value": "{color.green.500}",
+      "$description": "Brand green \u2014 Verde #10A70D"
+    },
+    "salvia": {
+      "$type": "color",
+      "$value": "{color.green.200}",
+      "$description": "Brand sage \u2014 Salvia #CFDCB7"
+    },
+    "menta": {
+      "$type": "color",
+      "$value": "{color.green.100}",
+      "$description": "Brand mint \u2014 Menta #DEEBC9"
+    },
+    "lilac": {
+      "$type": "color",
+      "$value": "{color.lilac.200}",
+      "$description": "Brand lilac \u2014 Lilac #E5D1E2"
+    }
+  },
+  "alias": {
+    "primary": {
+      "default": {
+        "$type": "color",
+        "$value": "{color.neutral.950}",
+        "$description": "Primary CTA fill"
+      },
+      "hover": {
+        "$type": "color",
+        "$value": "{color.neutral.900}",
+        "$description": "Primary CTA hover"
+      },
+      "pressed": {
+        "$type": "color",
+        "$value": "{color.neutral.800}",
+        "$description": "Primary CTA pressed"
+      },
+      "on": {
+        "$type": "color",
+        "$value": "{color.neutral.50}",
+        "$description": "Label on primary CTA"
+      },
+      "subtle": {
+        "$type": "color",
+        "$value": "{color.neutral.100}",
+        "$description": "Quiet primary surface"
+      },
+      "subtle-on": {
+        "$type": "color",
+        "$value": "{color.neutral.950}",
+        "$description": "Text on quiet primary surface"
+      }
+    },
+    "secondary": {
+      "default": {
+        "$type": "color",
+        "$value": "{color.neutral.50}",
+        "$description": "Ghost button background"
+      },
+      "hover": {
+        "$type": "color",
+        "$value": "{color.neutral.100}",
+        "$description": "Ghost hover background"
+      },
+      "pressed": {
+        "$type": "color",
+        "$value": "{color.neutral.200}",
+        "$description": "Ghost pressed background"
+      },
+      "border": {
+        "$type": "color",
+        "$value": "{color.neutral.950}",
+        "$description": "Ghost button outline"
+      },
+      "on": {
+        "$type": "color",
+        "$value": "{color.neutral.950}",
+        "$description": "Ghost button label"
+      }
+    },
+    "disabled": {
+      "background": {
+        "$type": "color",
+        "$value": "{color.neutral.100}",
+        "$description": "Disabled control surface"
+      },
+      "foreground": {
+        "$type": "color",
+        "$value": "{color.neutral.500}",
+        "$description": "Disabled label / icon"
+      },
+      "border": {
+        "$type": "color",
+        "$value": "{color.neutral.300}",
+        "$description": "Disabled outline"
+      }
+    },
+    "error": {
+      "default": {
+        "$type": "color",
+        "$value": "{color.red.600}",
+        "$description": "Error fill \u2014 7.67:1 on white"
+      },
+      "hover": {
+        "$type": "color",
+        "$value": "{color.red.700}",
+        "$description": "Error fill hover"
+      },
+      "subtle": {
+        "$type": "color",
+        "$value": "{color.red.50}",
+        "$description": "Error banner surface"
+      },
+      "on": {
+        "$type": "color",
+        "$value": "{color.neutral.50}",
+        "$description": "Text on error fill"
+      },
+      "on-subtle": {
+        "$type": "color",
+        "$value": "{color.red.700}",
+        "$description": "Text on error subtle surface"
+      },
+      "border": {
+        "$type": "color",
+        "$value": "{color.red.600}",
+        "$description": "Error border / required field"
+      }
+    },
+    "success": {
+      "default": {
+        "$type": "color",
+        "$value": "{color.green.600}",
+        "$description": "Success fill \u2014 5.2:1 on white"
+      },
+      "hover": {
+        "$type": "color",
+        "$value": "{color.green.700}",
+        "$description": "Success fill hover"
+      },
+      "subtle": {
+        "$type": "color",
+        "$value": "{color.green.100}",
+        "$description": "Success banner surface (brand Menta)"
+      },
+      "on": {
+        "$type": "color",
+        "$value": "{color.neutral.50}",
+        "$description": "Text on success fill"
+      },
+      "on-subtle": {
+        "$type": "color",
+        "$value": "{color.green.700}",
+        "$description": "Text on success subtle surface"
+      },
+      "border": {
+        "$type": "color",
+        "$value": "{color.green.600}",
+        "$description": "Success border"
+      }
+    },
+    "information": {
+      "default": {
+        "$type": "color",
+        "$value": "{color.blue.700}",
+        "$description": "Info fill \u2014 8.45:1 on white"
+      },
+      "hover": {
+        "$type": "color",
+        "$value": "{color.blue.800}",
+        "$description": "Info fill hover"
+      },
+      "subtle": {
+        "$type": "color",
+        "$value": "{color.blue.100}",
+        "$description": "Info banner surface (brand Ciel)"
+      },
+      "on": {
+        "$type": "color",
+        "$value": "{color.neutral.50}",
+        "$description": "Text on info fill"
+      },
+      "on-subtle": {
+        "$type": "color",
+        "$value": "{color.blue.800}",
+        "$description": "Text on info subtle surface"
+      },
+      "border": {
+        "$type": "color",
+        "$value": "{color.blue.700}",
+        "$description": "Info border"
+      }
+    },
+    "warning": {
+      "default": {
+        "$type": "color",
+        "$value": "{color.yellow.700}",
+        "$description": "Warning fill \u2014 8.46:1 on white"
+      },
+      "hover": {
+        "$type": "color",
+        "$value": "{color.yellow.800}",
+        "$description": "Warning fill hover"
+      },
+      "subtle": {
+        "$type": "color",
+        "$value": "{color.yellow.100}",
+        "$description": "Warning surface (brand Soleil)"
+      },
+      "on": {
+        "$type": "color",
+        "$value": "{color.neutral.50}",
+        "$description": "Text on warning fill"
+      },
+      "on-subtle": {
+        "$type": "color",
+        "$value": "{color.yellow.800}",
+        "$description": "Text on warning subtle surface"
+      },
+      "border": {
+        "$type": "color",
+        "$value": "{color.yellow.700}",
+        "$description": "Warning border"
+      }
+    },
+    "promo": {
+      "default": {
+        "$type": "color",
+        "$value": "{color.lilac.700}",
+        "$description": "Promo fill \u2014 AAA on white"
+      },
+      "subtle": {
+        "$type": "color",
+        "$value": "{color.lilac.200}",
+        "$description": "Promo surface (brand Lilac)"
+      },
+      "on": {
+        "$type": "color",
+        "$value": "{color.neutral.50}",
+        "$description": "Text on promo fill"
+      },
+      "on-subtle": {
+        "$type": "color",
+        "$value": "{color.lilac.800}",
+        "$description": "Text on promo subtle surface"
+      }
+    }
+  }
+}

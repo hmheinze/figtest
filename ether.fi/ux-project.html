@@ -1,0 +1,2413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ether.fi — Stake, Earn, Spend</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+/* ─────────────────────────────────────────────
+   DESIGN TOKENS → CSS CUSTOM PROPERTIES
+───────────────────────────────────────────── */
+:root {
+  /* Color / Brand */
+  --purple-300: #BB85FF;
+  --purple-400: #A060F0;
+  --purple-500: #7B40D4;
+  --purple-600: #5E28B0;
+  --purple-800: #2F0E65;
+
+  --teal-300: #5EEAD4;
+  --teal-500: #14B8A6;
+
+  --blue-400: #60A5FA;
+
+  /* Color / Neutral */
+  --neutral-0:   #FFFFFF;
+  --neutral-100: #F0EDE4;
+  --neutral-200: #D8D4C8;
+  --neutral-300: #B8B3A8;
+  --neutral-400: #9B97A8;
+  --neutral-500: #6E6A7C;
+  --neutral-600: #4A4759;
+  --neutral-700: #2E2C3E;
+  --neutral-750: #252438;
+  --neutral-800: #1C1B2E;
+  --neutral-850: #14131F;
+  --neutral-900: #0D0C18;
+  --neutral-950: #070611;
+
+  /* Color / Semantic */
+  --success:     #4ADE80;
+  --warning:     #FBBF24;
+  --error:       #F87171;
+  --info:        #60A5FA;
+
+  /* Asset colors */
+  --eth-color:  #627EEA;
+  --btc-color:  #F7931A;
+  --usdc-color: #2775CA;
+
+  /* Typography */
+  --font-display: 'Crimson Pro', Georgia, serif;
+  --font-body:    'DM Sans', -apple-system, 'Helvetica Neue', sans-serif;
+  --font-mono:    'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Motion */
+  --dur-fast:    100ms;
+  --dur-normal:  200ms;
+  --dur-slow:    350ms;
+  --dur-slower:  500ms;
+  --ease-out:    cubic-bezier(0, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Radius */
+  --radius-sm:   4px;
+  --radius-base: 8px;
+  --radius-md:   12px;
+  --radius-lg:   16px;
+  --radius-xl:   20px;
+  --radius-2xl:  24px;
+  --radius-full: 9999px;
+}
+
+/* ─────────────────────────────────────────────
+   RESET & BASE
+───────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  background: var(--neutral-950);
+  color: var(--neutral-100);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; border: none; outline: none; font-family: var(--font-body); }
+input, select { font-family: var(--font-body); outline: none; }
+
+/* ─────────────────────────────────────────────
+   NAVIGATION
+───────────────────────────────────────────── */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  padding: 0 32px;
+  background: rgba(7,6,17,0.75);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--neutral-100);
+  letter-spacing: -0.02em;
+}
+
+.nav-logo-mark {
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, var(--purple-300), var(--purple-500));
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: white;
+  font-weight: 700;
+  font-family: var(--font-body);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 40px;
+}
+
+.nav-link {
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--neutral-400);
+  transition: color var(--dur-normal) var(--ease-out), background var(--dur-normal) var(--ease-out);
+}
+.nav-link:hover { color: var(--neutral-100); background: rgba(255,255,255,0.05); }
+.nav-link.active { color: var(--purple-300); background: rgba(187,133,255,0.1); }
+
+.nav-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-btn-connect {
+  padding: 8px 20px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, var(--purple-300), var(--purple-500));
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  transition: opacity var(--dur-fast), transform var(--dur-fast);
+  box-shadow: 0 0 0 1px rgba(187,133,255,0.3), 0 4px 16px rgba(187,133,255,0.2);
+}
+.nav-btn-connect:hover { opacity: 0.9; transform: translateY(-1px); }
+.nav-btn-connect:active { transform: translateY(0); }
+
+/* ─────────────────────────────────────────────
+   PAGE SECTIONS LAYOUT
+───────────────────────────────────────────── */
+.page { padding-top: 64px; }
+
+.section {
+  padding: 80px 0;
+}
+
+.container {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* ─────────────────────────────────────────────
+   HERO
+───────────────────────────────────────────── */
+.hero {
+  position: relative;
+  min-height: calc(100vh - 64px);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(187,133,255,0.16) 0%, transparent 65%),
+              radial-gradient(ellipse 50% 40% at 80% 60%, rgba(94,234,212,0.06) 0%, transparent 60%),
+              radial-gradient(ellipse 40% 50% at 10% 70%, rgba(123,64,212,0.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 0%, transparent 80%);
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 14px;
+  border-radius: var(--radius-full);
+  background: rgba(187,133,255,0.1);
+  border: 1px solid rgba(187,133,255,0.25);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--purple-300);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+
+.hero-eyebrow-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--purple-300);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.75); }
+}
+
+.hero-h1 {
+  font-family: var(--font-display);
+  font-size: clamp(44px, 6vw, 72px);
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: var(--neutral-100);
+  margin-bottom: 24px;
+}
+
+.hero-h1 em {
+  font-style: italic;
+  background: linear-gradient(135deg, var(--purple-300), var(--teal-300));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-sub {
+  font-size: 18px;
+  color: var(--neutral-400);
+  line-height: 1.65;
+  max-width: 520px;
+  margin: 0 auto 40px;
+}
+
+.hero-ctas {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 56px;
+}
+
+.btn-primary {
+  padding: 14px 32px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, var(--purple-300), var(--purple-500));
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  box-shadow: 0 0 0 1px rgba(187,133,255,0.3), 0 8px 32px rgba(187,133,255,0.25);
+  transition: transform var(--dur-fast) var(--ease-spring),
+              box-shadow var(--dur-normal) var(--ease-out),
+              opacity var(--dur-fast);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 0 1px rgba(187,133,255,0.5), 0 12px 40px rgba(187,133,255,0.35);
+}
+.btn-primary:active { transform: translateY(0); }
+
+.btn-secondary {
+  padding: 14px 32px;
+  border-radius: var(--radius-full);
+  background: rgba(187,133,255,0.08);
+  border: 1px solid rgba(187,133,255,0.3);
+  color: var(--purple-300);
+  font-size: 15px;
+  font-weight: 500;
+  transition: background var(--dur-normal), border-color var(--dur-normal), transform var(--dur-fast) var(--ease-spring);
+}
+.btn-secondary:hover {
+  background: rgba(187,133,255,0.14);
+  border-color: rgba(187,133,255,0.55);
+  transform: translateY(-1px);
+}
+
+.hero-stats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  padding: 20px 32px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: var(--radius-2xl);
+  backdrop-filter: blur(12px);
+  max-width: fit-content;
+  margin: 0 auto;
+}
+
+.hero-stat {
+  text-align: center;
+}
+
+.hero-stat-value {
+  font-family: var(--font-mono);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--neutral-100);
+  letter-spacing: -0.04em;
+}
+
+.hero-stat-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--neutral-500);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.hero-stat-divider {
+  width: 1px;
+  height: 36px;
+  background: rgba(255,255,255,0.08);
+}
+
+/* ─────────────────────────────────────────────
+   PRODUCT CARDS
+───────────────────────────────────────────── */
+.section-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--purple-300);
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 300;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--neutral-100);
+  margin-bottom: 16px;
+}
+
+.section-sub {
+  font-size: 16px;
+  color: var(--neutral-400);
+  line-height: 1.65;
+  max-width: 520px;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 48px;
+}
+
+.product-card {
+  background: linear-gradient(145deg, rgba(37,36,56,0.85) 0%, rgba(20,19,31,0.85) 100%);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: var(--radius-2xl);
+  padding: 28px;
+  cursor: pointer;
+  transition: border-color var(--dur-slow), transform var(--dur-slow) var(--ease-spring), box-shadow var(--dur-slow);
+  position: relative;
+  overflow: hidden;
+}
+
+.product-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity var(--dur-slow);
+}
+
+.product-card.weeth::before {
+  background: radial-gradient(ellipse 60% 40% at 50% -10%, rgba(187,133,255,0.12) 0%, transparent 70%);
+}
+.product-card.ebtc::before {
+  background: radial-gradient(ellipse 60% 40% at 50% -10%, rgba(247,147,26,0.1) 0%, transparent 70%);
+}
+.product-card.eusd::before {
+  background: radial-gradient(ellipse 60% 40% at 50% -10%, rgba(94,234,212,0.1) 0%, transparent 70%);
+}
+
+.product-card:hover::before { opacity: 1; }
+
+.product-card.weeth:hover {
+  border-color: rgba(187,133,255,0.3);
+  transform: translateY(-4px);
+  box-shadow: 0 0 0 1px rgba(187,133,255,0.15), 0 20px 60px rgba(187,133,255,0.12);
+}
+.product-card.ebtc:hover {
+  border-color: rgba(247,147,26,0.3);
+  transform: translateY(-4px);
+  box-shadow: 0 0 0 1px rgba(247,147,26,0.15), 0 20px 60px rgba(247,147,26,0.10);
+}
+.product-card.eusd:hover {
+  border-color: rgba(94,234,212,0.3);
+  transform: translateY(-4px);
+  box-shadow: 0 0 0 1px rgba(94,234,212,0.15), 0 20px 60px rgba(94,234,212,0.10);
+}
+
+.product-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+.product-icon.weeth { background: linear-gradient(135deg, rgba(187,133,255,0.2), rgba(94,40,176,0.2)); }
+.product-icon.ebtc  { background: linear-gradient(135deg, rgba(247,147,26,0.2), rgba(194,98,10,0.2)); }
+.product-icon.eusd  { background: linear-gradient(135deg, rgba(94,234,212,0.2), rgba(13,148,136,0.2)); }
+
+.product-ticker {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.weeth .product-ticker { color: var(--purple-300); }
+.ebtc  .product-ticker { color: #F7931A; }
+.eusd  .product-ticker { color: var(--teal-300); }
+
+.product-name {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 400;
+  color: var(--neutral-100);
+  margin-bottom: 8px;
+}
+
+.product-desc {
+  font-size: 13px;
+  color: var(--neutral-500);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.product-metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.product-metric-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--neutral-600);
+  margin-bottom: 4px;
+}
+
+.product-metric-value {
+  font-family: var(--font-mono);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+.weeth .product-metric-value { color: var(--purple-300); }
+.ebtc  .product-metric-value { color: #F7931A; }
+.eusd  .product-metric-value { color: var(--teal-300); }
+
+.product-action {
+  margin-top: 20px;
+  width: 100%;
+  padding: 12px;
+  border-radius: var(--radius-full);
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  transition: opacity var(--dur-fast), transform var(--dur-fast) var(--ease-spring);
+}
+.product-action:hover { opacity: 0.85; transform: scale(1.01); }
+
+.weeth .product-action { background: linear-gradient(135deg, var(--purple-300), var(--purple-500)); color: white; }
+.ebtc  .product-action { background: linear-gradient(135deg, #F7931A, #C2620A); color: white; }
+.eusd  .product-action { background: linear-gradient(135deg, var(--teal-300), var(--teal-500)); color: var(--neutral-900); }
+
+/* ─────────────────────────────────────────────
+   HOW IT WORKS — UX CHALLENGE: DEMYSTIFY
+───────────────────────────────────────────── */
+.how-it-works {
+  background: var(--neutral-900);
+  border-top: 1px solid rgba(255,255,255,0.05);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: rgba(255,255,255,0.06);
+  border-radius: var(--radius-2xl);
+  overflow: hidden;
+  margin-top: 48px;
+}
+
+.step {
+  background: var(--neutral-900);
+  padding: 32px 28px;
+  position: relative;
+}
+
+.step-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--neutral-600);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.step-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  margin-bottom: 16px;
+  background: rgba(187,133,255,0.1);
+}
+
+.step-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--neutral-100);
+  margin-bottom: 8px;
+}
+
+.step-desc {
+  font-size: 13px;
+  color: var(--neutral-500);
+  line-height: 1.6;
+}
+
+.step-arrow {
+  position: absolute;
+  right: -12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  background: var(--neutral-800);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: var(--neutral-500);
+  z-index: 1;
+}
+
+/* ─────────────────────────────────────────────
+   STAKING WIDGET — UX CHALLENGE: SIMPLICITY
+───────────────────────────────────────────── */
+.stake-section {
+  background: var(--neutral-950);
+}
+
+.stake-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+  margin-top: 48px;
+}
+
+.stake-widget {
+  background: linear-gradient(145deg, rgba(37,36,56,0.9), rgba(20,19,31,0.9));
+  border: 1px solid rgba(187,133,255,0.15);
+  border-radius: var(--radius-2xl);
+  padding: 28px;
+  box-shadow: 0 0 0 1px rgba(187,133,255,0.08), 0 24px 64px rgba(0,0,0,0.5);
+}
+
+.widget-tabs {
+  display: flex;
+  background: rgba(255,255,255,0.05);
+  border-radius: var(--radius-full);
+  padding: 4px;
+  margin-bottom: 24px;
+}
+
+.widget-tab {
+  flex: 1;
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--neutral-500);
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--dur-normal) var(--ease-out);
+  background: transparent;
+}
+
+.widget-tab.active {
+  background: linear-gradient(135deg, var(--purple-300), var(--purple-500));
+  color: white;
+  box-shadow: 0 2px 12px rgba(187,133,255,0.3);
+}
+
+.widget-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--neutral-500);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.widget-input-row {
+  display: flex;
+  align-items: center;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius-lg);
+  padding: 4px 4px 4px 16px;
+  margin-bottom: 12px;
+  transition: border-color var(--dur-normal);
+}
+.widget-input-row:focus-within {
+  border-color: rgba(187,133,255,0.5);
+  box-shadow: 0 0 0 3px rgba(187,133,255,0.1);
+}
+
+.widget-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--neutral-100);
+  font-family: var(--font-mono);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  padding: 10px 0;
+}
+.widget-input::placeholder { color: var(--neutral-600); }
+
+.widget-asset-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: rgba(255,255,255,0.07);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background var(--dur-fast);
+}
+.widget-asset-badge:hover { background: rgba(255,255,255,0.11); }
+
+.asset-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+}
+.asset-icon.eth { background: var(--eth-color); color: white; }
+
+.asset-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--neutral-200);
+}
+
+.asset-chevron {
+  font-size: 11px;
+  color: var(--neutral-500);
+}
+
+.widget-balance {
+  font-size: 12px;
+  color: var(--neutral-500);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.widget-balance-max {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--purple-300);
+  cursor: pointer;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  background: rgba(187,133,255,0.1);
+  transition: background var(--dur-fast);
+}
+.widget-balance-max:hover { background: rgba(187,133,255,0.18); }
+
+.widget-arrow-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: -4px 0;
+  position: relative;
+  z-index: 1;
+}
+
+.widget-arrow-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  background: rgba(187,133,255,0.12);
+  border: 1px solid rgba(187,133,255,0.25);
+  color: var(--purple-300);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  transition: background var(--dur-normal), transform var(--dur-fast) var(--ease-spring);
+}
+.widget-arrow-btn:hover { background: rgba(187,133,255,0.2); transform: scale(1.1); }
+
+.widget-receive-box {
+  background: rgba(187,133,255,0.05);
+  border: 1px solid rgba(187,133,255,0.12);
+  border-radius: var(--radius-lg);
+  padding: 14px 16px;
+  margin-bottom: 20px;
+  margin-top: 12px;
+}
+
+.widget-receive-amount {
+  font-family: var(--font-mono);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--purple-300);
+  letter-spacing: -0.03em;
+}
+
+.widget-receive-usd {
+  font-size: 12px;
+  color: var(--neutral-500);
+  margin-top: 2px;
+}
+
+.widget-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  background: rgba(255,255,255,0.02);
+  border-radius: var(--radius-md);
+  margin-bottom: 20px;
+}
+
+.widget-detail-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.widget-detail-label {
+  font-size: 12px;
+  color: var(--neutral-500);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.info-icon {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid var(--neutral-600);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  color: var(--neutral-600);
+  cursor: help;
+}
+
+.widget-detail-value {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--neutral-300);
+}
+.widget-detail-value.positive { color: var(--success); }
+
+.widget-submit {
+  width: 100%;
+  padding: 16px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, var(--purple-300), var(--purple-500));
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  box-shadow: 0 4px 24px rgba(187,133,255,0.3);
+  transition: transform var(--dur-fast) var(--ease-spring), box-shadow var(--dur-normal), opacity var(--dur-fast);
+}
+.widget-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 40px rgba(187,133,255,0.4);
+}
+
+/* ─────────────────────────────────────────────
+   REWARDS EXPLAINER — UX CHALLENGE: CLARITY
+───────────────────────────────────────────── */
+.rewards-explainer {
+  padding: 28px;
+}
+
+.rewards-title {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 400;
+  color: var(--neutral-100);
+  margin-bottom: 6px;
+}
+
+.rewards-subtitle {
+  font-size: 14px;
+  color: var(--neutral-400);
+  margin-bottom: 24px;
+}
+
+.reward-streams {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.reward-stream {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--radius-lg);
+  transition: border-color var(--dur-normal), background var(--dur-normal);
+}
+.reward-stream:hover {
+  background: rgba(255,255,255,0.05);
+  border-color: rgba(255,255,255,0.1);
+}
+
+.reward-stream-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.reward-stream-body { flex: 1; }
+.reward-stream-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--neutral-200);
+  margin-bottom: 2px;
+}
+.reward-stream-desc {
+  font-size: 12px;
+  color: var(--neutral-500);
+}
+
+.reward-stream-apy {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--success);
+}
+
+.total-apy-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  background: rgba(74,222,128,0.06);
+  border: 1px solid rgba(74,222,128,0.15);
+  border-radius: var(--radius-lg);
+  margin-top: 8px;
+}
+
+.total-apy-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--neutral-300);
+}
+
+.total-apy-value {
+  font-family: var(--font-mono);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--success);
+  letter-spacing: -0.03em;
+}
+
+/* ─────────────────────────────────────────────
+   TRUST & SECURITY — UX CHALLENGE: CONFIDENCE
+───────────────────────────────────────────── */
+.trust-section {
+  background: var(--neutral-900);
+  border-top: 1px solid rgba(255,255,255,0.05);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.trust-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 48px;
+}
+
+.trust-card {
+  padding: 28px;
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: var(--radius-2xl);
+}
+
+.trust-icon {
+  font-size: 28px;
+  margin-bottom: 16px;
+}
+
+.trust-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--neutral-100);
+  margin-bottom: 8px;
+}
+
+.trust-desc {
+  font-size: 13px;
+  color: var(--neutral-500);
+  line-height: 1.65;
+}
+
+.auditors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.auditor-badge {
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--neutral-300);
+}
+
+.tvl-display {
+  font-family: var(--font-mono);
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--neutral-100);
+  letter-spacing: -0.04em;
+  margin-top: 12px;
+}
+
+.tvl-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--neutral-500);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ─────────────────────────────────────────────
+   PORTFOLIO DASHBOARD — UX CHALLENGE: OVERVIEW
+───────────────────────────────────────────── */
+.dashboard-section {
+  background: var(--neutral-950);
+}
+
+.dashboard-mockup {
+  background: linear-gradient(145deg, rgba(37,36,56,0.85), rgba(20,19,31,0.85));
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius-2xl);
+  overflow: hidden;
+  margin-top: 48px;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+}
+
+.dash-header {
+  padding: 20px 24px;
+  background: rgba(255,255,255,0.03);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dash-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--neutral-200);
+}
+
+.dash-wallet {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius-full);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--neutral-400);
+}
+
+.dash-wallet-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--success);
+  box-shadow: 0 0 6px var(--success);
+}
+
+.dash-body {
+  padding: 24px;
+}
+
+.dash-top-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.dash-kpi {
+  padding: 20px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--radius-xl);
+}
+
+.dash-kpi-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--neutral-600);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.dash-kpi-value {
+  font-family: var(--font-mono);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--neutral-100);
+  letter-spacing: -0.04em;
+}
+
+.dash-kpi-change {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--success);
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.dash-positions {
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+}
+
+.dash-positions-header {
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--neutral-500);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  gap: 12px;
+}
+
+.dash-position-row {
+  padding: 14px 16px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  gap: 12px;
+  align-items: center;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  transition: background var(--dur-fast);
+}
+.dash-position-row:last-child { border-bottom: none; }
+.dash-position-row:hover { background: rgba(255,255,255,0.03); }
+
+.dash-pos-asset {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dash-pos-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.dash-pos-icon.weeth { background: linear-gradient(135deg, rgba(187,133,255,0.3), rgba(94,40,176,0.3)); color: var(--purple-300); }
+.dash-pos-icon.ebtc  { background: linear-gradient(135deg, rgba(247,147,26,0.25), rgba(194,98,10,0.25)); color: #F7931A; }
+.dash-pos-icon.eusd  { background: linear-gradient(135deg, rgba(94,234,212,0.25), rgba(13,148,136,0.25)); color: var(--teal-300); }
+
+.dash-pos-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--neutral-200);
+}
+.dash-pos-sub {
+  font-size: 11px;
+  color: var(--neutral-600);
+  margin-top: 1px;
+}
+
+.dash-cell {
+  font-size: 13px;
+  color: var(--neutral-300);
+  font-variant-numeric: tabular-nums;
+}
+.dash-cell.mono {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: -0.02em;
+}
+.dash-cell.positive { color: var(--success); font-weight: 600; }
+
+.dash-rewards-bar {
+  height: 4px;
+  border-radius: var(--radius-full);
+  background: rgba(255,255,255,0.08);
+  overflow: hidden;
+  margin-top: 4px;
+}
+.dash-rewards-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  background: linear-gradient(90deg, var(--purple-300), var(--teal-300));
+}
+
+/* ─────────────────────────────────────────────
+   DEFI INTEGRATIONS — UX CHALLENGE: COMPOSABILITY
+───────────────────────────────────────────── */
+.defi-section { background: var(--neutral-900); }
+
+.protocols-marquee {
+  margin-top: 48px;
+  overflow: hidden;
+  position: relative;
+}
+.protocols-marquee::before,
+.protocols-marquee::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 120px;
+  z-index: 1;
+}
+.protocols-marquee::before { left: 0; background: linear-gradient(90deg, var(--neutral-900), transparent); }
+.protocols-marquee::after  { right: 0; background: linear-gradient(-90deg, var(--neutral-900), transparent); }
+
+.protocols-track {
+  display: flex;
+  gap: 12px;
+  animation: marquee 28s linear infinite;
+  width: max-content;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.protocol-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--neutral-300);
+  transition: border-color var(--dur-normal);
+}
+.protocol-chip:hover { border-color: rgba(187,133,255,0.25); }
+
+.protocol-chip-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+/* ─────────────────────────────────────────────
+   CASH CARD — UX CHALLENGE: REAL-WORLD UTILITY
+───────────────────────────────────────────── */
+.cash-section { background: var(--neutral-950); }
+
+.cash-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+  margin-top: 48px;
+}
+
+.cash-card-visual {
+  position: relative;
+  perspective: 1000px;
+}
+
+.credit-card {
+  width: 100%;
+  max-width: 380px;
+  aspect-ratio: 1.586;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #1A0D33 0%, #2F0E65 40%, #0D0C18 100%);
+  border: 1px solid rgba(187,133,255,0.25);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow:
+    0 0 0 1px rgba(187,133,255,0.15),
+    0 32px 80px rgba(0,0,0,0.7),
+    inset 0 1px 0 rgba(255,255,255,0.1);
+  transform: rotateY(-8deg) rotateX(3deg);
+  transition: transform var(--dur-slow) var(--ease-spring);
+  position: relative;
+  overflow: hidden;
+}
+.credit-card:hover { transform: rotateY(-2deg) rotateX(1deg); }
+
+.card-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 50% at 30% 30%, rgba(187,133,255,0.25), transparent 70%);
+  pointer-events: none;
+}
+
+.card-logo {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.9);
+  letter-spacing: -0.02em;
+}
+
+.card-chip {
+  width: 40px;
+  height: 30px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, rgba(255,200,50,0.8), rgba(255,150,20,0.5));
+  border: 1px solid rgba(255,200,50,0.3);
+}
+
+.card-number {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  letter-spacing: 0.15em;
+  color: rgba(255,255,255,0.7);
+}
+
+.card-bottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.card-holder-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.7);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.card-holder-label {
+  font-size: 9px;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+
+.card-network {
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.05em;
+}
+
+.cashback-benefits {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.benefit-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: var(--radius-lg);
+}
+
+.benefit-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.benefit-pct {
+  font-family: var(--font-mono);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: var(--neutral-100);
+}
+
+.benefit-label {
+  font-size: 13px;
+  color: var(--neutral-400);
+  margin-top: 1px;
+}
+
+/* ─────────────────────────────────────────────
+   ONBOARDING FLOW — UX CHALLENGE: FRICTION
+───────────────────────────────────────────── */
+.onboarding-section { background: var(--neutral-900); border-top: 1px solid rgba(255,255,255,0.05); }
+
+.onboarding-flow {
+  display: flex;
+  gap: 0;
+  margin-top: 48px;
+  border-radius: var(--radius-2xl);
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.07);
+}
+
+.onboarding-step {
+  flex: 1;
+  padding: 32px 24px;
+  background: var(--neutral-900);
+  position: relative;
+}
+
+.onboarding-step::after {
+  content: '→';
+  position: absolute;
+  right: -12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: var(--neutral-600);
+  z-index: 1;
+}
+.onboarding-step:last-child::after { display: none; }
+
+.onboarding-step.active {
+  background: linear-gradient(145deg, rgba(37,36,56,0.9), rgba(20,19,31,0.9));
+  border-right: none;
+}
+
+.step-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  background: rgba(187,133,255,0.15);
+  border: 1px solid rgba(187,133,255,0.3);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--purple-300);
+  margin-bottom: 16px;
+}
+
+.onboarding-step.active .step-badge {
+  background: var(--purple-300);
+  color: white;
+  border-color: var(--purple-300);
+  box-shadow: 0 0 12px rgba(187,133,255,0.4);
+}
+
+.onboarding-step.done .step-badge {
+  background: rgba(74,222,128,0.15);
+  border-color: rgba(74,222,128,0.3);
+  color: var(--success);
+}
+
+.onboarding-step-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--neutral-200);
+  margin-bottom: 6px;
+}
+
+.onboarding-step-desc {
+  font-size: 12px;
+  color: var(--neutral-500);
+  line-height: 1.5;
+}
+
+/* ─────────────────────────────────────────────
+   FOOTER
+───────────────────────────────────────────── */
+.footer {
+  background: var(--neutral-950);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 60px 0 40px;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 48px;
+}
+
+.footer-brand-name {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--neutral-100);
+  margin-bottom: 10px;
+}
+
+.footer-brand-tagline {
+  font-size: 14px;
+  color: var(--neutral-500);
+  line-height: 1.65;
+  max-width: 240px;
+  margin-bottom: 20px;
+}
+
+.footer-social {
+  display: flex;
+  gap: 10px;
+}
+
+.social-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: var(--neutral-400);
+  cursor: pointer;
+  transition: background var(--dur-normal), color var(--dur-normal);
+}
+.social-btn:hover { background: rgba(255,255,255,0.09); color: var(--neutral-100); }
+
+.footer-col-title {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--neutral-300);
+  margin-bottom: 16px;
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-link {
+  font-size: 14px;
+  color: var(--neutral-500);
+  transition: color var(--dur-fast);
+}
+.footer-link:hover { color: var(--neutral-200); }
+
+.footer-bottom {
+  padding-top: 24px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer-copy {
+  font-size: 13px;
+  color: var(--neutral-600);
+}
+
+.footer-disclaimer {
+  font-size: 11px;
+  color: var(--neutral-700);
+  max-width: 480px;
+  text-align: right;
+  line-height: 1.5;
+}
+
+/* ─────────────────────────────────────────────
+   SCROLLBAR
+───────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--neutral-700); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--neutral-600); }
+
+/* ─────────────────────────────────────────────
+   UTILITY
+───────────────────────────────────────────── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 600;
+}
+.badge.success { background: rgba(74,222,128,0.12); color: var(--success); border: 1px solid rgba(74,222,128,0.2); }
+.badge.purple  { background: rgba(187,133,255,0.12); color: var(--purple-300); border: 1px solid rgba(187,133,255,0.2); }
+.badge.warning { background: rgba(251,191,36,0.12); color: var(--warning); border: 1px solid rgba(251,191,36,0.2); }
+
+.text-gradient {
+  background: linear-gradient(135deg, var(--purple-300), var(--teal-300));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+  NAVIGATION
+══════════════════════════════════════════ -->
+<nav class="nav">
+  <div class="nav-logo">
+    <div class="nav-logo-mark">⟠</div>
+    ether.fi
+  </div>
+  <div class="nav-links">
+    <a href="#stake" class="nav-link active">Stake</a>
+    <a href="#liquid" class="nav-link">Liquid</a>
+    <a href="#cash" class="nav-link">Cash</a>
+    <a href="#defi" class="nav-link">DeFi</a>
+    <a href="#docs" class="nav-link">Docs</a>
+  </div>
+  <div class="nav-right">
+    <div class="badge success">● Mainnet</div>
+    <button class="nav-btn-connect" onclick="this.textContent='0x71C…3d4A'">Connect Wallet</button>
+  </div>
+</nav>
+
+<div class="page">
+
+<!-- ══════════════════════════════════════════
+  HERO
+══════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <span class="hero-eyebrow-dot"></span>
+      Liquid Restaking Protocol
+    </div>
+    <h1 class="hero-h1">
+      Stake, Earn, Spend.<br>
+      <em>Do more with your crypto.</em>
+    </h1>
+    <p class="hero-sub">
+      Non-custodial liquid restaking for ETH, BTC, and stablecoins.
+      Earn multiple reward streams while staying liquid across 400+ DeFi protocols.
+    </p>
+    <div class="hero-ctas">
+      <button class="btn-primary" onclick="document.getElementById('stake-widget').scrollIntoView({behavior:'smooth'})">
+        Start Staking →
+      </button>
+      <button class="btn-secondary" onclick="document.getElementById('how-it-works').scrollIntoView({behavior:'smooth'})">
+        How it works
+      </button>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-value">$9.3B</div>
+        <div class="hero-stat-label">Total Value Locked</div>
+      </div>
+      <div class="hero-stat-divider"></div>
+      <div class="hero-stat">
+        <div class="hero-stat-value">400+</div>
+        <div class="hero-stat-label">DeFi Integrations</div>
+      </div>
+      <div class="hero-stat-divider"></div>
+      <div class="hero-stat">
+        <div class="hero-stat-value">2.8%</div>
+        <div class="hero-stat-label">weETH Base APY</div>
+      </div>
+      <div class="hero-stat-divider"></div>
+      <div class="hero-stat">
+        <div class="hero-stat-value">5+</div>
+        <div class="hero-stat-label">Security Audits</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+  PRODUCTS
+══════════════════════════════════════════ -->
+<section class="section" id="products">
+  <div class="container">
+    <div class="section-label">Products</div>
+    <h2 class="section-title">Three assets. One ecosystem.</h2>
+    <p class="section-sub">Each token is designed to maximize yield while keeping your assets liquid and composable across DeFi.</p>
+
+    <div class="products-grid">
+      <!-- weETH -->
+      <div class="product-card weeth">
+        <div class="product-icon weeth">⟠</div>
+        <div class="product-ticker">weETH</div>
+        <div class="product-name">Wrapped ether</div>
+        <div class="product-desc">
+          Liquid restaking token backed by ETH. Earn staking yield + EigenLayer restaking rewards + ether.fi loyalty points — all in one token.
+        </div>
+        <div class="product-metrics">
+          <div>
+            <div class="product-metric-label">Base APY</div>
+            <div class="product-metric-value">2.8%</div>
+          </div>
+          <div>
+            <div class="product-metric-label">TVL</div>
+            <div class="product-metric-value">$9.0B</div>
+          </div>
+        </div>
+        <button class="product-action">Stake ETH → weETH</button>
+      </div>
+
+      <!-- eBTC -->
+      <div class="product-card ebtc">
+        <div class="product-icon ebtc">₿</div>
+        <div class="product-ticker">eBTC</div>
+        <div class="product-name">ether Bitcoin</div>
+        <div class="product-desc">
+          Liquid restaking for BTC. Put your Bitcoin to work in DeFi while maintaining exposure to BTC price appreciation.
+        </div>
+        <div class="product-metrics">
+          <div>
+            <div class="product-metric-label">Base APY</div>
+            <div class="product-metric-value">0.4%</div>
+          </div>
+          <div>
+            <div class="product-metric-label">TVL</div>
+            <div class="product-metric-value">$103.9M</div>
+          </div>
+        </div>
+        <button class="product-action">Stake BTC → eBTC</button>
+      </div>
+
+      <!-- eUSD -->
+      <div class="product-card eusd">
+        <div class="product-icon eusd">◎</div>
+        <div class="product-ticker">eUSD</div>
+        <div class="product-name">ether USD</div>
+        <div class="product-desc">
+          Yield-bearing stablecoin. Earn on-chain yield from your stable holdings without leaving the ether.fi ecosystem.
+        </div>
+        <div class="product-metrics">
+          <div>
+            <div class="product-metric-label">Base APY</div>
+            <div class="product-metric-value">0.6%</div>
+          </div>
+          <div>
+            <div class="product-metric-label">TVL</div>
+            <div class="product-metric-value">$212.5K</div>
+          </div>
+        </div>
+        <button class="product-action">Stake USDC → eUSD</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+  HOW IT WORKS
+══════════════════════════════════════════ -->
+<section class="section how-it-works" id="how-it-works">
+  <div class="container">
+    <div class="section-label">How It Works</div>
+    <h2 class="section-title">Simple in, compounding out.</h2>
+    <p class="section-sub">Restaking is complex under the hood. We built ether.fi so you never have to think about it.</p>
+
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-icon">⬇️</div>
+        <div class="step-title">Deposit ETH</div>
+        <div class="step-desc">Connect your wallet and deposit any amount of ETH — no 32 ETH minimum required.</div>
+        <div class="step-arrow">→</div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-icon">⟠</div>
+        <div class="step-title">Receive weETH</div>
+        <div class="step-desc">You immediately receive weETH — a non-rebasing token that accrues value over time as rewards compound.</div>
+        <div class="step-arrow">→</div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-icon">📈</div>
+        <div class="step-title">Earn Automatically</div>
+        <div class="step-desc">Your weETH earns ETH staking yield, EigenLayer restaking rewards, and ether.fi loyalty points — all passively.</div>
+        <div class="step-arrow">→</div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-icon">🌐</div>
+        <div class="step-title">Use in DeFi</div>
+        <div class="step-desc">Deploy weETH across 400+ protocols — as collateral, in liquidity pools, or bridge it cross-chain.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+  STAKING WIDGET + REWARDS EXPLAINER
+══════════════════════════════════════════ -->
+<section class="section stake-section" id="stake-widget">
+  <div class="container">
+    <div class="stake-layout">
+
+      <!-- Widget -->
+      <div>
+        <div class="section-label">Stake</div>
+        <h2 class="section-title" style="margin-bottom:32px;">Stake your ETH</h2>
+        <div class="stake-widget">
+          <div class="widget-tabs">
+            <button class="widget-tab active" onclick="setTab(this,'Stake')">Stake</button>
+            <button class="widget-tab" onclick="setTab(this,'Unstake')">Unstake</button>
+            <button class="widget-tab" onclick="setTab(this,'Wrap')">Wrap</button>
+          </div>
+
+          <div class="widget-label">You send</div>
+          <div class="widget-input-row">
+            <input class="widget-input" type="number" placeholder="0.0" id="stakeInput" oninput="updateReceive()" />
+            <div class="widget-asset-badge">
+              <div class="asset-icon eth">Ξ</div>
+              <span class="asset-name">ETH</span>
+              <span class="asset-chevron">▾</span>
+            </div>
+          </div>
+          <div class="widget-balance">
+            <span>Balance: 4.823 ETH</span>
+            <span class="widget-balance-max" onclick="document.getElementById('stakeInput').value='4.823';updateReceive()">MAX</span>
+          </div>
+
+          <div class="widget-arrow-divider">
+            <button class="widget-arrow-btn">↕</button>
+          </div>
+
+          <div class="widget-label" style="margin-top:12px">You receive</div>
+          <div class="widget-receive-box">
+            <div class="widget-receive-amount" id="receiveAmount">0.0 weETH</div>
+            <div class="widget-receive-usd" id="receiveUsd">≈ $0.00</div>
+          </div>
+
+          <div class="widget-details">
+            <div class="widget-detail-row">
+              <span class="widget-detail-label">
+                Exchange rate
+                <span class="info-icon">i</span>
+              </span>
+              <span class="widget-detail-value">1 ETH = 0.9507 weETH</span>
+            </div>
+            <div class="widget-detail-row">
+              <span class="widget-detail-label">
+                APY
+                <span class="info-icon">i</span>
+              </span>
+              <span class="widget-detail-value positive">+2.8% base + extras</span>
+            </div>
+            <div class="widget-detail-row">
+              <span class="widget-detail-label">
+                Protocol fee
+                <span class="info-icon">i</span>
+              </span>
+              <span class="widget-detail-value">10% of rewards</span>
+            </div>
+            <div class="widget-detail-row">
+              <span class="widget-detail-label">
+                Withdrawal
+                <span class="info-icon">i</span>
+              </span>
+              <span class="widget-detail-value positive">Instant (if liquidity available)</span>
+            </div>
+          </div>
+
+          <button class="widget-submit" id="stakeBtn">Stake ETH → weETH</button>
+        </div>
+      </div>
+
+      <!-- Rewards explainer — UX challenge: demystify multiple reward streams -->
+      <div class="rewards-explainer">
+        <div class="rewards-title">All your rewards, one token</div>
+        <div class="rewards-subtitle">weETH automatically stacks every reward source so you don't have to manage them individually.</div>
+
+        <div class="reward-streams">
+          <div class="reward-stream">
+            <div class="reward-stream-icon" style="background:rgba(98,126,234,0.15)">🔷</div>
+            <div class="reward-stream-body">
+              <div class="reward-stream-name">ETH Staking Yield</div>
+              <div class="reward-stream-desc">Base Ethereum PoS consensus rewards</div>
+            </div>
+            <div class="reward-stream-apy">~2.5%</div>
+          </div>
+
+          <div class="reward-stream">
+            <div class="reward-stream-icon" style="background:rgba(187,133,255,0.12)">⚡</div>
+            <div class="reward-stream-body">
+              <div class="reward-stream-name">EigenLayer Restaking</div>
+              <div class="reward-stream-desc">Restaking rewards from secured AVS services</div>
+            </div>
+            <div class="reward-stream-apy">~0.3%</div>
+          </div>
+
+          <div class="reward-stream">
+            <div class="reward-stream-icon" style="background:rgba(94,234,212,0.12)">✨</div>
+            <div class="reward-stream-body">
+              <div class="reward-stream-name">ether.fi Loyalty Points</div>
+              <div class="reward-stream-desc">Redeemable for ETHFI governance tokens</div>
+            </div>
+            <div class="reward-stream-apy">ongoing</div>
+          </div>
+
+          <div class="reward-stream">
+            <div class="reward-stream-icon" style="background:rgba(251,191,36,0.1)">🌐</div>
+            <div class="reward-stream-body">
+              <div class="reward-stream-name">DeFi Integration Boosts</div>
+              <div class="reward-stream-desc">Additional yield from Aave, Pendle, Curve, etc.</div>
+            </div>
+            <div class="reward-stream-apy">variable</div>
+          </div>
+
+          <div class="total-apy-row">
+            <span class="total-apy-label">Total effective APY</span>
+            <span class="total-apy-value">2.8%+ <span style="font-size:14px;opacity:0.6">+ points</span></span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+  PORTFOLIO DASHBOARD
+══════════════════════════════════════════ -->
+<section class="section dashboard-section" id="dashboard">
+  <div class="container">
+    <div class="section-label">Portfolio</div>
+    <h2 class="section-title">Your positions, at a glance.</h2>
+    <p class="section-sub">Track your staked assets, accrued rewards, and earning rate in real time — across every product.</p>
+
+    <div class="dashboard-mockup">
+      <div class="dash-header">
+        <div class="dash-title">Portfolio Overview</div>
+        <div style="display:flex;align-items:center;gap:12px">
+          <div class="badge success" style="font-size:11px">Live</div>
+          <div class="dash-wallet">
+            <div class="dash-wallet-dot"></div>
+            0x71Cf…3d4A
+          </div>
+        </div>
+      </div>
+
+      <div class="dash-body">
+        <div class="dash-top-row">
+          <div class="dash-kpi">
+            <div class="dash-kpi-label">Total Portfolio Value</div>
+            <div class="dash-kpi-value">$24,831.40</div>
+            <div class="dash-kpi-change">↑ +$284.17 (1.16%) this month</div>
+          </div>
+          <div class="dash-kpi">
+            <div class="dash-kpi-label">Rewards Earned</div>
+            <div class="dash-kpi-value" style="font-size:22px;color:var(--success)">$284.17</div>
+            <div style="font-size:12px;color:var(--neutral-500);margin-top:4px">Since Jan 2025</div>
+          </div>
+          <div class="dash-kpi">
+            <div class="dash-kpi-label">Earning Rate</div>
+            <div class="dash-kpi-value" style="font-size:22px;color:var(--purple-300)">2.8%</div>
+            <div style="font-size:12px;color:var(--neutral-500);margin-top:4px">Blended APY</div>
+          </div>
+        </div>
+
+        <div class="dash-positions">
+          <div class="dash-positions-header">
+            <span>Asset</span>
+            <span>Holdings</span>
+            <span>Value</span>
+            <span>APY</span>
+            <span>Rewards</span>
+          </div>
+
+          <div class="dash-position-row">
+            <div class="dash-pos-asset">
+              <div class="dash-pos-icon weeth">⟠</div>
+              <div>
+                <div class="dash-pos-name">weETH</div>
+                <div class="dash-pos-sub">Wrapped ether ETH</div>
+              </div>
+            </div>
+            <div class="dash-cell mono">7.432 weETH</div>
+            <div class="dash-cell mono">$22,104.88</div>
+            <div class="dash-cell positive">2.8%</div>
+            <div class="dash-cell">
+              <div style="font-size:13px;color:var(--neutral-300)">$248.91</div>
+              <div class="dash-rewards-bar"><div class="dash-rewards-fill" style="width:82%"></div></div>
+            </div>
+          </div>
+
+          <div class="dash-position-row">
+            <div class="dash-pos-asset">
+              <div class="dash-pos-icon ebtc">₿</div>
+              <div>
+                <div class="dash-pos-name">eBTC</div>
+                <div class="dash-pos-sub">ether Bitcoin</div>
+              </div>
+            </div>
+            <div class="dash-cell mono">0.0298 eBTC</div>
+            <div class="dash-cell mono">$2,456.12</div>
+            <div class="dash-cell positive">0.4%</div>
+            <div class="dash-cell">
+              <div style="font-size:13px;color:var(--neutral-300)">$29.44</div>
+              <div class="dash-rewards-bar"><div class="dash-rewards-fill" style="width:38%"></div></div>
+            </div>
+          </div>
+
+          <div class="dash-position-row">
+            <div class="dash-pos-asset">
+              <div class="dash-pos-icon eusd">◎</div>
+              <div>
+                <div class="dash-pos-name">eUSD</div>
+                <div class="dash-pos-sub">ether USD</div>
+              </div>
+            </div>
+            <div class="dash-cell mono">270.40 eUSD</div>
+            <div class="dash-cell mono">$270.40</div>
+            <div class="dash-cell positive">0.6%</div>
+            <div class="dash-cell">
+              <div style="font-size:13px;color:var(--neutral-300)">$5.82</div>
+              <div class="dash-rewards-bar"><div class="dash-rewards-fill" style="width:22%"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+  TRUST & SECURITY
+══════════════════════════════════════════ -->
+<section class="section trust-section" id="security">
+  <div class="container">
+    <div class="section-label">Security</div>
+    <h2 class="section-title">Your keys. Your assets. Our code, audited.</h2>
+    <p class="section-sub">Non-custodial by design — we can't touch your staked ETH. And every line of our code has been reviewed by leading security firms.</p>
+
+    <div class="trust-grid">
+      <div class="trust-card">
+        <div class="trust-icon">🔑</div>
+        <div class="trust-title">Non-custodial</div>
+        <div class="trust-desc">
+          Unlike most staking services, you generate and hold your own validator keys. ether.fi never has custody of your staked ETH or withdrawal credentials.
+        </div>
+      </div>
+
+      <div class="trust-card">
+        <div class="trust-icon">🛡️</div>
+        <div class="trust-title">Audited by leaders</div>
+        <div class="trust-desc">
+          Our smart contracts have been reviewed by five independent security firms. All reports are public and our code is open-source on GitHub.
+        </div>
+        <div class="auditors">
+          <span class="auditor-badge">Certik</span>
+          <span class="auditor-badge">Nethermind</span>
+          <span class="auditor-badge">Certora</span>
+          <span class="auditor-badge">Zellic</span>
+          <span class="auditor-badge">Halborn</span>
+        </div>
+      </div>
+
+      <div class="trust-card">
+        <div class="trust-icon">📊</div>
+        <div class="trust-title">Proven scale</div>
+        <div class="trust-desc">
+          Trusted by the DeFi community with billions in staked assets — making ether.fi one of the largest liquid restaking protocols on Ethereum.
+        </div>
+        <div class="tvl-display">$9.3B</div>
+        <div class="tvl-label">Total Value Secured</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+  DEFI INTEGRATIONS
+══════════════════════════════════════════ -->
+<section class="section defi-section" id="defi">
+  <div class="container">
+    <div class="section-label">Ecosystem</div>
+    <h2 class="section-title">Liquid across 400+ protocols.</h2>
+    <p class="section-sub">weETH, eBTC and eUSD work natively across the broadest DeFi ecosystem in crypto. Supply, borrow, trade, and earn — without unstaking.</p>
+  </div>
+
+  <div class="protocols-marquee" style="margin-top:48px">
+    <div class="protocols-track" id="protocolTrack">
+      <!-- row rendered by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+  CASH CARD
+══════════════════════════════════════════ -->
+<section class="section cash-section" id="cash">
+  <div class="container">
+    <div class="cash-layout">
+      <div>
+        <div class="section-label">Cash</div>
+        <h2 class="section-title">Spend your yield. Not your principal.</h2>
+        <p class="section-sub" style="margin-bottom:32px">
+          The ether.fi Cash card lets you spend the yield from your weETH holdings in the real world — while your staked ETH keeps compounding.
+        </p>
+        <div class="cashback-benefits">
+          <div class="benefit-item">
+            <div class="benefit-icon" style="background:rgba(251,191,36,0.1)">🚗</div>
+            <div>
+              <div class="benefit-pct">15%</div>
+              <div class="benefit-label">cashback on rides & dining</div>
+            </div>
+          </div>
+          <div class="benefit-item">
+            <div class="benefit-icon" style="background:rgba(187,133,255,0.1)">🛒</div>
+            <div>
+              <div class="benefit-pct">3%</div>
+              <div class="benefit-label">cashback on all other purchases</div>
+            </div>
+          </div>
+          <div class="benefit-item">
+            <div class="benefit-icon" style="background:rgba(74,222,128,0.1)">💳</div>
+            <div>
+              <div class="benefit-pct" style="font-size:16px;font-family:var(--font-body);font-weight:600;color:var(--neutral-100)">Non-custodial</div>
+              <div class="benefit-label">you always control the underlying assets</div>
+            </div>
+          </div>
+        </div>
+        <button class="btn-primary" style="margin-top:28px">Join Waitlist →</button>
+      </div>
+
+      <div class="cash-card-visual">
+        <div class="credit-card">
+          <div class="card-glow"></div>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div class="card-logo">ether.fi</div>
+            <div class="card-chip"></div>
+          </div>
+          <div class="card-number">•••• •••• •••• 4291</div>
+          <div class="card-bottom">
+            <div>
+              <div class="card-holder-label">Card Holder</div>
+              <div class="card-holder-name">A. Satoshi</div>
+            </div>
+            <div class="card-network">VISA</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+  ONBOARDING FLOW
+══════════════════════════════════════════ -->
+<section class="section onboarding-section" id="get-started">
+  <div class="container">
+    <div class="section-label">Get Started</div>
+    <h2 class="section-title">From zero to staking in 3 steps.</h2>
+    <p class="section-sub" style="margin-bottom:0">No validator setup. No 32 ETH requirement. No technical knowledge needed.</p>
+
+    <div class="onboarding-flow">
+      <div class="onboarding-step done">
+        <div class="step-badge">✓</div>
+        <div class="onboarding-step-title">Connect Wallet</div>
+        <div class="onboarding-step-desc">Use MetaMask, Coinbase Wallet, WalletConnect, or any EVM-compatible wallet.</div>
+      </div>
+      <div class="onboarding-step active">
+        <div class="step-badge">2</div>
+        <div class="onboarding-step-title">Choose Amount</div>
+        <div class="onboarding-step-desc">Stake any amount of ETH — from 0.01 ETH upwards. No minimum required.</div>
+      </div>
+      <div class="onboarding-step">
+        <div class="step-badge">3</div>
+        <div class="onboarding-step-title">Confirm & Receive</div>
+        <div class="onboarding-step-desc">Approve the transaction in your wallet. Receive weETH instantly. Rewards start accruing.</div>
+      </div>
+      <div class="onboarding-step">
+        <div class="step-badge">4</div>
+        <div class="onboarding-step-title">Earn & Explore</div>
+        <div class="onboarding-step-desc">Watch your weETH value grow. Deploy into DeFi or simply hold for compounding yield.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+  FOOTER
+══════════════════════════════════════════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-name">ether.fi</div>
+        <div class="footer-brand-tagline">Non-custodial liquid restaking. Stake, earn, spend — do more with your crypto.</div>
+        <div class="footer-social">
+          <div class="social-btn" title="Twitter/X">𝕏</div>
+          <div class="social-btn" title="Discord">💬</div>
+          <div class="social-btn" title="GitHub">⌥</div>
+          <div class="social-btn" title="Telegram">✈</div>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Products</div>
+        <div class="footer-links">
+          <a class="footer-link" href="#">Stake (weETH)</a>
+          <a class="footer-link" href="#">eBTC</a>
+          <a class="footer-link" href="#">eUSD</a>
+          <a class="footer-link" href="#">Cash Card</a>
+          <a class="footer-link" href="#">Liquid Vaults</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Developers</div>
+        <div class="footer-links">
+          <a class="footer-link" href="#">Documentation</a>
+          <a class="footer-link" href="#">GitHub</a>
+          <a class="footer-link" href="#">Security Audits</a>
+          <a class="footer-link" href="#">Contracts</a>
+          <a class="footer-link" href="#">Bug Bounty</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <div class="footer-links">
+          <a class="footer-link" href="#">About</a>
+          <a class="footer-link" href="#">Blog</a>
+          <a class="footer-link" href="#">Press Kit</a>
+          <a class="footer-link" href="#">Careers</a>
+          <a class="footer-link" href="#">Terms & Privacy</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 ether.fi. All rights reserved.</div>
+      <div class="footer-disclaimer">Staking involves risk. Past yield is not indicative of future returns. ether.fi is a non-custodial protocol — users are responsible for their wallet security.</div>
+    </div>
+  </div>
+</footer>
+
+</div><!-- .page -->
+
+<!-- ══════════════════════════════════════════
+  JAVASCRIPT
+══════════════════════════════════════════ -->
+<script>
+// ── Tab switching ──
+function setTab(el, label) {
+  document.querySelectorAll('.widget-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  const btn = document.getElementById('stakeBtn');
+  if (label === 'Stake')   btn.textContent = 'Stake ETH → weETH';
+  if (label === 'Unstake') btn.textContent = 'Unstake weETH → ETH';
+  if (label === 'Wrap')    btn.textContent = 'Wrap eETH → weETH';
+}
+
+// ── Staking calculator ──
+function updateReceive() {
+  const val = parseFloat(document.getElementById('stakeInput').value) || 0;
+  const rate = 0.9507;
+  const ethPrice = 2976.42;
+  const weethAmt = (val * rate).toFixed(4);
+  const usdVal = (val * ethPrice).toLocaleString('en-US', { style:'currency', currency:'USD' });
+  document.getElementById('receiveAmount').textContent = weethAmt > 0 ? weethAmt + ' weETH' : '0.0 weETH';
+  document.getElementById('receiveUsd').textContent = val > 0 ? '≈ ' + usdVal : '≈ $0.00';
+}
+
+// ── Protocols marquee ──
+const protocols = [
+  { name:'Aave', icon:'Aa', color:'#B6509E' },
+  { name:'Pendle', icon:'Pn', color:'#3FCB92' },
+  { name:'Curve', icon:'Cv', color:'#C00' },
+  { name:'Uniswap', icon:'Un', color:'#FF007A' },
+  { name:'Balancer', icon:'Ba', color:'#1E1E1E' },
+  { name:'Gearbox', icon:'Gb', color:'#FF6B35' },
+  { name:'Compound', icon:'Cp', color:'#00D395' },
+  { name:'MorphoBlue', icon:'Mo', color:'#1D4ED8' },
+  { name:'Spark', icon:'Sp', color:'#FF6B35' },
+  { name:'EigenLayer', icon:'EL', color:'#6E56CF' },
+  { name:'Lido', icon:'Li', color:'#00A3FF' },
+  { name:'Frax', icon:'Fr', color:'#333' },
+  { name:'Convex', icon:'Cx', color:'#F5AC37' },
+  { name:'Yearn', icon:'Yr', color:'#006AE3' },
+  { name:'Rocketpool', icon:'Rp', color:'#F5A623' },
+  { name:'dYdX', icon:'dY', color:'#6966FF' },
+  { name:'GMX', icon:'GX', color:'#03D1CF' },
+  { name:'Chainlink', icon:'CL', color:'#375BD2' },
+];
+
+function buildMarquee() {
+  const track = document.getElementById('protocolTrack');
+  const doubled = [...protocols, ...protocols]; // for seamless loop
+  track.innerHTML = doubled.map(p => `
+    <div class="protocol-chip">
+      <div class="protocol-chip-icon" style="background:${p.color}20;color:${p.color};font-size:9px;font-weight:700">${p.icon}</div>
+      ${p.name}
+    </div>
+  `).join('');
+}
+
+buildMarquee();
+
+// ── Subtle number counters for hero stats ──
+function animateCounter(el, target, suffix, decimals=0) {
+  const start = 0;
+  const duration = 1500;
+  const startTime = performance.now();
+  function step(now) {
+    const elapsed = now - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    const current = start + (target - start) * eased;
+    el.textContent = (decimals > 0 ? current.toFixed(decimals) : Math.floor(current)) + suffix;
+    if (progress < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+// Run counters on scroll into view
+const heroStats = document.querySelectorAll('.hero-stat-value');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const el = e.target;
+      const text = el.textContent;
+      if (text.includes('$') && text.includes('B')) {
+        animateCounter(el, parseFloat(text.replace(/[$B]/g,'')), 'B', 1);
+        el.textContent = '$' + el.textContent;
+        setTimeout(() => el.textContent = '$' + parseFloat(text.replace(/[$B]/g,''))*1 + 'B', 10);
+        let val = 0;
+        const t = parseFloat(text.replace(/[$B]/g,''));
+        const dur = 1500; const s = performance.now();
+        function run(now) {
+          const p = Math.min((now-s)/dur,1);
+          const e2 = 1-Math.pow(1-p,3);
+          el.textContent = '$' + (t*e2).toFixed(1) + 'B';
+          if(p<1) requestAnimationFrame(run);
+        }
+        requestAnimationFrame(run);
+      } else if (text.includes('%')) {
+        const t = parseFloat(text);
+        const dur = 1200; const s = performance.now();
+        function run(now) {
+          const p = Math.min((now-s)/dur,1);
+          const e2 = 1-Math.pow(1-p,3);
+          el.textContent = (t*e2).toFixed(1) + '%';
+          if(p<1) requestAnimationFrame(run);
+        }
+        requestAnimationFrame(run);
+      } else if (text.includes('+')) {
+        const t = parseInt(text);
+        const dur = 1200; const s = performance.now();
+        function run(now) {
+          const p = Math.min((now-s)/dur,1);
+          const e2 = 1-Math.pow(1-p,3);
+          el.textContent = Math.floor(t*e2) + '+';
+          if(p<1) requestAnimationFrame(run);
+        }
+        requestAnimationFrame(run);
+      }
+      observer.unobserve(el);
+    }
+  });
+}, { threshold: 0.5 });
+heroStats.forEach(s => observer.observe(s));
+
+// ── Scroll-driven nav active state ──
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-link');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    const top = s.getBoundingClientRect().top;
+    if (top <= 100) current = s.id;
+  });
+  navLinks.forEach(l => {
+    l.classList.toggle('active', l.getAttribute('href') === '#' + current);
+  });
+});
+</script>
+
+</body>
+</html>

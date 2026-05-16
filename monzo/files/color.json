@@ -1,0 +1,143 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amzn/style-dictionary/main/lib/common/schemas/token.json",
+  "$metadata": {
+    "source": "Revolut Brand System — Primitive Colour Tokens",
+    "version": "1.0.0",
+    "notes": "Raw colour values only. No semantic meaning applied here. Use semantic/color.json to assign intent. Compatible with Token Studio (Figma Tokens) and Style Dictionary."
+  },
+  "color": {
+    "navy": {
+      "$description": "Revolut's core dark anchor — Shark. Used as the primary brand dark.",
+      "0":  { "$value": "#FFFFFF", "$type": "color" },
+      "50": { "$value": "#F0F1F2", "$type": "color" },
+      "100": { "$value": "#D6D8DC", "$type": "color" },
+      "200": { "$value": "#AEB3BA", "$type": "color" },
+      "300": { "$value": "#858D97", "$type": "color" },
+      "400": { "$value": "#5C6673", "$type": "color" },
+      "500": { "$value": "#3B4450", "$type": "color" },
+      "600": { "$value": "#2A3140", "$type": "color" },
+      "700": { "$value": "#1E2530", "$type": "color" },
+      "800": { "$value": "#191C1F", "$type": "color", "$description": "Shark — primary brand dark" },
+      "900": { "$value": "#0F1215", "$type": "color" },
+      "950": { "$value": "#08090B", "$type": "color" }
+    },
+    "blue": {
+      "$description": "Revolut's signature Cornflower Blue — primary interactive and brand accent colour.",
+      "50":  { "$value": "#EEF0FE", "$type": "color" },
+      "100": { "$value": "#D9DCFD", "$type": "color" },
+      "200": { "$value": "#B3B9FB", "$type": "color" },
+      "300": { "$value": "#8D96F9", "$type": "color" },
+      "400": { "$value": "#7F84F6", "$type": "color", "$description": "Cornflower Blue — brand signature" },
+      "500": { "$value": "#6B70F3", "$type": "color" },
+      "600": { "$value": "#545AEF", "$type": "color" },
+      "700": { "$value": "#3D43E0", "$type": "color" },
+      "800": { "$value": "#2B30C4", "$type": "color" },
+      "900": { "$value": "#1E228F", "$type": "color" },
+      "950": { "$value": "#111460", "$type": "color" }
+    },
+    "indigo": {
+      "$description": "Deep indigo-purple — used in gradients, premium tier visuals, and the Ultra plan.",
+      "50":  { "$value": "#EEECFD", "$type": "color" },
+      "100": { "$value": "#D8D3FB", "$type": "color" },
+      "200": { "$value": "#B1A7F7", "$type": "color" },
+      "300": { "$value": "#8A7BF3", "$type": "color" },
+      "400": { "$value": "#6E4CE5", "$type": "color" },
+      "500": { "$value": "#5A3ACE", "$type": "color" },
+      "600": { "$value": "#4529B4", "$type": "color" },
+      "700": { "$value": "#321A96", "$type": "color" },
+      "800": { "$value": "#261073", "$type": "color", "$description": "Deep brand purple — Metal/Ultra card tier" },
+      "900": { "$value": "#1A0A52", "$type": "color" },
+      "950": { "$value": "#0E0533", "$type": "color" }
+    },
+    "lime": {
+      "$description": "Revolut brand lime — accent highlight, growth signifier, used sparingly per brand guidelines.",
+      "50":  { "$value": "#F5FBDB", "$type": "color" },
+      "100": { "$value": "#E9F6B2", "$type": "color" },
+      "200": { "$value": "#D3ED65", "$type": "color" },
+      "300": { "$value": "#C2E530", "$type": "color" },
+      "400": { "$value": "#AEDB00", "$type": "color", "$description": "Brand lime — use with caution, max 10% of layout" },
+      "500": { "$value": "#93BB00", "$type": "color" },
+      "600": { "$value": "#789900", "$type": "color" },
+      "700": { "$value": "#5D7800", "$type": "color" },
+      "800": { "$value": "#445800", "$type": "color" },
+      "900": { "$value": "#2C3900", "$type": "color" }
+    },
+    "green": {
+      "$description": "Semantic success / positive states — money in, completed, confirmed.",
+      "50":  { "$value": "#EDFAF3", "$type": "color" },
+      "100": { "$value": "#D0F2E2", "$type": "color" },
+      "200": { "$value": "#A0E4C4", "$type": "color" },
+      "300": { "$value": "#65D4A0", "$type": "color" },
+      "400": { "$value": "#34C17E", "$type": "color" },
+      "500": { "$value": "#1FA965", "$type": "color" },
+      "600": { "$value": "#178C52", "$type": "color" },
+      "700": { "$value": "#116E3F", "$type": "color" },
+      "800": { "$value": "#0C512E", "$type": "color" },
+      "900": { "$value": "#07341D", "$type": "color" }
+    },
+    "red": {
+      "$description": "Semantic error / negative states — money out, failed, declined, destructive actions.",
+      "50":  { "$value": "#FEF2F2", "$type": "color" },
+      "100": { "$value": "#FDE3E3", "$type": "color" },
+      "200": { "$value": "#FBBBBB", "$type": "color" },
+      "300": { "$value": "#F88686", "$type": "color" },
+      "400": { "$value": "#F55252", "$type": "color" },
+      "500": { "$value": "#E83030", "$type": "color" },
+      "600": { "$value": "#C82020", "$type": "color" },
+      "700": { "$value": "#A01818", "$type": "color" },
+      "800": { "$value": "#781010", "$type": "color" },
+      "900": { "$value": "#500A0A", "$type": "color" }
+    },
+    "amber": {
+      "$description": "Semantic warning states — pending, requires attention, review needed.",
+      "50":  { "$value": "#FFFBEB", "$type": "color" },
+      "100": { "$value": "#FEF3C7", "$type": "color" },
+      "200": { "$value": "#FDE68A", "$type": "color" },
+      "300": { "$value": "#FCD34D", "$type": "color" },
+      "400": { "$value": "#FBBF24", "$type": "color" },
+      "500": { "$value": "#F59E0B", "$type": "color" },
+      "600": { "$value": "#D97706", "$type": "color" },
+      "700": { "$value": "#B45309", "$type": "color" },
+      "800": { "$value": "#92400E", "$type": "color" },
+      "900": { "$value": "#78350F", "$type": "color" }
+    },
+    "neutral": {
+      "$description": "True neutrals — backgrounds, borders, text, and surface layers.",
+      "0":   { "$value": "#FFFFFF", "$type": "color" },
+      "50":  { "$value": "#F8F9FA", "$type": "color" },
+      "100": { "$value": "#F1F3F5", "$type": "color" },
+      "200": { "$value": "#E9ECEF", "$type": "color" },
+      "300": { "$value": "#DEE2E6", "$type": "color" },
+      "400": { "$value": "#CED4DA", "$type": "color" },
+      "500": { "$value": "#ADB5BD", "$type": "color" },
+      "600": { "$value": "#868E96", "$type": "color" },
+      "700": { "$value": "#495057", "$type": "color" },
+      "800": { "$value": "#343A40", "$type": "color" },
+      "900": { "$value": "#212529", "$type": "color" },
+      "950": { "$value": "#121416", "$type": "color" },
+      "1000": { "$value": "#000000", "$type": "color" }
+    },
+    "white": {
+      "0": { "$value": "#FFFFFF", "$type": "color" },
+      "alpha": {
+        "5":  { "$value": "rgba(255,255,255,0.05)", "$type": "color" },
+        "10": { "$value": "rgba(255,255,255,0.10)", "$type": "color" },
+        "20": { "$value": "rgba(255,255,255,0.20)", "$type": "color" },
+        "40": { "$value": "rgba(255,255,255,0.40)", "$type": "color" },
+        "60": { "$value": "rgba(255,255,255,0.60)", "$type": "color" },
+        "80": { "$value": "rgba(255,255,255,0.80)", "$type": "color" }
+      }
+    },
+    "black": {
+      "0": { "$value": "#000000", "$type": "color" },
+      "alpha": {
+        "5":  { "$value": "rgba(0,0,0,0.05)", "$type": "color" },
+        "10": { "$value": "rgba(0,0,0,0.10)", "$type": "color" },
+        "20": { "$value": "rgba(0,0,0,0.20)", "$type": "color" },
+        "40": { "$value": "rgba(0,0,0,0.40)", "$type": "color" },
+        "60": { "$value": "rgba(0,0,0,0.60)", "$type": "color" },
+        "80": { "$value": "rgba(0,0,0,0.80)", "$type": "color" }
+      }
+    }
+  }
+}

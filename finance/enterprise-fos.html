@@ -1,0 +1,1787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maples Group · Enterprise Financial OS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ── DESIGN TOKENS ── */
+:root {
+  --paper:   #f0ede7;
+  --canvas:  #f7f5f1;
+  --white:   #ffffff;
+  --sidebar: #e8e4dc;
+  --sidebar-border: rgba(20,18,15,0.09);
+  --ink:     #14120f;
+  --ink-2:   #3d3830;
+  --ink-3:   #7a7068;
+  --ink-4:   #b0a898;
+  --gold:    #8c6820;
+  --gold-lt: #b08830;
+  --gold-bg: #fdf5e6;
+  --rule:    rgba(20,18,15,0.10);
+  --rule-2:  rgba(20,18,15,0.06);
+  --green:   #1e6641;
+  --green-bg:#e8f4ec;
+  --amber:   #96620a;
+  --amber-bg:#fef5e0;
+  --red:     #b03020;
+  --red-bg:  #fcecea;
+  --token:   #4040b8;
+  --token-bg:#eeeeff;
+  --fiat:    #1a5c9a;
+  --fiat-bg: #e6f0fa;
+  --ai:      #5b4fcf;
+  --ai-bg:   #eeebfb;
+  --serif: 'Fraunces', 'Georgia', serif;
+  --sans:  'DM Sans', system-ui, sans-serif;
+  --mono:  'DM Mono', 'Courier New', monospace;
+  --gap: 20px;
+  --r: 4px;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:14px}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100dvh;overflow-x:clip}
+
+/* ── LAYOUT ── */
+.shell{min-height:100dvh}
+.main{margin-left:220px;display:flex;flex-direction:column;min-height:100dvh;background:var(--paper);transition:margin-left 0.2s ease}
+
+/* ── SIDEBAR ── */
+.sidebar{width:220px;flex-shrink:0;background:var(--sidebar);border-right:1px solid var(--rule);display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:200;transition:transform 0.2s ease;overflow-y:auto}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(20,18,15,0.30);z-index:150}
+body.sidebar-open .sidebar-overlay{display:block}
+.logo{padding:20px 18px 16px;border-bottom:1px solid var(--rule);display:flex;align-items:center;gap:10px;flex-shrink:0}
+.logo-mark{width:28px;height:28px;border:1px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:13px;color:var(--gold);letter-spacing:0.5px;flex-shrink:0;font-weight:400}
+.logo-text .wordmark{font-family:var(--serif);font-size:15px;color:var(--ink);letter-spacing:0.2px;font-weight:300;display:block;line-height:1.1;font-style:italic}
+.logo-text .division{font-size:9px;color:var(--ink-3);letter-spacing:1.4px;text-transform:uppercase;font-weight:400;font-family:var(--mono);display:block;margin-top:3px}
+
+.nav{padding:12px 0;flex:1}
+.nav-section{margin-bottom:4px}
+.nav-label{font-size:9px;letter-spacing:1.6px;text-transform:uppercase;color:var(--ink-4);font-family:var(--mono);font-weight:400;padding:8px 18px 4px}
+.nav-item{display:flex;align-items:center;gap:9px;padding:7px 18px;cursor:pointer;border-radius:0;transition:background 0.12s;font-size:12.5px;color:var(--ink-2);font-weight:400;border:none;background:none;width:100%;text-align:left;white-space:nowrap}
+.nav-item svg{width:14px;height:14px;flex-shrink:0;opacity:0.6}
+.nav-item:hover{background:rgba(20,18,15,0.06);color:var(--ink)}
+.nav-item.active{background:var(--gold-bg);color:var(--gold);font-weight:500}
+.nav-item.active svg{opacity:1}
+.nav-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-left:auto}
+
+.role-switch{padding:14px 14px 16px;border-top:1px solid var(--rule);flex-shrink:0}
+.role-label{font-size:9px;letter-spacing:1.4px;text-transform:uppercase;color:var(--ink-4);font-family:var(--mono);margin-bottom:6px}
+.role-select{width:100%;background:var(--canvas);border:1px solid var(--rule);border-radius:var(--r);font-family:var(--sans);font-size:12px;color:var(--ink-2);padding:6px 8px;cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%237a7068'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center}
+
+/* ── TOPBAR ── */
+.topbar{position:sticky;top:0;z-index:100;background:var(--canvas);border-bottom:1px solid var(--rule);padding:14px 28px;display:flex;align-items:center;gap:12px}
+.topbar-hamburger{display:none;background:none;border:none;cursor:pointer;padding:4px;color:var(--ink-2)}
+.topbar-title{font-family:var(--serif);font-size:20px;font-weight:300;color:var(--ink);line-height:1.1;flex:1;font-style:italic}
+.topbar-pills{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.ai-pill{display:inline-flex;align-items:center;gap:5px;background:var(--ai-bg);color:var(--ai);font-size:10px;font-family:var(--mono);letter-spacing:0.8px;text-transform:uppercase;padding:4px 9px;border-radius:20px;font-weight:500;white-space:nowrap}
+.ai-dot{width:6px;height:6px;border-radius:50%;background:var(--ai);animation:pulse-ai 1.8s ease-in-out infinite}
+@keyframes pulse-ai{0%,100%{opacity:1}50%{opacity:0.35}}
+.live-pill{display:inline-flex;align-items:center;gap:5px;background:var(--green-bg);color:var(--green);font-size:10px;font-family:var(--mono);letter-spacing:0.8px;text-transform:uppercase;padding:4px 9px;border-radius:20px;font-weight:500;white-space:nowrap}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 1.4s step-start infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.2}}
+.clock{font-family:var(--mono);font-size:11px;color:var(--ink-3);letter-spacing:0.5px;white-space:nowrap}
+.topbar-btn{background:none;border:1px solid var(--rule);border-radius:var(--r);font-size:11px;font-family:var(--mono);color:var(--ink-3);padding:5px 10px;cursor:pointer;white-space:nowrap;transition:border-color 0.15s,color 0.15s}
+.topbar-btn:hover{border-color:var(--gold);color:var(--gold)}
+
+/* ── CONTENT ── */
+.content{padding:20px 28px;flex:1;width:100%;max-width:1200px;margin-inline:auto;box-sizing:border-box}
+
+/* ── VIEWS ── */
+.view{display:none}
+.view.active{display:block}
+
+/* ── CARDS ── */
+.card{background:var(--white);border:1px solid var(--rule);border-radius:var(--r);padding:18px}
+.card-sm{background:var(--white);border:1px solid var(--rule);border-radius:var(--r);padding:14px}
+.card-title{font-family:var(--serif);font-size:14px;font-weight:400;color:var(--ink);margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;gap:8px;font-style:italic}
+.card-title span{font-size:10px;font-family:var(--mono);font-style:normal;color:var(--ink-3);letter-spacing:0.6px}
+
+/* ── GRIDS ── */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:var(--gap)}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--gap)}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--gap)}
+.g-63{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,1.4fr);gap:var(--gap)}
+.g-36{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,3fr);gap:var(--gap)}
+.stack{display:flex;flex-direction:column;gap:var(--gap)}
+.g2>*,.g3>*,.g4>*,.g-63>*,.g-36>*,.stack>*{min-width:0}
+
+/* ── KPI STRIP ── */
+.kpi-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:var(--gap);margin-bottom:var(--gap)}
+@media(max-width:1200px){.kpi-strip{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:700px){.kpi-strip{grid-template-columns:repeat(2,1fr)}}
+.kpi{background:var(--white);border:1px solid var(--rule);border-radius:var(--r);padding:14px 16px;cursor:pointer;transition:box-shadow 0.15s}
+.kpi:hover{box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+.kpi-label{font-size:10px;font-family:var(--mono);letter-spacing:1px;text-transform:uppercase;color:var(--ink-3);margin-bottom:6px}
+.kpi-value{font-family:var(--serif);font-size:22px;font-weight:300;color:var(--ink);line-height:1}
+.kpi-sub{font-size:10px;color:var(--ink-3);margin-top:4px;font-family:var(--mono)}
+.kpi-spark{height:28px;margin-top:8px}
+
+/* ── BADGES & PILLS ── */
+.badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-family:var(--mono);font-weight:500;padding:2px 7px;border-radius:20px;letter-spacing:0.4px;white-space:nowrap}
+.badge-green{background:var(--green-bg);color:var(--green)}
+.badge-amber{background:var(--amber-bg);color:var(--amber)}
+.badge-red{background:var(--red-bg);color:var(--red)}
+.badge-gold{background:var(--gold-bg);color:var(--gold)}
+.badge-ai{background:var(--ai-bg);color:var(--ai)}
+.badge-token{background:var(--token-bg);color:var(--token)}
+.badge-fiat{background:var(--fiat-bg);color:var(--fiat)}
+
+/* ── TABLES ── */
+.tbl{width:100%;border-collapse:collapse;font-size:12px}
+.tbl th{font-family:var(--mono);font-size:9px;letter-spacing:1.2px;text-transform:uppercase;color:var(--ink-3);font-weight:400;padding:6px 10px;border-bottom:1px solid var(--rule);text-align:left;white-space:nowrap}
+.tbl td{padding:9px 10px;border-bottom:1px solid var(--rule-2);vertical-align:middle}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:rgba(20,18,15,0.02)}
+.tbl-wrap{overflow-x:auto}
+
+/* ── ACTIVITY FEED ── */
+.feed{display:flex;flex-direction:column;gap:0}
+.feed-item{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--rule-2);align-items:flex-start}
+.feed-item:last-child{border-bottom:none}
+.feed-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.feed-body{flex:1;min-width:0}
+.feed-text{font-size:12px;color:var(--ink-2);line-height:1.4}
+.feed-meta{font-size:10px;font-family:var(--mono);color:var(--ink-4);margin-top:2px}
+
+/* ── SYSTEM HEALTH ── */
+.health-strip{display:flex;gap:10px;flex-wrap:wrap}
+.health-item{display:flex;align-items:center;gap:6px;font-size:11px;font-family:var(--mono);color:var(--ink-2)}
+.health-dot{width:7px;height:7px;border-radius:50%}
+
+/* ── PENDING ACTIONS ── */
+.action-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--rule-2)}
+.action-item:last-child{border-bottom:none}
+.action-icon{width:30px;height:30px;border-radius:var(--r);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px}
+.action-body{flex:1;min-width:0}
+.action-title{font-size:12px;font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.action-sub{font-size:10px;font-family:var(--mono);color:var(--ink-3)}
+.action-btn{font-size:10px;font-family:var(--mono);padding:4px 9px;border-radius:var(--r);border:1px solid var(--rule);background:none;cursor:pointer;color:var(--ink-2);white-space:nowrap;flex-shrink:0}
+.action-btn:hover{border-color:var(--gold);color:var(--gold)}
+.action-btn.primary{background:var(--gold);border-color:var(--gold);color:#fff}
+.action-btn.primary:hover{background:var(--gold-lt)}
+
+/* ── FLOW MAP ── */
+.flow-map{width:100%;background:var(--canvas);border-radius:var(--r);overflow:hidden}
+.flow-svg{width:100%;height:auto;display:block}
+
+/* ── SANKEY ── */
+.sankey-wrap{width:100%;background:var(--canvas);border-radius:var(--r);overflow:hidden;padding:10px}
+
+/* ── UPLOAD ZONE ── */
+.upload-zone{border:2px dashed var(--rule);border-radius:var(--r);padding:32px;text-align:center;background:var(--canvas);cursor:pointer;transition:border-color 0.15s}
+.upload-zone:hover{border-color:var(--ai)}
+.upload-icon{font-size:28px;margin-bottom:8px;opacity:0.5}
+.upload-text{font-size:13px;color:var(--ink-2)}
+.upload-sub{font-size:11px;font-family:var(--mono);color:var(--ink-4);margin-top:4px}
+
+/* ── RULE BUILDER ── */
+.rule-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:10px 0;border-bottom:1px solid var(--rule-2)}
+.rule-row:last-child{border-bottom:none}
+.rule-select,.rule-input{font-family:var(--mono);font-size:11px;padding:5px 8px;border:1px solid var(--rule);border-radius:var(--r);background:var(--canvas);color:var(--ink-2)}
+.rule-connector{font-size:10px;font-family:var(--mono);font-weight:500;color:var(--ai);letter-spacing:1px;padding:0 4px}
+.rule-chip{font-size:10px;font-family:var(--mono);padding:3px 8px;border-radius:var(--r);background:var(--ai-bg);color:var(--ai);border:1px solid rgba(91,79,207,0.2)}
+
+/* ── FX CHART ── */
+.fx-chart{width:100%;height:160px}
+
+/* ── COMPLIANCE ISSUE ── */
+.issue-item{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--rule-2);align-items:flex-start}
+.issue-item:last-child{border-bottom:none}
+.issue-sev{width:3px;border-radius:2px;flex-shrink:0;align-self:stretch}
+.issue-body{flex:1;min-width:0}
+.issue-title{font-size:12.5px;font-weight:500;color:var(--ink)}
+.issue-sub{font-size:11px;color:var(--ink-3);font-family:var(--mono);margin-top:2px}
+.issue-actions{display:flex;gap:6px;margin-top:6px}
+
+/* ── THREAD / WORKSPACE ── */
+.thread-item{padding:12px 0;border-bottom:1px solid var(--rule-2)}
+.thread-item:last-child{border-bottom:none}
+.thread-header{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.avatar{width:24px;height:24px;border-radius:50%;background:var(--gold-bg);border:1px solid var(--rule);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;color:var(--gold);flex-shrink:0;font-family:var(--mono)}
+.thread-author{font-size:12px;font-weight:500;color:var(--ink)}
+.thread-time{font-size:10px;font-family:var(--mono);color:var(--ink-4)}
+.thread-msg{font-size:12px;color:var(--ink-2);line-height:1.5}
+.thread-reply{font-size:11px;font-family:var(--mono);color:var(--ai);cursor:pointer;margin-top:4px}
+.thread-reply:hover{text-decoration:underline}
+
+/* ── TASK BOARD ── */
+.board{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gap)}
+.board-col-title{font-size:10px;font-family:var(--mono);letter-spacing:1.2px;text-transform:uppercase;color:var(--ink-3);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.board-card{background:var(--white);border:1px solid var(--rule);border-radius:var(--r);padding:12px;margin-bottom:8px}
+.board-card-title{font-size:12px;font-weight:500;color:var(--ink);margin-bottom:4px}
+.board-card-meta{font-size:10px;font-family:var(--mono);color:var(--ink-3);display:flex;gap:8px;align-items:center}
+
+/* ── PIPELINE TABLE ── */
+.pipeline-trace{font-size:10px;font-family:var(--mono);color:var(--ai);cursor:pointer}
+.pipeline-trace:hover{text-decoration:underline}
+.trace-panel{background:var(--ai-bg);border:1px solid rgba(91,79,207,0.2);border-radius:var(--r);padding:12px;margin-top:6px;font-size:11px;font-family:var(--mono);color:var(--ai-2,var(--ai));display:none}
+.trace-panel.open{display:block}
+
+/* ── HEATMAP ── */
+.heatmap{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.hm-cell{border-radius:2px;aspect-ratio:1;cursor:pointer;transition:opacity 0.15s;position:relative}
+.hm-cell:hover{opacity:0.8}
+.hm-label-row{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-top:4px}
+.hm-label{font-size:9px;font-family:var(--mono);color:var(--ink-4);text-align:center}
+
+/* ── DOC LIBRARY ── */
+.doc-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--rule-2)}
+.doc-row:last-child{border-bottom:none}
+.doc-icon{font-size:18px;flex-shrink:0}
+.doc-body{flex:1;min-width:0}
+.doc-name{font-size:12.5px;font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.doc-meta{font-size:10px;font-family:var(--mono);color:var(--ink-3)}
+.doc-ai-tag{font-size:9px;font-family:var(--mono);color:var(--ai);background:var(--ai-bg);padding:2px 6px;border-radius:20px}
+
+/* ── JURISDICTION RISK ── */
+.jur-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--rule-2)}
+.jur-row:last-child{border-bottom:none}
+.jur-name{font-size:12px;color:var(--ink-2);width:90px;flex-shrink:0}
+.jur-bar-wrap{flex:1;height:6px;background:var(--rule-2);border-radius:3px;overflow:hidden}
+.jur-bar{height:100%;border-radius:3px}
+.jur-score{font-size:10px;font-family:var(--mono);color:var(--ink-3);width:28px;text-align:right;flex-shrink:0}
+
+/* ── CALENDAR ── */
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cal-day-label{font-size:9px;font-family:var(--mono);color:var(--ink-4);text-align:center;letter-spacing:0.5px}
+.cal-day{min-height:36px;border-radius:var(--r);padding:4px;font-size:10px;font-family:var(--mono);color:var(--ink-3);background:var(--canvas)}
+.cal-day.has-event{background:var(--gold-bg);color:var(--gold)}
+.cal-day.has-deadline{background:var(--red-bg);color:var(--red)}
+.cal-day.today{border:1px solid var(--gold)}
+.cal-event{font-size:9px;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* ── LIQUIDITY BANK ── */
+.bank-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--rule-2)}
+.bank-row:last-child{border-bottom:none}
+.bank-name{font-size:12px;color:var(--ink-2);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bank-bar-wrap{width:100px;height:5px;background:var(--rule-2);border-radius:3px;overflow:hidden;flex-shrink:0}
+.bank-bar{height:100%;border-radius:3px;background:var(--fiat)}
+.bank-val{font-size:11px;font-family:var(--mono);color:var(--ink-2);width:72px;text-align:right;flex-shrink:0}
+.bank-limit{font-size:9px;font-family:var(--mono);color:var(--ink-4);width:60px;text-align:right;flex-shrink:0}
+
+/* ── SECTION SPACER ── */
+.section-gap{margin-bottom:var(--gap)}
+
+/* ── SEPARATORS ── */
+.sep{height:1px;background:var(--rule-2);margin:12px 0}
+
+/* ── FORM ELEMENTS ── */
+.field-label{font-size:10px;font-family:var(--mono);letter-spacing:1px;text-transform:uppercase;color:var(--ink-3);margin-bottom:5px}
+.field-input{width:100%;font-family:var(--sans);font-size:13px;padding:8px 10px;border:1px solid var(--rule);border-radius:var(--r);background:var(--canvas);color:var(--ink-2)}
+.field-input:focus{outline:none;border-color:var(--ai)}
+.btn{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;padding:7px 14px;border-radius:var(--r);border:1px solid var(--rule);cursor:pointer;transition:all 0.15s;white-space:nowrap;color:var(--ink-2);background:none}
+.btn:hover{border-color:var(--gold);color:var(--gold)}
+.btn-primary{background:var(--gold);border-color:var(--gold);color:#fff}
+.btn-primary:hover{background:var(--gold-lt);border-color:var(--gold-lt)}
+.btn-ai{background:var(--ai);border-color:var(--ai);color:#fff}
+.btn-ai:hover{opacity:0.9}
+
+/* ── MINI STAT ── */
+.mini-stat{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--rule-2)}
+.mini-stat:last-child{border-bottom:none}
+.mini-stat-label{font-size:11px;color:var(--ink-3)}
+.mini-stat-val{font-size:12px;font-family:var(--mono);font-weight:500;color:var(--ink-2)}
+
+/* ── SEARCH BAR ── */
+.search-bar{display:flex;gap:8px;margin-bottom:var(--gap)}
+.search-input{flex:1;font-family:var(--sans);font-size:13px;padding:8px 12px;border:1px solid var(--rule);border-radius:var(--r);background:var(--canvas);color:var(--ink-2)}
+.search-input:focus{outline:none;border-color:var(--gold)}
+
+/* ── MOBILE ── */
+@media(max-width:900px){
+  .main{margin-left:0}
+  body.sidebar-open .main{margin-left:220px}
+  .topbar-hamburger{display:flex}
+  .kpi-strip{grid-template-columns:repeat(2,1fr)}
+  .g2,.g3,.g-63,.g-36{grid-template-columns:1fr}
+  .g4{grid-template-columns:repeat(2,1fr)}
+  .board{grid-template-columns:1fr}
+  .content{padding:14px 16px}
+  .topbar{padding:12px 16px}
+}
+@media(max-width:500px){
+  .kpi-strip{grid-template-columns:1fr}
+  .g4{grid-template-columns:1fr}
+  .heatmap{grid-template-columns:repeat(5,1fr)}
+  .hm-label-row{grid-template-columns:repeat(5,1fr)}
+}
+
+/* ── PERFORMANCE ── */
+.mover-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--rule-2)}
+.mover-row:last-child{border-bottom:none}
+.mover-rank{font-family:var(--mono);font-size:11px;color:var(--ink-4);width:20px;flex-shrink:0}
+.mover-body{flex:1;min-width:0}
+.mover-title{font-size:12px;font-weight:500;color:var(--ink)}
+.mover-meta{font-size:10px;font-family:var(--mono);color:var(--ink-3);margin-top:2px}
+.mover-amount{font-family:var(--mono);font-size:12px;white-space:nowrap;flex-shrink:0}
+.mover-amount.up{color:var(--green)}
+.mover-amount.dn{color:var(--red)}
+.exec-summary{padding:14px 16px;border-left:2px solid var(--gold);background:var(--gold-bg);font-size:12px;color:var(--ink-2);line-height:1.7;font-weight:300}
+.exec-summary-label{font-family:var(--mono);font-size:9px;color:var(--gold);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px}
+
+/* ── SMART ACTIONS ── */
+.sect-label{font-size:9px;font-family:var(--mono);letter-spacing:1.4px;text-transform:uppercase;color:var(--ink-4);margin-bottom:4px;margin-top:14px}
+.sect-label:first-child{margin-top:0}
+.rec-tag{font-size:9px;font-family:var(--mono);color:var(--gold);background:var(--gold-bg);padding:2px 7px;border-radius:2px;white-space:nowrap;flex-shrink:0;border:1px solid rgba(140,104,32,0.2)}
+.log-row{display:grid;grid-template-columns:52px 58px 110px 1fr 66px;gap:8px;padding:8px 0;border-bottom:1px solid var(--rule-2);font-size:11px;font-family:var(--mono);align-items:center}
+.log-row:last-child{border-bottom:none}
+.log-hash{color:var(--ai)}
+.log-time{color:var(--ink-4)}
+.log-entity{color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.log-action{color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tag{display:inline-block;font-size:9px;padding:2px 6px;border-radius:2px;font-family:var(--mono);letter-spacing:0.5px;white-space:nowrap;font-weight:500}
+.t-g{background:var(--green-bg);color:var(--green)}
+.t-r{background:var(--red-bg);color:var(--red)}
+.t-a{background:var(--amber-bg);color:var(--amber)}
+
+/* ── AUDIT ── */
+.audit-row{display:grid;grid-template-columns:52px 58px 120px 1fr 66px 64px;gap:8px;padding:9px 0;border-bottom:1px solid var(--rule-2);font-size:11px;font-family:var(--mono);align-items:center}
+.audit-row:last-child{border-bottom:none}
+.a-hash{color:var(--ai)}
+.a-time{color:var(--ink-4)}
+.a-entity{color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.a-action{color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.a-amount{color:var(--ink-2);text-align:right}
+
+/* ── RECONCILIATION ── */
+.recon-head{display:grid;grid-template-columns:1fr 1fr 100px 70px;gap:10px;padding:6px 10px;border-bottom:1px solid var(--rule);font-family:var(--mono);font-size:9px;letter-spacing:1.2px;text-transform:uppercase;color:var(--ink-3)}
+.recon-row{display:grid;grid-template-columns:1fr 1fr 100px 70px;gap:10px;padding:9px 10px;border-bottom:1px solid var(--rule-2);font-size:12px;align-items:center}
+.recon-row:last-child{border-bottom:none}
+.recon-row:hover{background:rgba(20,18,15,0.02)}
+.recon-entity{color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.recon-amount{font-family:var(--mono);font-size:11px;color:var(--ink)}
+.anomaly-box{display:flex;gap:10px;padding:12px;border-radius:var(--r);margin-bottom:8px;align-items:flex-start}
+.anomaly-box:last-child{margin-bottom:0}
+.sev-red{background:var(--red-bg);border-left:3px solid var(--red)}
+.sev-amber{background:var(--amber-bg);border-left:3px solid var(--amber)}
+.anomaly-sev{font-size:9px;font-family:var(--mono);font-weight:500;width:36px;flex-shrink:0;padding-top:2px;letter-spacing:0.5px}
+.sev-red .anomaly-sev{color:var(--red)}
+.sev-amber .anomaly-sev{color:var(--amber)}
+.anomaly-body{flex:1;min-width:0}
+.anomaly-title{font-size:12px;font-weight:500;color:var(--ink);margin-bottom:2px}
+.anomaly-desc{font-size:10px;color:var(--ink-3);line-height:1.4;font-family:var(--mono)}
+.anomaly-action{font-size:9px;font-family:var(--mono);padding:4px 8px;border:1px solid var(--rule);border-radius:var(--r);background:none;cursor:pointer;color:var(--ink-3);white-space:nowrap;flex-shrink:0;transition:border-color 0.15s,color 0.15s}
+.anomaly-action:hover{border-color:var(--amber);color:var(--amber)}
+.s-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--rule-2)}
+.s-row:last-child{border-bottom:none}
+.s-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.sd-r{background:var(--red)}
+.sd-a{background:var(--amber)}
+.sd-g{background:var(--green)}
+.s-body{flex:1;min-width:0}
+.s-title{font-size:12px;font-weight:500;color:var(--ink)}
+.s-desc{font-size:10px;font-family:var(--mono);color:var(--ink-3);margin-top:2px}
+.s-action{font-size:10px;font-family:var(--mono);padding:4px 9px;border:1px solid var(--rule);border-radius:var(--r);background:none;cursor:pointer;color:var(--ink-2);white-space:nowrap;flex-shrink:0}
+.s-action:hover{border-color:var(--gold);color:var(--gold)}
+
+/* ── ONBOARDING PIPELINE ── */
+.pipeline-bar{display:flex;align-items:stretch;gap:0;border:1px solid var(--rule);border-radius:var(--r);overflow:hidden;margin-bottom:16px}
+.ps{flex:1;padding:12px 10px;cursor:pointer;border-right:1px solid var(--rule);transition:background 0.12s;text-align:center}
+.ps:last-child{border-right:none}
+.ps:hover{background:var(--canvas)}
+.ps.ps-sel{background:var(--gold-bg);border-bottom:2px solid var(--gold)}
+.ps-count{font-family:var(--serif);font-size:22px;font-weight:300;color:var(--ink);line-height:1}
+.ps-label{font-size:9px;font-family:var(--mono);letter-spacing:0.9px;text-transform:uppercase;color:var(--ink-3);margin-top:4px}
+.ps-dot{width:7px;height:7px;border-radius:50%;margin:5px auto 0}
+.entity-drawer{background:var(--canvas);border:1px solid var(--rule);border-radius:var(--r);padding:16px;margin-bottom:12px}
+.entity-drawer-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;gap:12px}
+.entity-drawer-name{font-family:var(--serif);font-size:15px;font-weight:300;font-style:italic;color:var(--ink)}
+.entity-drawer-meta{font-size:10px;font-family:var(--mono);color:var(--ink-3);margin-top:3px}
+.checklist{display:flex;flex-direction:column;gap:0}
+.cl-item{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--rule-2)}
+.cl-item:last-child{border-bottom:none}
+.cl-icon{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;font-weight:500}
+.cl-done{background:var(--green-bg);color:var(--green)}
+.cl-active{background:var(--amber-bg);color:var(--amber)}
+.cl-pend{background:var(--rule-2);color:var(--ink-4)}
+.cl-body{flex:1;min-width:0}
+.cl-label{font-size:12px;font-weight:500;color:var(--ink)}
+.cl-sub{font-size:10px;font-family:var(--mono);color:var(--ink-3);margin-top:1px}
+
+/* ── ROLE VISIBILITY ── */
+body[data-role="treasury"] .role-compliance{display:none}
+body[data-role="treasury"] .role-investment{display:none}
+body[data-role="compliance"] .role-treasury{display:none}
+body[data-role="compliance"] .role-investment{display:none}
+body[data-role="investment"] .role-treasury{display:none}
+body[data-role="investment"] .role-compliance{display:none}
+</style>
+</head>
+<body data-role="executive">
+
+<div class="sidebar-overlay" onclick="closeSidebar()"></div>
+
+<div class="shell">
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar">
+    <div class="logo">
+      <div class="logo-mark">M</div>
+      <div class="logo-text">
+        <span class="wordmark">Maples Group</span>
+        <span class="division">Enterprise FOS</span>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <div class="nav-section">
+        <div class="nav-label">Operations</div>
+        <button class="nav-item active" onclick="nav('command')">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>
+          Command Centre
+        </button>
+        <button class="nav-item" onclick="nav('flows')">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 8h14M8 1l7 7-7 7"/></svg>
+          Live Flows
+          <span class="nav-dot" style="background:var(--green)"></span>
+        </button>
+        <button class="nav-item" onclick="nav('transactions')">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5h10M3 8h7M3 11h5"/><rect x="1" y="2" width="14" height="12" rx="1"/></svg>
+          Transaction Monitor
+        </button>
+        <button class="nav-item" onclick="nav('liquidity')">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 4v4l3 2"/></svg>
+          Liquidity Map
+        </button>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-label">Intelligence</div>
+        <button class="nav-item" onclick="nav('documents')">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 1h7l4 4v10H4z"/><path d="M11 1v4h4"/></svg>
+          Document Hub
+          <span class="badge badge-ai" style="font-size:9px;padding:1px 5px;margin-left:auto">AI</span>
+        </button>
+        <button class="nav-item" onclick="nav('rules')">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12M2 8h8M2 12h5"/></svg>
+          Rule Engine
+        </button>
+        <button class="nav-item" onclick="nav('market')">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="1,12 5,7 8,10 12,4 15,6"/></svg>
+          Market Intelligence
+        </button>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-label">Analytics</div>
+        <button class="nav-item" onclick="nav('performance')">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="1,12 5,7 8,10 12,4 15,6"/><line x1="1" y1="14" x2="15" y2="14"/></svg>
+          Performance
+        </button>
+        <button class="nav-item" onclick="nav('actions')">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="8,1 10.5,6 15,6.5 11.5,10 12.5,15 8,12.5 3.5,15 4.5,10 1,6.5 5.5,6"/></svg>
+          Smart Actions
+        </button>
+        <button class="nav-item" onclick="nav('audit')">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="1" width="10" height="14" rx="1"/><line x1="6" y1="5" x2="10" y2="5"/><line x1="6" y1="8" x2="10" y2="8"/><line x1="6" y1="11" x2="8" y2="11"/></svg>
+          Audit & Reconciliation
+        </button>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-label">Governance</div>
+        <button class="nav-item" onclick="nav('compliance')">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1l6 3v5c0 3-6 7-6 7S2 12 2 9V4z"/></svg>
+          Compliance
+          <span class="nav-dot" style="background:var(--amber)"></span>
+        </button>
+        <button class="nav-item" onclick="nav('workspace')">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 12V4a1 1 0 011-1h12a1 1 0 011 1v8a1 1 0 01-1 1H5l-4 2V12z"/></svg>
+          Workspace
+        </button>
+      </div>
+    </nav>
+
+    <div class="role-switch">
+      <div class="role-label">Role View</div>
+      <select class="role-select" id="role-select" onchange="setRole(this.value)">
+        <option value="executive">Executive</option>
+        <option value="treasury">Treasury</option>
+        <option value="compliance">Compliance</option>
+        <option value="investment">Investment</option>
+      </select>
+    </div>
+  </aside>
+
+  <!-- ── MAIN ── -->
+  <div class="main">
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <button class="topbar-hamburger" onclick="toggleSidebar()">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="2" y1="4" x2="16" y2="4"/><line x1="2" y1="9" x2="16" y2="9"/><line x1="2" y1="14" x2="16" y2="14"/></svg>
+      </button>
+      <div class="topbar-title" id="top-title">Command<br>Centre</div>
+      <div class="topbar-pills">
+        <span class="ai-pill"><span class="ai-dot"></span>AI Engine</span>
+        <span class="live-pill"><span class="live-dot"></span>Live</span>
+        <span class="clock" id="clock">--:--:--</span>
+        <button class="topbar-btn" onclick="exportReport()">Export</button>
+      </div>
+    </div>
+
+    <!-- ── CONTENT ── -->
+    <div class="content">
+
+      <!-- ════════════════════════════════════════
+           VIEW: COMMAND CENTRE
+      ════════════════════════════════════════ -->
+      <div class="view active" id="view-command">
+        <!-- KPI Strip -->
+        <div class="kpi-strip">
+          <div class="kpi" onclick="drillKpi('aum')">
+            <div class="kpi-label">Total AUM</div>
+            <div class="kpi-value" id="kpi-aum">$48.3B</div>
+            <div class="kpi-sub" id="kpi-aum-sub">↑ 2.1% MTD</div>
+            <svg class="kpi-spark" viewBox="0 0 80 28" preserveAspectRatio="none"><polyline id="spark-aum" points="0,22 12,18 24,20 36,14 48,16 60,10 72,12 80,8" fill="none" stroke="var(--green)" stroke-width="1.5"/></svg>
+          </div>
+          <div class="kpi" onclick="drillKpi('flows')">
+            <div class="kpi-label">Daily Flow</div>
+            <div class="kpi-value" id="kpi-flow">$1.24B</div>
+            <div class="kpi-sub">14 active corridors</div>
+            <svg class="kpi-spark" viewBox="0 0 80 28" preserveAspectRatio="none"><polyline id="spark-flow" points="0,18 12,14 24,22 36,10 48,18 60,12 72,16 80,14" fill="none" stroke="var(--token)" stroke-width="1.5"/></svg>
+          </div>
+          <div class="kpi" onclick="drillKpi('pending')">
+            <div class="kpi-label">Pending</div>
+            <div class="kpi-value" id="kpi-pending">38</div>
+            <div class="kpi-sub">7 require action</div>
+            <svg class="kpi-spark" viewBox="0 0 80 28" preserveAspectRatio="none"><polyline id="spark-pending" points="0,14 12,18 24,12 36,16 48,10 60,20 72,8 80,14" fill="none" stroke="var(--amber)" stroke-width="1.5"/></svg>
+          </div>
+          <div class="kpi" onclick="drillKpi('breaches')">
+            <div class="kpi-label">Breaches</div>
+            <div class="kpi-value" id="kpi-breach">3</div>
+            <div class="kpi-sub">2 escalated today</div>
+            <svg class="kpi-spark" viewBox="0 0 80 28" preserveAspectRatio="none"><polyline id="spark-breach" points="0,22 12,20 24,22 36,18 48,22 60,14 72,18 80,10" fill="none" stroke="var(--red)" stroke-width="1.5"/></svg>
+          </div>
+          <div class="kpi" onclick="drillKpi('ai')">
+            <div class="kpi-label">AI Extractions</div>
+            <div class="kpi-value" id="kpi-ai">312</div>
+            <div class="kpi-sub">Today · 97.4% acc.</div>
+            <svg class="kpi-spark" viewBox="0 0 80 28" preserveAspectRatio="none"><polyline id="spark-ai" points="0,20 12,16 24,12 36,14 48,8 60,10 72,6 80,4" fill="none" stroke="var(--ai)" stroke-width="1.5"/></svg>
+          </div>
+        </div>
+
+        <!-- KPI Drill Panel -->
+        <div id="kpi-drill" style="display:none;margin-bottom:var(--gap)">
+          <div class="card">
+            <div class="card-title">Drill-down <span id="drill-label"></span> <button onclick="document.getElementById('kpi-drill').style.display='none'" style="font-size:11px;font-family:var(--mono);background:none;border:none;cursor:pointer;color:var(--ink-3)">✕ close</button></div>
+            <div id="drill-content"></div>
+          </div>
+        </div>
+
+        <div class="g-63 section-gap">
+          <!-- Left: Exposure Heatmap + Activity Feed -->
+          <div class="stack">
+            <div class="card">
+              <div class="card-title">Exposure Heatmap <span>jurisdiction × asset class</span></div>
+              <div class="heatmap" id="heatmap"></div>
+              <div class="hm-label-row" id="hm-labels"></div>
+              <div style="display:flex;gap:16px;margin-top:10px;flex-wrap:wrap">
+                <span style="font-size:10px;font-family:var(--mono);color:var(--ink-3)">■ <span style="color:var(--green)">Low</span>  ■ <span style="color:var(--amber)">Medium</span>  ■ <span style="color:var(--red)">High</span></span>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-title">Live Activity <span id="feed-count">0 events</span></div>
+              <div class="feed" id="activity-feed"></div>
+            </div>
+          </div>
+          <!-- Right: Pending Actions + System Health -->
+          <div class="stack">
+            <div class="card">
+              <div class="card-title">Pending Actions <span>7 require action</span></div>
+              <div id="pending-actions"></div>
+            </div>
+            <div class="card">
+              <div class="card-title">System Health</div>
+              <div class="health-strip" id="health-strip"></div>
+              <div class="sep"></div>
+              <div class="mini-stat"><span class="mini-stat-label">Message throughput</span><span class="mini-stat-val" id="hs-throughput">4,812 / min</span></div>
+              <div class="mini-stat"><span class="mini-stat-label">API latency (p99)</span><span class="mini-stat-val">41 ms</span></div>
+              <div class="mini-stat"><span class="mini-stat-label">Queue depth</span><span class="mini-stat-val" id="hs-queue">184</span></div>
+              <div class="mini-stat"><span class="mini-stat-label">AI engine uptime</span><span class="mini-stat-val">99.98%</span></div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /view-command -->
+
+      <!-- ════════════════════════════════════════
+           VIEW: LIVE FLOWS
+      ════════════════════════════════════════ -->
+      <div class="view" id="view-flows">
+        <div class="section-gap">
+          <div class="card">
+            <div class="card-title">Flow Map <span>real-time settlement corridors</span></div>
+            <svg class="flow-svg" viewBox="0 0 800 340" style="max-height:min(40vh,380px)">
+              <defs>
+                <marker id="arr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+                  <path d="M0,0 L6,3 L0,6 Z" fill="var(--gold)" opacity="0.7"/>
+                </marker>
+                <marker id="arr-r" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+                  <path d="M0,0 L6,3 L0,6 Z" fill="var(--red)" opacity="0.7"/>
+                </marker>
+              </defs>
+              <!-- Nodes -->
+              <g id="flow-nodes">
+                <circle cx="120" cy="170" r="28" fill="var(--fiat-bg)" stroke="var(--fiat)" stroke-width="1.5"/>
+                <text x="120" y="174" text-anchor="middle" font-size="9" font-family="DM Mono,monospace" fill="var(--fiat)">CAYMAN</text>
+                <circle cx="300" cy="90" r="28" fill="var(--fiat-bg)" stroke="var(--fiat)" stroke-width="1.5"/>
+                <text x="300" y="94" text-anchor="middle" font-size="9" font-family="DM Mono,monospace" fill="var(--fiat)">LONDON</text>
+                <circle cx="300" cy="260" r="28" fill="var(--gold-bg)" stroke="var(--gold)" stroke-width="1.5"/>
+                <text x="300" y="264" text-anchor="middle" font-size="9" font-family="DM Mono,monospace" fill="var(--gold)">DUBLIN</text>
+                <circle cx="480" cy="170" r="32" fill="var(--gold-bg)" stroke="var(--gold)" stroke-width="2"/>
+                <text x="480" y="168" text-anchor="middle" font-size="9" font-family="DM Mono,monospace" fill="var(--gold)" font-weight="500">HUB</text>
+                <text x="480" y="180" text-anchor="middle" font-size="8" font-family="DM Mono,monospace" fill="var(--gold)">JERSEY</text>
+                <circle cx="660" cy="100" r="26" fill="var(--token-bg)" stroke="var(--token)" stroke-width="1.5"/>
+                <text x="660" y="104" text-anchor="middle" font-size="9" font-family="DM Mono,monospace" fill="var(--token)">HONG KONG</text>
+                <circle cx="660" cy="240" r="26" fill="var(--green-bg)" stroke="var(--green)" stroke-width="1.5"/>
+                <text x="660" y="244" text-anchor="middle" font-size="9" font-family="DM Mono,monospace" fill="var(--green)">SINGAPORE</text>
+                <circle cx="480" cy="310" r="22" fill="var(--red-bg)" stroke="var(--red)" stroke-width="1.5"/>
+                <text x="480" y="314" text-anchor="middle" font-size="9" font-family="DM Mono,monospace" fill="var(--red)">BLOCKED</text>
+              </g>
+              <!-- Edges -->
+              <line x1="148" y1="160" x2="272" y2="100" stroke="var(--fiat)" stroke-width="1.8" stroke-dasharray="6,3" opacity="0.6" marker-end="url(#arr)"/>
+              <line x1="148" y1="180" x2="272" y2="250" stroke="var(--gold)" stroke-width="1.8" stroke-dasharray="6,3" opacity="0.6" marker-end="url(#arr)"/>
+              <line x1="328" y1="98" x2="448" y2="152" stroke="var(--fiat)" stroke-width="2" opacity="0.7" marker-end="url(#arr)"/>
+              <line x1="328" y1="252" x2="448" y2="188" stroke="var(--gold)" stroke-width="2" opacity="0.7" marker-end="url(#arr)"/>
+              <line x1="512" y1="152" x2="634" y2="112" stroke="var(--token)" stroke-width="1.8" stroke-dasharray="6,3" opacity="0.6" marker-end="url(#arr)"/>
+              <line x1="512" y1="188" x2="634" y2="228" stroke="var(--green)" stroke-width="1.8" stroke-dasharray="6,3" opacity="0.6" marker-end="url(#arr)"/>
+              <line x1="480" y1="202" x2="480" y2="288" stroke="var(--red)" stroke-width="1.5" stroke-dasharray="4,4" opacity="0.7" marker-end="url(#arr-r)"/>
+              <!-- Animated flow particles -->
+              <circle r="5" fill="var(--gold)" opacity="0.8">
+                <animateMotion dur="3s" repeatCount="indefinite" path="M148,160 L328,98 L448,152"/>
+              </circle>
+              <circle r="4" fill="var(--fiat)" opacity="0.7">
+                <animateMotion dur="4s" repeatCount="indefinite" path="M148,180 L328,252 L448,188"/>
+              </circle>
+              <circle r="3" fill="var(--token)" opacity="0.6">
+                <animateMotion dur="5s" repeatCount="indefinite" path="M512,152 L634,112"/>
+              </circle>
+            </svg>
+          </div>
+        </div>
+
+        <div class="g-63">
+          <div class="card">
+            <div class="card-title">Settlement Queue <span>last 30 min</span></div>
+            <div class="tbl-wrap">
+              <table class="tbl">
+                <thead><tr><th>Ref</th><th>From</th><th>To</th><th>Amount</th><th>Status</th><th>ETA</th></tr></thead>
+                <tbody id="flow-table"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="stack">
+            <div class="card">
+              <div class="card-title">Blocked Flows <span style="color:var(--red)">3 flagged</span></div>
+              <div class="action-item">
+                <div class="action-icon" style="background:var(--red-bg)">🚫</div>
+                <div class="action-body"><div class="action-title">Cayman → Malta: AML Hold</div><div class="action-sub">$4.2M · 02:14 elapsed</div></div>
+                <button class="action-btn primary">Review</button>
+              </div>
+              <div class="action-item">
+                <div class="action-icon" style="background:var(--amber-bg)">⚠️</div>
+                <div class="action-body"><div class="action-title">Singapore: FX Limit Breach</div><div class="action-sub">$890K · SGD/USD</div></div>
+                <button class="action-btn">Approve</button>
+              </div>
+              <div class="action-item">
+                <div class="action-icon" style="background:var(--amber-bg)">⚠️</div>
+                <div class="action-body"><div class="action-title">Dublin: Docs Incomplete</div><div class="action-sub">$1.1M · 3 docs missing</div></div>
+                <button class="action-btn">Upload</button>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-title">Volume 24h</div>
+              <div class="mini-stat"><span class="mini-stat-label">Settled</span><span class="mini-stat-val">$2.81B</span></div>
+              <div class="mini-stat"><span class="mini-stat-label">Pending</span><span class="mini-stat-val">$480M</span></div>
+              <div class="mini-stat"><span class="mini-stat-label">Blocked</span><span class="mini-stat-val" style="color:var(--red)">$6.2M</span></div>
+              <div class="mini-stat"><span class="mini-stat-label">Failed</span><span class="mini-stat-val" style="color:var(--red)">$1.4M</span></div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /view-flows -->
+
+      <!-- ════════════════════════════════════════
+           VIEW: DOCUMENT HUB
+      ════════════════════════════════════════ -->
+      <div class="view" id="view-documents">
+        <div class="g-63">
+          <div class="stack">
+            <div class="card">
+              <div class="card-title">Upload Documents</div>
+              <div class="upload-zone" onclick="simulateUpload()">
+                <div class="upload-icon">📄</div>
+                <div class="upload-text">Drop files here or click to upload</div>
+                <div class="upload-sub">PDF, DOCX, XLSX · AI extraction enabled</div>
+              </div>
+              <div id="upload-progress" style="display:none;margin-top:12px">
+                <div style="font-size:11px;font-family:var(--mono);color:var(--ai);margin-bottom:6px">⚙ AI extracting rules and obligations…</div>
+                <div style="height:4px;background:var(--rule-2);border-radius:2px;overflow:hidden"><div id="upload-bar" style="height:100%;background:var(--ai);width:0%;transition:width 0.3s;border-radius:2px"></div></div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-title">Validation Queue <span>4 pending review</span></div>
+              <div class="action-item">
+                <div class="action-icon" style="background:var(--ai-bg)">🤖</div>
+                <div class="action-body"><div class="action-title">AIFMD Annex IV — Q1</div><div class="action-sub">AI confidence: 94% · 12 rules extracted</div></div>
+                <button class="action-btn primary">Validate</button>
+              </div>
+              <div class="action-item">
+                <div class="action-icon" style="background:var(--amber-bg)">📋</div>
+                <div class="action-body"><div class="action-title">Subscription Agreement</div><div class="action-sub">AI confidence: 78% · Low — review needed</div></div>
+                <button class="action-btn">Review</button>
+              </div>
+              <div class="action-item">
+                <div class="action-icon" style="background:var(--green-bg)">✓</div>
+                <div class="action-body"><div class="action-title">CRS Filing Template</div><div class="action-sub">AI confidence: 99% · Ready to apply</div></div>
+                <button class="action-btn">Apply</button>
+              </div>
+            </div>
+          </div>
+          <div class="stack">
+            <div class="card">
+              <div class="card-title">Document Library <span>48 documents</span></div>
+              <div class="search-bar">
+                <input class="search-input" placeholder="Search documents…" oninput="filterDocs(this.value)">
+              </div>
+              <div id="doc-library"></div>
+            </div>
+            <div class="card">
+              <div class="card-title">Extracted Rules <span>AI · last 24h</span></div>
+              <div id="extracted-rules"></div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /view-documents -->
+
+      <!-- ════════════════════════════════════════
+           VIEW: RULE ENGINE
+      ════════════════════════════════════════ -->
+      <div class="view" id="view-rules">
+        <div class="g-63">
+          <div class="stack">
+            <div class="card">
+              <div class="card-title">Rule Library <span>24 active rules</span></div>
+              <div class="search-bar">
+                <input class="search-input" placeholder="Search rules…">
+                <button class="btn btn-primary">+ New Rule</button>
+              </div>
+              <div id="rule-library"></div>
+            </div>
+            <div class="card">
+              <div class="card-title">Conflict Detection <span class="badge badge-amber">2 conflicts</span></div>
+              <div class="action-item">
+                <div class="action-icon" style="background:var(--amber-bg)">⚡</div>
+                <div class="action-body"><div class="action-title">Rule #12 vs Rule #18: Overlap on SGD</div><div class="action-sub">Both trigger at $500K threshold — ambiguous priority</div></div>
+                <button class="action-btn">Resolve</button>
+              </div>
+              <div class="action-item">
+                <div class="action-icon" style="background:var(--amber-bg)">⚡</div>
+                <div class="action-body"><div class="action-title">Rule #7 vs AI Extract #3</div><div class="action-sub">Manual rule contradicts AI-extracted AIFMD obligation</div></div>
+                <button class="action-btn">Review</button>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">Visual Rule Builder</div>
+            <div style="font-size:11px;font-family:var(--mono);color:var(--ink-3);margin-bottom:12px;letter-spacing:0.5px">IF / THEN / ALERT</div>
+            <div id="rule-builder">
+              <div class="rule-row">
+                <span class="rule-connector">IF</span>
+                <select class="rule-select"><option>Transaction Amount</option><option>Jurisdiction</option><option>Asset Class</option><option>Counterparty</option></select>
+                <select class="rule-select"><option>exceeds</option><option>equals</option><option>is below</option><option>is in</option></select>
+                <input class="rule-input" value="$1,000,000" style="width:110px">
+              </div>
+              <div class="rule-row">
+                <span class="rule-connector">AND</span>
+                <select class="rule-select"><option>Jurisdiction</option><option>Transaction Amount</option><option>Currency</option></select>
+                <select class="rule-select"><option>is in</option><option>equals</option><option>is not in</option></select>
+                <span class="rule-chip">Cayman</span>
+                <span class="rule-chip">BVI</span>
+                <span class="rule-chip">+ Add</span>
+              </div>
+              <div class="rule-row">
+                <span class="rule-connector">THEN</span>
+                <select class="rule-select"><option>Require approval</option><option>Block transaction</option><option>Alert compliance</option><option>Flag for AML</option></select>
+              </div>
+              <div class="rule-row">
+                <span class="rule-connector">ALERT</span>
+                <select class="rule-select"><option>Compliance Officer</option><option>Treasury</option><option>Executive</option><option>All roles</option></select>
+                <select class="rule-select"><option>Immediately</option><option>Within 1h</option><option>Daily digest</option></select>
+              </div>
+              <div style="display:flex;gap:8px;margin-top:14px">
+                <button class="btn btn-ai">Test Rule</button>
+                <button class="btn btn-primary">Save Rule</button>
+                <button class="btn" style="margin-left:auto">Discard</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /view-rules -->
+
+      <!-- ════════════════════════════════════════
+           VIEW: MARKET INTELLIGENCE
+      ════════════════════════════════════════ -->
+      <div class="view" id="view-market">
+        <div class="g-63 section-gap">
+          <div class="card">
+            <div class="card-title">FX Rates <span id="fx-time">live</span></div>
+            <svg id="fx-chart" class="fx-chart" viewBox="0 0 560 160" preserveAspectRatio="none">
+              <defs><linearGradient id="fx-grad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="var(--gold)" stop-opacity="0.18"/><stop offset="100%" stop-color="var(--gold)" stop-opacity="0"/></linearGradient></defs>
+              <path id="fx-area" fill="url(#fx-grad)"/>
+              <path id="fx-line" fill="none" stroke="var(--gold)" stroke-width="2"/>
+              <text x="10" y="150" font-size="9" font-family="DM Mono,monospace" fill="var(--ink-4)">EUR/USD</text>
+            </svg>
+            <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:10px">
+              <div><div class="kpi-label">EUR/USD</div><div style="font-family:var(--mono);font-size:14px;color:var(--ink)" id="fx-eurusd">1.0842</div></div>
+              <div><div class="kpi-label">GBP/USD</div><div style="font-family:var(--mono);font-size:14px;color:var(--ink)" id="fx-gbpusd">1.2710</div></div>
+              <div><div class="kpi-label">USD/SGD</div><div style="font-family:var(--mono);font-size:14px;color:var(--ink)" id="fx-usdsgd">1.3480</div></div>
+              <div><div class="kpi-label">USD/HKD</div><div style="font-family:var(--mono);font-size:14px;color:var(--ink)">7.8190</div></div>
+              <div><div class="kpi-label">USD/KYD</div><div style="font-family:var(--mono);font-size:14px;color:var(--ink)">0.8204</div></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">AI Insights <span class="badge badge-ai">3 new</span></div>
+            <div id="ai-insights"></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Jurisdiction Risk Index</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--gap)">
+            <div id="jur-risk-left"></div>
+            <div id="jur-risk-right"></div>
+          </div>
+        </div>
+      </div><!-- /view-market -->
+
+      <!-- ════════════════════════════════════════
+           VIEW: TRANSACTION MONITOR
+      ════════════════════════════════════════ -->
+      <div class="view" id="view-transactions">
+        <div class="search-bar section-gap" style="margin-bottom:var(--gap)">
+          <input class="search-input" placeholder="Search transactions by ref, entity, amount…" oninput="filterTxns(this.value)">
+          <select class="rule-select" onchange="filterTxnStatus(this.value)" style="width:auto">
+            <option value="">All statuses</option>
+            <option value="settled">Settled</option>
+            <option value="pending">Pending</option>
+            <option value="blocked">Blocked</option>
+            <option value="failed">Failed</option>
+          </select>
+          <button class="btn btn-primary">Export CSV</button>
+        </div>
+        <div class="card">
+          <div class="card-title">Transaction Pipeline <span id="txn-count">0 transactions</span></div>
+          <div class="tbl-wrap">
+            <table class="tbl">
+              <thead><tr><th>Ref</th><th>Date</th><th>From</th><th>To</th><th>Amount</th><th>Currency</th><th>Status</th><th>Risk</th><th>Compliance Trace</th></tr></thead>
+              <tbody id="txn-table"></tbody>
+            </table>
+          </div>
+        </div>
+      </div><!-- /view-transactions -->
+
+      <!-- ════════════════════════════════════════
+           VIEW: LIQUIDITY MAP
+      ════════════════════════════════════════ -->
+      <div class="view" id="view-liquidity">
+        <div class="section-gap">
+          <div class="card">
+            <div class="card-title">Liquidity Flow — Sankey <span>real-time intraday</span></div>
+            <svg viewBox="0 0 760 280" style="width:100%;max-height:min(38vh,300px);display:block">
+              <!-- Sankey-style node diagram -->
+              <!-- Source nodes (left) -->
+              <rect x="20" y="30" width="16" height="90" rx="2" fill="var(--fiat)" opacity="0.85"/>
+              <text x="42" y="58" font-size="9" font-family="DM Mono,monospace" fill="var(--ink-2)">HSBC</text>
+              <text x="42" y="70" font-size="9" font-family="DM Mono,monospace" fill="var(--ink-3)">$480M</text>
+
+              <rect x="20" y="140" width="16" height="70" rx="2" fill="var(--fiat)" opacity="0.7"/>
+              <text x="42" y="162" font-size="9" font-family="DM Mono,monospace" fill="var(--ink-2)">Citi</text>
+              <text x="42" y="174" font-size="9" font-family="DM Mono,monospace" fill="var(--ink-3)">$310M</text>
+
+              <rect x="20" y="226" width="16" height="40" rx="2" fill="var(--fiat)" opacity="0.6"/>
+              <text x="42" y="244" font-size="9" font-family="DM Mono,monospace" fill="var(--ink-2)">JPM</text>
+              <text x="42" y="256" font-size="9" font-family="DM Mono,monospace" fill="var(--ink-3)">$190M</text>
+
+              <!-- Hub (center) -->
+              <rect x="340" y="60" width="18" height="160" rx="2" fill="var(--gold)" opacity="0.85"/>
+              <text x="365" y="130" font-size="9" font-family="DM Mono,monospace" fill="var(--gold)">HUB</text>
+              <text x="365" y="142" font-size="9" font-family="DM Mono,monospace" fill="var(--ink-3)">$980M</text>
+
+              <!-- Dest nodes (right) -->
+              <rect x="710" y="40" width="16" height="80" rx="2" fill="var(--token)" opacity="0.8"/>
+              <text x="694" y="75" font-size="9" font-family="DM Mono,monospace" fill="var(--token)" text-anchor="end">HK</text>
+              <text x="694" y="88" font-size="9" font-family="DM Mono,monospace" fill="var(--ink-3)" text-anchor="end">$380M</text>
+
+              <rect x="710" y="140" width="16" height="60" rx="2" fill="var(--green)" opacity="0.75"/>
+              <text x="694" y="166" font-size="9" font-family="DM Mono,monospace" fill="var(--green)" text-anchor="end">SGP</text>
+              <text x="694" y="178" font-size="9" font-family="DM Mono,monospace" fill="var(--ink-3)" text-anchor="end">$280M</text>
+
+              <rect x="710" y="218" width="16" height="46" rx="2" fill="var(--fiat)" opacity="0.7"/>
+              <text x="694" y="238" font-size="9" font-family="DM Mono,monospace" fill="var(--fiat)" text-anchor="end">EUR</text>
+              <text x="694" y="250" font-size="9" font-family="DM Mono,monospace" fill="var(--ink-3)" text-anchor="end">$210M</text>
+
+              <!-- Flow paths (bezier) -->
+              <path d="M36,75 C180,75 200,140 340,140" fill="var(--fiat)" fill-opacity="0.12" stroke="var(--fiat)" stroke-width="0.8" stroke-opacity="0.3"/>
+              <path d="M36,175 C180,175 200,140 340,140" fill="var(--fiat)" fill-opacity="0.09" stroke="var(--fiat)" stroke-width="0.8" stroke-opacity="0.25"/>
+              <path d="M36,246 C180,246 200,200 340,200" fill="var(--fiat)" fill-opacity="0.07" stroke="var(--fiat)" stroke-width="0.8" stroke-opacity="0.2"/>
+              <path d="M358,100 C520,100 540,80 710,80" fill="var(--token)" fill-opacity="0.10" stroke="var(--token)" stroke-width="0.8" stroke-opacity="0.3"/>
+              <path d="M358,170 C520,170 540,170 710,170" fill="var(--green)" fill-opacity="0.09" stroke="var(--green)" stroke-width="0.8" stroke-opacity="0.25"/>
+              <path d="M358,200 C520,200 540,230 710,230" fill="var(--fiat)" fill-opacity="0.07" stroke="var(--fiat)" stroke-width="0.8" stroke-opacity="0.2"/>
+            </svg>
+          </div>
+        </div>
+        <div class="g-63">
+          <div class="card">
+            <div class="card-title">Bank Account Summary</div>
+            <div id="bank-accounts"></div>
+          </div>
+          <div class="card">
+            <div class="card-title">Intraday Limits</div>
+            <div id="intraday-limits"></div>
+          </div>
+        </div>
+      </div><!-- /view-liquidity -->
+
+      <!-- ════════════════════════════════════════
+           VIEW: COMPLIANCE
+      ════════════════════════════════════════ -->
+      <div class="view" id="view-compliance">
+
+        <!-- ── SECTION 1: ENTITY ONBOARDING PIPELINE ── -->
+        <div class="card section-gap">
+          <div class="card-title">Entity Onboarding Pipeline
+            <span id="pipeline-subtitle">click a stage to filter</span>
+          </div>
+          <div class="pipeline-bar" id="pipeline-bar"></div>
+          <div id="entity-drawer" style="display:none" class="entity-drawer"></div>
+          <div class="tbl-wrap">
+            <table class="tbl">
+              <thead>
+                <tr><th>Entity / Fund</th><th>Type</th><th>Jurisdiction</th><th>Stage</th><th>Assigned To</th><th>Days Open</th><th></th></tr>
+              </thead>
+              <tbody id="onboarding-table"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="g-63">
+          <div class="stack">
+
+            <!-- ── SECTION 2: TRANSACTION EXCEPTIONS ── -->
+            <div class="card">
+              <div class="card-title">Transaction Exception Monitor
+                <span style="display:flex;align-items:center;gap:6px">
+                  <span class="badge badge-amber">5 open</span>
+                  <span style="font-size:9px;font-family:var(--mono);color:var(--ink-4)">post-clearance only</span>
+                </span>
+              </div>
+              <div style="font-size:10px;font-family:var(--mono);color:var(--ink-4);margin-bottom:10px;padding:6px 8px;background:var(--canvas);border-radius:var(--r)">All entities below are fully onboarded &amp; KYC/AML cleared. Exceptions are ongoing monitoring triggers.</div>
+              <div id="txn-exceptions"></div>
+            </div>
+
+            <!-- ── RULE EVAL LOG ── -->
+            <div class="card">
+              <div class="card-title">Rule Evaluation Log <span>live · last 50 events</span></div>
+              <div class="tbl-wrap">
+                <table class="tbl">
+                  <thead><tr><th>Time</th><th>Rule</th><th>Entity</th><th>Result</th></tr></thead>
+                  <tbody id="rule-log"></tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ── SECTION 3: REGULATORY OBLIGATIONS ── -->
+          <div class="card">
+            <div class="card-title">Regulatory Obligations</div>
+            <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:6px">
+              <span style="font-size:9px;font-family:var(--mono);color:var(--ink-4);text-align:center">M</span>
+              <span style="font-size:9px;font-family:var(--mono);color:var(--ink-4);text-align:center">T</span>
+              <span style="font-size:9px;font-family:var(--mono);color:var(--ink-4);text-align:center">W</span>
+              <span style="font-size:9px;font-family:var(--mono);color:var(--ink-4);text-align:center">T</span>
+              <span style="font-size:9px;font-family:var(--mono);color:var(--ink-4);text-align:center">F</span>
+              <span style="font-size:9px;font-family:var(--mono);color:var(--ink-4);text-align:center">S</span>
+              <span style="font-size:9px;font-family:var(--mono);color:var(--ink-4);text-align:center">S</span>
+            </div>
+            <div class="cal-grid" id="reg-calendar"></div>
+            <div class="sep"></div>
+            <div style="font-size:9px;font-family:var(--mono);letter-spacing:1.2px;text-transform:uppercase;color:var(--ink-4);margin-bottom:8px">Upcoming Obligations</div>
+            <div id="reg-deadlines"></div>
+          </div>
+        </div>
+
+      </div><!-- /view-compliance -->
+
+      <!-- ════════════════════════════════════════
+           VIEW: WORKSPACE
+      ════════════════════════════════════════ -->
+      <div class="view" id="view-workspace">
+        <div class="g-63">
+          <div class="stack">
+            <div class="card">
+              <div class="card-title">Discussions <span>3 active threads</span></div>
+              <div id="threads"></div>
+            </div>
+            <div class="card">
+              <div class="card-title">Reply</div>
+              <div class="field-label">Message</div>
+              <textarea class="field-input" rows="3" placeholder="Type your message…" style="resize:vertical;font-family:var(--sans)"></textarea>
+              <div style="display:flex;gap:8px;margin-top:8px">
+                <button class="btn btn-primary">Send</button>
+                <button class="btn btn-ai">Ask AI</button>
+              </div>
+            </div>
+          </div>
+          <div class="stack">
+            <div class="card">
+              <div class="card-title">Task Board</div>
+              <div class="board">
+                <div>
+                  <div class="board-col-title"><span style="width:8px;height:8px;border-radius:50%;background:var(--ink-4);display:inline-block"></span>To Do</div>
+                  <div id="board-todo"></div>
+                </div>
+                <div>
+                  <div class="board-col-title"><span style="width:8px;height:8px;border-radius:50%;background:var(--amber);display:inline-block"></span>In Progress</div>
+                  <div id="board-progress"></div>
+                </div>
+                <div>
+                  <div class="board-col-title"><span style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block"></span>Done</div>
+                  <div id="board-done"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /view-workspace -->
+
+    </div><!-- /content -->
+  </div><!-- /main -->
+</div><!-- /shell -->
+
+<script>
+/* ── NAV TITLES ── */
+const TITLES = {
+  command:      'Command Centre',
+  flows:        'Live Flows',
+  documents:    'Document Hub',
+  rules:        'Rule Engine',
+  market:       'Market Intelligence',
+  transactions: 'Transaction Monitor',
+  liquidity:    'Liquidity Map',
+  compliance:   'Compliance & Onboarding',
+  workspace:    'Workspace',
+};
+
+function nav(v){
+  const viewEl=document.getElementById('view-'+v);
+  if(!viewEl)return;
+  document.querySelectorAll('.view').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
+  viewEl.classList.add('active');
+  // highlight matching nav item whether called from click or programmatically
+  const btn=document.querySelector(`.nav-item[onclick*="nav('${v}')"]`);
+  if(btn)btn.classList.add('active');
+  const t=TITLES[v]||'';
+  const sp=t.indexOf(' ');
+  document.getElementById('top-title').innerHTML=sp>-1?t.slice(0,sp)+'<br>'+t.slice(sp+1):t;
+}
+
+/* ── SIDEBAR ── */
+function toggleSidebar(){document.body.classList.toggle('sidebar-open')}
+function closeSidebar(){document.body.classList.remove('sidebar-open')}
+
+/* ── ROLE ── */
+function setRole(r){document.body.setAttribute('data-role',r)}
+
+/* ── CLOCK ── */
+function updateClock(){
+  const n=new Date();
+  document.getElementById('clock').textContent=
+    n.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',second:'2-digit'})+' UTC';
+}
+setInterval(updateClock,1000);updateClock();
+
+/* ── EXPORT ── */
+function exportReport(){alert('Generating PDF report… (demo)')}
+
+/* ── KPI DRILL ── */
+const DRILL_CONTENT = {
+  aum:      '<div class="mini-stat"><span class="mini-stat-label">Equities</span><span class="mini-stat-val">$21.4B</span></div><div class="mini-stat"><span class="mini-stat-label">Fixed Income</span><span class="mini-stat-val">$14.8B</span></div><div class="mini-stat"><span class="mini-stat-label">Alternatives</span><span class="mini-stat-val">$8.1B</span></div><div class="mini-stat"><span class="mini-stat-label">Cash & Equiv.</span><span class="mini-stat-val">$4.0B</span></div>',
+  flows:    '<div class="mini-stat"><span class="mini-stat-label">Inbound</span><span class="mini-stat-val">$820M</span></div><div class="mini-stat"><span class="mini-stat-label">Outbound</span><span class="mini-stat-val">$420M</span></div><div class="mini-stat"><span class="mini-stat-label">Net</span><span class="mini-stat-val" style="color:var(--green)">+$400M</span></div>',
+  pending:  '<div class="mini-stat"><span class="mini-stat-label">Awaiting docs</span><span class="mini-stat-val">12</span></div><div class="mini-stat"><span class="mini-stat-label">Awaiting approval</span><span class="mini-stat-val">7</span></div><div class="mini-stat"><span class="mini-stat-label">AML review</span><span class="mini-stat-val">3</span></div><div class="mini-stat"><span class="mini-stat-label">FX hold</span><span class="mini-stat-val">16</span></div>',
+  breaches: '<div class="mini-stat"><span class="mini-stat-label">AML threshold</span><span class="mini-stat-val" style="color:var(--red)">2 critical</span></div><div class="mini-stat"><span class="mini-stat-label">Concentration</span><span class="mini-stat-val" style="color:var(--amber)">1 warning</span></div>',
+  ai:       '<div class="mini-stat"><span class="mini-stat-label">Documents processed</span><span class="mini-stat-val">48</span></div><div class="mini-stat"><span class="mini-stat-label">Rules extracted</span><span class="mini-stat-val">312</span></div><div class="mini-stat"><span class="mini-stat-label">Accuracy</span><span class="mini-stat-val" style="color:var(--green)">97.4%</span></div>',
+};
+function drillKpi(k){
+  const panel=document.getElementById('kpi-drill');
+  document.getElementById('drill-label').textContent='— '+TITLES[k]||k;
+  document.getElementById('drill-content').innerHTML=DRILL_CONTENT[k]||'';
+  panel.style.display='block';
+  panel.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+/* ── HEATMAP ── */
+(function buildHeatmap(){
+  const jurs=['Cayman','Jersey','Dublin','BVI','HK','SGP','Malta'];
+  const intensities=[
+    [0.1,0.3,0.2,0.5,0.8,0.6,0.4],
+    [0.3,0.2,0.4,0.7,0.5,0.3,0.6],
+    [0.6,0.5,0.3,0.8,0.9,0.7,0.2],
+    [0.2,0.4,0.6,0.3,0.5,0.4,0.8],
+    [0.4,0.6,0.5,0.2,0.7,0.6,0.3],
+    [0.7,0.3,0.8,0.4,0.6,0.5,0.9],
+    [0.5,0.7,0.4,0.6,0.3,0.8,0.5],
+  ];
+  const hm=document.getElementById('heatmap');
+  const hl=document.getElementById('hm-labels');
+  intensities.forEach(row=>{
+    row.forEach(v=>{
+      const cell=document.createElement('div');
+      cell.className='hm-cell';
+      const color=v<0.4?`rgba(30,102,65,${v+0.2})`:v<0.7?`rgba(150,98,10,${v})`:`rgba(176,48,32,${v})`;
+      cell.style.background=color;
+      cell.title=`Risk: ${Math.round(v*100)}%`;
+      hm.appendChild(cell);
+    });
+  });
+  jurs.forEach(j=>{
+    const l=document.createElement('div');
+    l.className='hm-label';l.textContent=j.slice(0,3).toUpperCase();
+    hl.appendChild(l);
+  });
+})();
+
+/* ── ACTIVITY FEED ── */
+const FEED_EVENTS=[
+  {color:'var(--green)',text:'Settlement confirmed: Jersey → HK $12.4M',time:'just now'},
+  {color:'var(--ai)',text:'AI extracted 8 rules from AIFMD Annex IV filing',time:'1 min'},
+  {color:'var(--amber)',text:'FX limit warning: USD/SGD position at 94% threshold',time:'3 min'},
+  {color:'var(--red)',text:'AML hold triggered: Cayman entity — $4.2M',time:'4 min'},
+  {color:'var(--green)',text:'Rule #14 passed: Dublin subscription $890K',time:'6 min'},
+  {color:'var(--token)',text:'New investor onboarded: Cartesia Capital IV',time:'8 min'},
+  {color:'var(--ai)',text:'AI confidence score updated: 97.4% (+0.8%)',time:'11 min'},
+  {color:'var(--fiat)',text:'Intraday limit reset: HSBC Singapore account',time:'14 min'},
+];
+let feedCount=0;
+function buildFeed(){
+  const feed=document.getElementById('activity-feed');
+  feed.innerHTML='';
+  FEED_EVENTS.forEach(e=>{
+    const item=document.createElement('div');item.className='feed-item';
+    item.innerHTML=`<div class="feed-dot" style="background:${e.color}"></div><div class="feed-body"><div class="feed-text">${e.text}</div><div class="feed-meta">${e.time}</div></div>`;
+    feed.appendChild(item);
+  });
+  feedCount=FEED_EVENTS.length;
+  document.getElementById('feed-count').textContent=feedCount+' events';
+}
+buildFeed();
+
+/* ── PENDING ACTIONS ── */
+(function(){
+  const actions=[
+    {icon:'🖊',bg:'var(--gold-bg)',title:'Sign off Q1 AIFMD filing',sub:'Due: today 17:00 · Compliance',primary:true},
+    {icon:'🔍',bg:'var(--red-bg)',title:'Review AML hold: $4.2M Cayman',sub:'Escalated · 02:14 elapsed',primary:true},
+    {icon:'📄',bg:'var(--ai-bg)',title:'Validate AI extraction: FATCA doc',sub:'Confidence 78% — manual check',primary:false},
+    {icon:'✓',bg:'var(--green-bg)',title:'Approve 3 pending subscriptions',sub:'$6.4M total · Jersey',primary:false},
+    {icon:'⚡',bg:'var(--amber-bg)',title:'Resolve rule conflict #12 vs #18',sub:'SGD threshold ambiguity',primary:false},
+  ];
+  const el=document.getElementById('pending-actions');
+  el.innerHTML=actions.map(a=>`
+    <div class="action-item">
+      <div class="action-icon" style="background:${a.bg}">${a.icon}</div>
+      <div class="action-body"><div class="action-title">${a.title}</div><div class="action-sub">${a.sub}</div></div>
+      <button class="action-btn${a.primary?' primary':''}">${a.primary?'Action':'View'}</button>
+    </div>`).join('');
+})();
+
+/* ── SYSTEM HEALTH ── */
+(function(){
+  const systems=[
+    {name:'Core API',color:'var(--green)'},
+    {name:'AI Engine',color:'var(--green)'},
+    {name:'Message Bus',color:'var(--green)'},
+    {name:'FX Feed',color:'var(--green)'},
+    {name:'AML Service',color:'var(--amber)'},
+    {name:'Reporting',color:'var(--green)'},
+  ];
+  const el=document.getElementById('health-strip');
+  el.innerHTML=systems.map(s=>`<div class="health-item"><div class="health-dot" style="background:${s.color}"></div>${s.name}</div>`).join('');
+})();
+
+/* ── FLOW TABLE ── */
+(function(){
+  const rows=[
+    {ref:'FLW-4821',from:'Jersey',to:'HK',amt:'$12.4M',status:'settled',eta:'—'},
+    {ref:'FLW-4820',from:'Cayman',to:'Dublin',amt:'$3.8M',status:'pending',eta:'14 min'},
+    {ref:'FLW-4819',from:'Dublin',to:'Singapore',amt:'$7.1M',status:'settled',eta:'—'},
+    {ref:'FLW-4818',from:'Cayman',to:'Malta',amt:'$4.2M',status:'blocked',eta:'—'},
+    {ref:'FLW-4817',from:'Singapore',to:'Jersey',amt:'$890K',status:'pending',eta:'6 min'},
+    {ref:'FLW-4816',from:'BVI',to:'London',amt:'$2.1M',status:'settled',eta:'—'},
+  ];
+  const colors={settled:'badge-green',pending:'badge-amber',blocked:'badge-red',failed:'badge-red'};
+  document.getElementById('flow-table').innerHTML=rows.map(r=>`
+    <tr>
+      <td><span style="font-family:var(--mono);font-size:11px">${r.ref}</span></td>
+      <td>${r.from}</td><td>${r.to}</td>
+      <td style="font-family:var(--mono)">${r.amt}</td>
+      <td><span class="badge ${colors[r.status]}">${r.status}</span></td>
+      <td style="font-family:var(--mono);font-size:11px;color:var(--ink-3)">${r.eta}</td>
+    </tr>`).join('');
+})();
+
+/* ── DOCUMENT LIBRARY ── */
+const DOCS=[
+  {icon:'📋',name:'AIFMD Annex IV — Q1 2026',meta:'Uploaded 2h ago · 24 pages',ai:'12 rules'},
+  {icon:'📄',name:'Subscription Agreement — Cartesia IV',meta:'Uploaded yesterday · 8 pages',ai:'4 obligations'},
+  {icon:'📊',name:'CRS Reporting Template 2026',meta:'Uploaded 3 days ago',ai:'31 fields'},
+  {icon:'📋',name:'FATCA Self-Certification',meta:'Uploaded last week',ai:'9 rules'},
+  {icon:'📄',name:'AML Policy v4.2',meta:'Uploaded 2 weeks ago',ai:'48 rules'},
+  {icon:'📊',name:'Fund Prospectus — Balmoral II',meta:'Uploaded last month',ai:'16 obligations'},
+];
+function renderDocs(filter=''){
+  const el=document.getElementById('doc-library');
+  const filtered=DOCS.filter(d=>d.name.toLowerCase().includes(filter.toLowerCase()));
+  el.innerHTML=filtered.map(d=>`
+    <div class="doc-row">
+      <div class="doc-icon">${d.icon}</div>
+      <div class="doc-body"><div class="doc-name">${d.name}</div><div class="doc-meta">${d.meta}</div></div>
+      <span class="doc-ai-tag">AI: ${d.ai}</span>
+    </div>`).join('');
+}
+renderDocs();
+function filterDocs(v){renderDocs(v)}
+
+/* ── EXTRACTED RULES ── */
+(function(){
+  const rules=[
+    {rule:'Transactions >$1M require dual approval',src:'AIFMD §12',conf:96},
+    {rule:'AML filing required within 24h of threshold breach',src:'AML Policy §4',conf:99},
+    {rule:'CRS reporting deadline: Q1 by 31 Mar',src:'CRS Template',conf:98},
+    {rule:'Concentration limit: single counterparty <15% NAV',src:'Prospectus §7',conf:91},
+    {rule:'FX hedging mandatory for positions >$5M non-base',src:'Investment Policy',conf:87},
+  ];
+  document.getElementById('extracted-rules').innerHTML=rules.map(r=>`
+    <div class="action-item" style="align-items:flex-start">
+      <div class="action-icon" style="background:var(--ai-bg);font-size:12px">🤖</div>
+      <div class="action-body">
+        <div class="action-title">${r.rule}</div>
+        <div class="action-sub">Source: ${r.src} · Confidence: ${r.conf}%</div>
+      </div>
+      <span class="badge ${r.conf>=95?'badge-green':'badge-amber'}">${r.conf}%</span>
+    </div>`).join('');
+})();
+
+/* ── UPLOAD SIMULATE ── */
+function simulateUpload(){
+  const prog=document.getElementById('upload-progress');
+  const bar=document.getElementById('upload-bar');
+  prog.style.display='block';
+  let pct=0;
+  const iv=setInterval(()=>{
+    pct+=Math.random()*12;
+    if(pct>=100){pct=100;clearInterval(iv);setTimeout(()=>{prog.style.display='none';alert('AI extracted 8 rules from document.')},600)}
+    bar.style.width=pct+'%';
+  },200);
+}
+
+/* ── RULE LIBRARY ── */
+(function(){
+  const rules=[
+    {id:'R-001',name:'Dual Approval >$1M',type:'Approval',status:'active',src:'Manual'},
+    {id:'R-002',name:'AML Threshold $10K',type:'AML',status:'active',src:'AI'},
+    {id:'R-003',name:'CRS Q1 Deadline',type:'Reporting',status:'active',src:'AI'},
+    {id:'R-004',name:'Concentration 15% NAV',type:'Limit',status:'active',src:'AI'},
+    {id:'R-005',name:'FX Hedge >$5M',type:'Limit',status:'active',src:'Manual'},
+    {id:'R-006',name:'AIFMD Annex IV Filing',type:'Reporting',status:'active',src:'AI'},
+    {id:'R-007',name:'Counterparty KYC Refresh',type:'Compliance',status:'warning',src:'Manual'},
+    {id:'R-008',name:'Intraday Limit 80%',type:'Limit',status:'active',src:'Manual'},
+  ];
+  const typeColors={'Approval':'badge-gold','AML':'badge-red','Reporting':'badge-ai','Limit':'badge-token','Compliance':'badge-amber'};
+  document.getElementById('rule-library').innerHTML=`
+    <table class="tbl"><thead><tr><th>ID</th><th>Rule</th><th>Type</th><th>Source</th><th>Status</th></tr></thead><tbody>
+    ${rules.map(r=>`<tr>
+      <td><span style="font-family:var(--mono);font-size:11px">${r.id}</span></td>
+      <td style="font-size:12px">${r.name}</td>
+      <td><span class="badge ${typeColors[r.type]||'badge-gold'}">${r.type}</span></td>
+      <td><span class="badge ${r.src==='AI'?'badge-ai':'badge-gold'}">${r.src}</span></td>
+      <td><span class="badge ${r.status==='active'?'badge-green':'badge-amber'}">${r.status}</span></td>
+    </tr>`).join('')}</tbody></table>`;
+})();
+
+/* ── FX CHART ── */
+(function(){
+  let fxData=Array.from({length:50},(_,i)=>1.0800+Math.sin(i/8)*0.004+Math.random()*0.002);
+  function drawFx(){
+    const w=560,h=160,pad=10;
+    const mn=Math.min(...fxData),mx=Math.max(...fxData),rng=mx-mn||0.001;
+    const pts=fxData.map((v,i)=>{
+      const x=pad+(i/(fxData.length-1))*(w-pad*2);
+      const y=h-pad-(v-mn)/rng*(h-pad*2);
+      return`${x},${y}`;
+    });
+    const lineD='M'+pts.join(' L');
+    const areaD=lineD+` L${w-pad},${h-pad} L${pad},${h-pad} Z`;
+    document.getElementById('fx-line').setAttribute('d',lineD);
+    document.getElementById('fx-area').setAttribute('d',areaD);
+  }
+  drawFx();
+  setInterval(()=>{
+    fxData.push(fxData[fxData.length-1]+(Math.random()-0.5)*0.0008);
+    if(fxData.length>60)fxData.shift();
+    drawFx();
+    document.getElementById('fx-eurusd').textContent=(fxData[fxData.length-1]).toFixed(4);
+    document.getElementById('fx-time').textContent='live · '+new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  },2000);
+})();
+
+/* ── AI INSIGHTS ── */
+(function(){
+  const insights=[
+    {text:'EUR/USD approaching 6-month resistance at 1.0880. Consider hedging EUR-denominated exposures.',type:'FX',sev:'amber'},
+    {text:'Singapore MAS circular expected Q2 — AI has flagged 3 rules likely to require update.',type:'Regulatory',sev:'ai'},
+    {text:'HK Hang Seng correlation with portfolio up 12% this month — concentration risk elevated.',type:'Risk',sev:'red'},
+  ];
+  document.getElementById('ai-insights').innerHTML=insights.map(i=>`
+    <div style="padding:10px 0;border-bottom:1px solid var(--rule-2)">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">
+        <span class="badge badge-${i.sev==='ai'?'ai':i.sev==='amber'?'amber':'red'}">${i.type}</span>
+        <span style="font-size:9px;font-family:var(--mono);color:var(--ink-4)">AI</span>
+      </div>
+      <div style="font-size:12px;color:var(--ink-2);line-height:1.5">${i.text}</div>
+    </div>`).join('');
+})();
+
+/* ── JURISDICTION RISK ── */
+(function(){
+  const jurs=[
+    {name:'Cayman Islands',score:22,color:'var(--green)'},
+    {name:'Jersey',score:18,color:'var(--green)'},
+    {name:'Dublin',score:15,color:'var(--green)'},
+    {name:'BVI',score:34,color:'var(--green)'},
+    {name:'Hong Kong',score:58,color:'var(--amber)'},
+    {name:'Singapore',score:42,color:'var(--amber)'},
+    {name:'Malta',score:71,color:'var(--amber)'},
+    {name:'Mauritius',score:81,color:'var(--red)'},
+  ];
+  const half=Math.ceil(jurs.length/2);
+  [document.getElementById('jur-risk-left'),document.getElementById('jur-risk-right')].forEach((el,ci)=>{
+    el.innerHTML=jurs.slice(ci*half,(ci+1)*half).map(j=>`
+      <div class="jur-row">
+        <span class="jur-name">${j.name}</span>
+        <div class="jur-bar-wrap"><div class="jur-bar" style="width:${j.score}%;background:${j.color}"></div></div>
+        <span class="jur-score">${j.score}</span>
+      </div>`).join('');
+  });
+})();
+
+/* ── TRANSACTIONS ── */
+const TXN_DATA=[
+  {ref:'TXN-9012',date:'20 Mar',from:'Jersey Fund I',to:'HSBC HK',amt:'$12.4M',ccy:'USD',status:'settled',risk:'low'},
+  {ref:'TXN-9011',date:'20 Mar',from:'Cayman Entity',to:'Malta Acc.',amt:'$4.2M',ccy:'USD',status:'blocked',risk:'high'},
+  {ref:'TXN-9010',date:'20 Mar',from:'Dublin ICAV',to:'SGP Clearing',amt:'$7.1M',ccy:'EUR',status:'settled',risk:'low'},
+  {ref:'TXN-9009',date:'19 Mar',from:'BVI Holdings',to:'London Prime',amt:'$2.1M',ccy:'GBP',status:'settled',risk:'low'},
+  {ref:'TXN-9008',date:'19 Mar',from:'Cayman Entity',to:'Jersey SPV',amt:'$890K',ccy:'USD',status:'pending',risk:'medium'},
+  {ref:'TXN-9007',date:'19 Mar',from:'HK Branch',to:'SGP Entity',amt:'$3.3M',ccy:'HKD',status:'settled',risk:'low'},
+  {ref:'TXN-9006',date:'18 Mar',from:'Jersey Fund II',to:'Dublin ICAV',amt:'$1.4M',ccy:'GBP',status:'failed',risk:'high'},
+  {ref:'TXN-9005',date:'18 Mar',from:'Balmoral II',to:'Edastra I',amt:'$18.2M',ccy:'USD',status:'settled',risk:'low'},
+];
+let openTrace=null;
+function renderTxns(data){
+  const colors={settled:'badge-green',pending:'badge-amber',blocked:'badge-red',failed:'badge-red'};
+  const riskColors={low:'badge-green',medium:'badge-amber',high:'badge-red'};
+  document.getElementById('txn-count').textContent=data.length+' transactions';
+  document.getElementById('txn-table').innerHTML=data.map((r,i)=>`
+    <tr>
+      <td><span style="font-family:var(--mono);font-size:11px">${r.ref}</span></td>
+      <td style="font-family:var(--mono);font-size:11px;color:var(--ink-3)">${r.date}</td>
+      <td>${r.from}</td><td>${r.to}</td>
+      <td style="font-family:var(--mono)">${r.amt}</td>
+      <td style="font-family:var(--mono);font-size:11px">${r.ccy}</td>
+      <td><span class="badge ${colors[r.status]}">${r.status}</span></td>
+      <td><span class="badge ${riskColors[r.risk]}">${r.risk}</span></td>
+      <td>
+        <span class="pipeline-trace" onclick="toggleTrace(${i})">View trace</span>
+        <div class="trace-panel" id="trace-${i}">
+          Rule #14: Amount check ✓<br>Rule #02: AML screen ${r.risk==='high'?'⚠ FLAGGED':'✓'}<br>Rule #07: KYC status ✓<br>Jurisdiction: ${r.risk==='high'?'Hold applied':'Clear'}<br>Compliance Officer: ${r.status==='blocked'?'Notified':'Not required'}
+        </div>
+      </td>
+    </tr>`).join('');
+}
+renderTxns(TXN_DATA);
+function toggleTrace(i){
+  const el=document.getElementById('trace-'+i);
+  el.classList.toggle('open');
+}
+function filterTxns(v){renderTxns(TXN_DATA.filter(r=>r.ref.toLowerCase().includes(v)||r.from.toLowerCase().includes(v)||r.to.toLowerCase().includes(v)||r.amt.includes(v)))}
+function filterTxnStatus(v){renderTxns(v?TXN_DATA.filter(r=>r.status===v):TXN_DATA)}
+
+/* ── BANK ACCOUNTS ── */
+(function(){
+  const accounts=[
+    {name:'HSBC — Jersey GBP',val:'$248M',pct:72},
+    {name:'Citi — Cayman USD',val:'$181M',pct:55},
+    {name:'JPMorgan — HK USD',val:'$312M',pct:84},
+    {name:'BofA — Dublin EUR',val:'$94M',pct:28},
+    {name:'DBS — Singapore SGD',val:'$167M',pct:51},
+    {name:'BNYM — London GBP',val:'$78M',pct:24},
+  ];
+  document.getElementById('bank-accounts').innerHTML=accounts.map(a=>`
+    <div class="bank-row">
+      <span class="bank-name">${a.name}</span>
+      <div class="bank-bar-wrap"><div class="bank-bar" style="width:${a.pct}%"></div></div>
+      <span class="bank-val">${a.val}</span>
+      <span class="bank-limit">${a.pct}% cap</span>
+    </div>`).join('');
+})();
+
+/* ── INTRADAY LIMITS ── */
+(function(){
+  const limits=[
+    {name:'HSBC Jersey',used:'$182M',limit:'$250M',pct:73,color:'var(--amber)'},
+    {name:'JPMorgan HK',used:'$268M',limit:'$370M',pct:72,color:'var(--amber)'},
+    {name:'Citi Cayman',used:'$95M',limit:'$200M',pct:48,color:'var(--green)'},
+    {name:'DBS Singapore',used:'$134M',limit:'$175M',pct:77,color:'var(--amber)'},
+    {name:'BofA Dublin',used:'$41M',limit:'$120M',pct:34,color:'var(--green)'},
+  ];
+  document.getElementById('intraday-limits').innerHTML=limits.map(l=>`
+    <div class="bank-row">
+      <span class="bank-name">${l.name}</span>
+      <div class="bank-bar-wrap"><div class="bank-bar" style="width:${l.pct}%;background:${l.color}"></div></div>
+      <span class="bank-val">${l.used}</span>
+      <span class="bank-limit">/ ${l.limit}</span>
+    </div>`).join('');
+})();
+
+/* ── ONBOARDING PIPELINE ── */
+const ONBOARDING=[
+  {id:'ONB-001',entity:'Cartesia Capital IV',type:'LP Investor',jur:'Cayman',stage:'active',assigned:'S. Baker',days:42,
+    checks:[
+      {label:'Identity & Beneficial Ownership',sub:'UBO structure verified · 4 parties',state:'done'},
+      {label:'AML / Sanctions Screening',sub:'Passed · OFAC + UN clean',state:'done'},
+      {label:'Source of Funds',sub:'Audited financials accepted',state:'done'},
+      {label:'Risk Classification',sub:'Medium risk · periodic review scheduled',state:'done'},
+      {label:'Fund Documentation',sub:'Subscription agreement executed',state:'done'},
+    ]},
+  {id:'ONB-002',entity:'Balmoral II GP Ltd',type:'General Partner',jur:'Jersey',stage:'aml',assigned:'J. Kim',days:8,
+    checks:[
+      {label:'Identity & Beneficial Ownership',sub:'UBO structure verified · 2 parties',state:'done'},
+      {label:'AML / Sanctions Screening',sub:'In review — enhanced due diligence required',state:'active'},
+      {label:'Source of Funds',sub:'Awaiting documentation',state:'pend'},
+      {label:'Risk Classification',sub:'Pending AML outcome',state:'pend'},
+      {label:'Fund Documentation',sub:'Pending approval',state:'pend'},
+    ]},
+  {id:'ONB-003',entity:'Edastra Fund I',type:'Fund Vehicle',jur:'Dublin',stage:'kyc',assigned:'M. Torres',days:12,
+    checks:[
+      {label:'Identity & Beneficial Ownership',sub:'Under review — 6 UBO parties',state:'active'},
+      {label:'AML / Sanctions Screening',sub:'Not started',state:'pend'},
+      {label:'Source of Funds',sub:'Not started',state:'pend'},
+      {label:'Risk Classification',sub:'Not started',state:'pend'},
+      {label:'Fund Documentation',sub:'Received',state:'done'},
+    ]},
+  {id:'ONB-004',entity:'Cayman SPV Holdings',type:'SPV',jur:'Cayman',stage:'sanctions',assigned:'R. Patel',days:3,
+    checks:[
+      {label:'Identity & Beneficial Ownership',sub:'Verified',state:'done'},
+      {label:'AML / Sanctions Screening',sub:'Completed',state:'done'},
+      {label:'Source of Funds',sub:'Verified',state:'done'},
+      {label:'Risk Classification',sub:'Running sanctions cross-check',state:'active'},
+      {label:'Fund Documentation',sub:'Pending clearance',state:'pend'},
+    ]},
+  {id:'ONB-005',entity:'Meridian Asset Co.',type:'LP Investor',jur:'Singapore',stage:'prospect',assigned:'—',days:1,
+    checks:[
+      {label:'Identity & Beneficial Ownership',sub:'Not yet submitted',state:'pend'},
+      {label:'AML / Sanctions Screening',sub:'Not started',state:'pend'},
+      {label:'Source of Funds',sub:'Not started',state:'pend'},
+      {label:'Risk Classification',sub:'Not started',state:'pend'},
+      {label:'Fund Documentation',sub:'Term sheet issued',state:'done'},
+    ]},
+  {id:'ONB-006',entity:'Atlas Credit Fund',type:'Fund Vehicle',jur:'Malta',stage:'hold',assigned:'J. Kim',days:22,
+    checks:[
+      {label:'Identity & Beneficial Ownership',sub:'Verified',state:'done'},
+      {label:'AML / Sanctions Screening',sub:'On hold — MFSA query pending',state:'active'},
+      {label:'Source of Funds',sub:'Queried — awaiting clarification',state:'active'},
+      {label:'Risk Classification',sub:'Escalated to senior compliance',state:'pend'},
+      {label:'Fund Documentation',sub:'Suspended pending resolution',state:'pend'},
+    ]},
+  {id:'ONB-007',entity:'Novara Capital Ltd',type:'LP Investor',jur:'BVI',stage:'kyc',assigned:'S. Baker',days:6,
+    checks:[
+      {label:'Identity & Beneficial Ownership',sub:'Partially submitted — awaiting register extract',state:'active'},
+      {label:'AML / Sanctions Screening',sub:'Not started',state:'pend'},
+      {label:'Source of Funds',sub:'Not started',state:'pend'},
+      {label:'Risk Classification',sub:'Not started',state:'pend'},
+      {label:'Fund Documentation',sub:'Received',state:'done'},
+    ]},
+  {id:'ONB-008',entity:'Greenfield Partners',type:'LP Investor',jur:'Jersey',stage:'active',assigned:'—',days:180,
+    checks:[
+      {label:'Identity & Beneficial Ownership',sub:'Verified · Annual refresh due Dec 2026',state:'done'},
+      {label:'AML / Sanctions Screening',sub:'Passed · last screened 23 Mar 2026',state:'done'},
+      {label:'Source of Funds',sub:'Audited financials on file',state:'done'},
+      {label:'Risk Classification',sub:'Low risk',state:'done'},
+      {label:'Fund Documentation',sub:'All agreements executed',state:'done'},
+    ]},
+];
+
+const PIPELINE_STAGES=[
+  {key:'prospect',label:'Prospect',color:'var(--ink-4)'},
+  {key:'kyc',label:'KYC Review',color:'var(--fiat)'},
+  {key:'aml',label:'AML Screening',color:'var(--amber)'},
+  {key:'sanctions',label:'Sanctions Check',color:'var(--token)'},
+  {key:'hold',label:'On Hold',color:'var(--red)'},
+  {key:'active',label:'Active',color:'var(--green)'},
+];
+
+const STAGE_BADGE={prospect:'badge-fiat',kyc:'badge-fiat',aml:'badge-amber',sanctions:'badge-token',hold:'badge-red',active:'badge-green'};
+
+let activeStageFilter=null;
+let openEntityId=null;
+
+function buildPipelineBar(){
+  const bar=document.getElementById('pipeline-bar');
+  bar.innerHTML=PIPELINE_STAGES.map(s=>{
+    const count=ONBOARDING.filter(e=>e.stage===s.key).length;
+    return`<div class="ps${activeStageFilter===s.key?' ps-sel':''}" onclick="filterStage('${s.key}')">
+      <div class="ps-count" style="${s.key==='hold'?'color:var(--red)':s.key==='active'?'color:var(--green)':''}">${count}</div>
+      <div class="ps-label">${s.label}</div>
+      <div class="ps-dot" style="background:${s.color}"></div>
+    </div>`;
+  }).join('');
+}
+
+function renderOnboardingTable(data){
+  document.getElementById('onboarding-table').innerHTML=data.map(e=>`
+    <tr style="cursor:pointer" onclick="openEntityDrawer('${e.id}')">
+      <td><span style="font-weight:500">${e.entity}</span></td>
+      <td style="font-size:11px;color:var(--ink-3)">${e.type}</td>
+      <td style="font-size:11px;font-family:var(--mono)">${e.jur}</td>
+      <td><span class="badge ${STAGE_BADGE[e.stage]}">${PIPELINE_STAGES.find(s=>s.key===e.stage)?.label||e.stage}</span></td>
+      <td style="font-size:11px;color:var(--ink-3)">${e.assigned}</td>
+      <td style="font-family:var(--mono);font-size:11px;color:${e.days>14?'var(--amber)':'var(--ink-3)'}">${e.days}d</td>
+      <td><span class="pipeline-trace">View →</span></td>
+    </tr>`).join('');
+}
+
+function filterStage(key){
+  if(activeStageFilter===key){activeStageFilter=null;}
+  else{activeStageFilter=key;}
+  buildPipelineBar();
+  const data=activeStageFilter?ONBOARDING.filter(e=>e.stage===activeStageFilter):ONBOARDING;
+  const sub=activeStageFilter
+    ?`${data.length} ${PIPELINE_STAGES.find(s=>s.key===activeStageFilter)?.label} · <span class="pipeline-trace" onclick="filterStage('${activeStageFilter}')">clear filter</span>`
+    :'click a stage to filter';
+  document.getElementById('pipeline-subtitle').innerHTML=sub;
+  if(openEntityId&&!data.find(e=>e.id===openEntityId))closeEntityDrawer();
+  renderOnboardingTable(data);
+}
+
+function openEntityDrawer(id){
+  const e=ONBOARDING.find(x=>x.id===id);
+  if(!e)return;
+  openEntityId=id;
+  const stageInfo=PIPELINE_STAGES.find(s=>s.key===e.stage);
+  const checklist=e.checks.map(c=>`
+    <div class="cl-item">
+      <div class="cl-icon ${c.state==='done'?'cl-done':c.state==='active'?'cl-active':'cl-pend'}">${c.state==='done'?'✓':c.state==='active'?'…':'–'}</div>
+      <div class="cl-body"><div class="cl-label">${c.label}</div><div class="cl-sub">${c.sub}</div></div>
+    </div>`).join('');
+  document.getElementById('entity-drawer').style.display='block';
+  document.getElementById('entity-drawer').innerHTML=`
+    <div class="entity-drawer-head">
+      <div>
+        <div class="entity-drawer-name">${e.entity}</div>
+        <div class="entity-drawer-meta">${e.id} · ${e.type} · ${e.jur} · Assigned: ${e.assigned} · Open ${e.days} days</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+        <span class="badge ${STAGE_BADGE[e.stage]}">${stageInfo?.label||e.stage}</span>
+        <button onclick="closeEntityDrawer()" style="font-size:11px;font-family:var(--mono);background:none;border:none;cursor:pointer;color:var(--ink-3)">✕ close</button>
+      </div>
+    </div>
+    <div class="g2">
+      <div>
+        <div style="font-size:9px;font-family:var(--mono);letter-spacing:1.2px;text-transform:uppercase;color:var(--ink-4);margin-bottom:8px">Onboarding Checklist</div>
+        <div class="checklist">${checklist}</div>
+      </div>
+      <div>
+        <div style="font-size:9px;font-family:var(--mono);letter-spacing:1.2px;text-transform:uppercase;color:var(--ink-4);margin-bottom:8px">Actions</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <button class="btn btn-primary" onclick="alert('Approval workflow initiated for ${e.entity}')">Approve &amp; Activate</button>
+          <button class="btn" onclick="alert('Escalation sent for ${e.entity}')">Escalate to Senior</button>
+          <button class="btn" onclick="alert('Request sent to ${e.entity}')">Request Documents</button>
+          <button class="btn" onclick="closeEntityDrawer();nav('documents')">View in Document Hub</button>
+        </div>
+      </div>
+    </div>`;
+  document.getElementById('entity-drawer').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function closeEntityDrawer(){
+  openEntityId=null;
+  document.getElementById('entity-drawer').style.display='none';
+}
+
+// Init pipeline
+buildPipelineBar();
+renderOnboardingTable(ONBOARDING);
+
+/* ── TRANSACTION EXCEPTIONS (post-clearance monitoring only) ── */
+(function(){
+  const exceptions=[
+    {title:'Concentration limit approaching — Cartesia Capital IV',sub:'Active investor · 13.8% NAV vs 15% limit · Rule R-004',sev:'var(--amber)',label:'Warning',
+     action:()=>nav('transactions')},
+    {title:'FX hedging gap: EUR $3.1M unhedged',sub:'Active entity · Investment Policy §4 · below required threshold',sev:'var(--amber)',label:'Warning',
+     action:()=>nav('rules')},
+    {title:'HSBC Jersey intraday limit at 73%',sub:'Active account · Rule R-008 · threshold 80%',sev:'var(--amber)',label:'Warning',
+     action:()=>nav('liquidity')},
+    {title:'Dual approval required: TXN-9008 $890K',sub:'Active entity · Jersey SPV · Rule R-001 awaiting second signatory',sev:'var(--amber)',label:'Pending',
+     action:()=>nav('transactions')},
+    {title:'AIFMD Annex IV filing overdue',sub:'Q1 deadline 15 Mar · 8 days overdue · regulatory obligation',sev:'var(--red)',label:'Critical',
+     action:()=>nav('documents')},
+  ];
+  document.getElementById('txn-exceptions').innerHTML=exceptions.map((i,idx)=>`
+    <div class="issue-item">
+      <div class="issue-sev" style="background:${i.sev}"></div>
+      <div class="issue-body">
+        <div class="issue-title">${i.title}</div>
+        <div class="issue-sub">${i.sub}</div>
+        <div class="issue-actions">
+          <button class="action-btn primary" onclick="exceptionAction(${idx})">Go to ${['Transactions','Rules','Liquidity','Transactions','Documents'][idx]}</button>
+          <button class="action-btn" onclick="this.closest('.issue-item').style.opacity='0.4'">Dismiss</button>
+        </div>
+      </div>
+      <span class="badge ${i.sev.includes('red')?'badge-red':'badge-amber'}">${i.label}</span>
+    </div>`).join('');
+})();
+const EXCEPTION_TARGETS=['transactions','rules','liquidity','transactions','documents'];
+function exceptionAction(idx){nav(EXCEPTION_TARGETS[idx]);}
+
+/* ── RULE EVAL LOG ── */
+(function(){
+  const logs=[
+    {time:'14:32',rule:'R-004 Concentration',entity:'Cartesia Capital IV',result:'warned'},
+    {time:'14:28',rule:'R-001 Dual Approve',entity:'Jersey Fund I',result:'passed'},
+    {time:'14:21',rule:'R-008 Intraday',entity:'HSBC Jersey',result:'warned'},
+    {time:'14:15',rule:'R-003 CRS',entity:'Dublin ICAV',result:'passed'},
+    {time:'14:09',rule:'R-005 FX Hedge',entity:'HK Branch',result:'warned'},
+    {time:'13:58',rule:'R-006 AIFMD',entity:'Jersey Fund II',result:'blocked'},
+    {time:'13:44',rule:'R-001 Dual Approve',entity:'Greenfield Partners',result:'passed'},
+    {time:'13:30',rule:'R-002 AML',entity:'Cartesia Capital IV',result:'passed'},
+  ];
+  const res={passed:'badge-green',blocked:'badge-red',warned:'badge-amber'};
+  document.getElementById('rule-log').innerHTML=logs.map(l=>`
+    <tr>
+      <td style="font-family:var(--mono);font-size:11px;color:var(--ink-3)">${l.time}</td>
+      <td style="font-size:11px">${l.rule}</td>
+      <td style="font-size:12px">${l.entity}</td>
+      <td><span class="badge ${res[l.result]}">${l.result}</span></td>
+    </tr>`).join('');
+})();
+
+/* ── REGULATORY CALENDAR ── */
+(function(){
+  const today=23;
+  const events={15:'AIFMD',25:'CRS',31:'KYC'};
+  const deadlines={25:'badge-gold',31:'badge-red'};
+  const grid=document.getElementById('reg-calendar');
+  const startDay=6; // month starts on Saturday (0=Mon)
+  for(let i=0;i<startDay;i++){const d=document.createElement('div');d.className='cal-day';d.style.opacity='0.3';grid.appendChild(d)}
+  for(let d=1;d<=31;d++){
+    const el=document.createElement('div');
+    let cls='cal-day';
+    if(d===today)cls+=' today';
+    else if(events[d]&&deadlines[d]&&deadlines[d].includes('red'))cls+=' has-deadline';
+    else if(events[d])cls+=' has-event';
+    el.className=cls;
+    el.innerHTML=d+(events[d]?`<div class="cal-event">${events[d]}</div>`:'');
+    grid.appendChild(el);
+  }
+  document.getElementById('reg-deadlines').innerHTML=`
+    <div class="action-item" style="cursor:pointer" onclick="nav('compliance')"><div class="action-icon" style="background:var(--red-bg)">🔴</div><div class="action-body"><div class="action-title">AIFMD Annex IV (Q1)</div><div class="action-sub">15 Mar · 8 days overdue · filing required</div></div><span class="badge badge-red">Overdue</span></div>
+    <div class="action-item" style="cursor:pointer" onclick="nav('compliance')"><div class="action-icon" style="background:var(--gold-bg)">📅</div><div class="action-body"><div class="action-title">CRS Reporting Deadline</div><div class="action-sub">25 Mar 2026 · 2 days remaining</div></div><span class="badge badge-amber">2d</span></div>
+    <div class="action-item" style="cursor:pointer" onclick="nav('compliance')"><div class="action-icon" style="background:var(--amber-bg)">⚠️</div><div class="action-body"><div class="action-title">KYC Periodic Refresh</div><div class="action-sub">31 Mar 2026 · 8 days · 3 active entities due</div></div><span class="badge badge-amber">8d</span></div>
+  `;
+})();
+
+/* ── THREADS ── */
+(function(){
+  const threads=[
+    {initials:'SB',author:'Sarah B.',time:'Today 09:41',msg:'The AML hold on the Cayman transaction needs immediate review — can compliance sign off before EOD?',replies:3},
+    {initials:'JK',author:'James K.',time:'Today 08:22',msg:'AIFMD filing is overdue. I've uploaded the Q1 data to Document Hub — AI extraction is 94% complete. Need validation before submission.',replies:5},
+    {initials:'MT',author:'Maya T.',time:'Yesterday',msg:'FX hedge gap on EUR exposure — $3.1M currently unhedged. Investment committee approval required per Rule #05.',replies:2},
+  ];
+  document.getElementById('threads').innerHTML=threads.map(t=>`
+    <div class="thread-item">
+      <div class="thread-header">
+        <div class="avatar">${t.initials}</div>
+        <span class="thread-author">${t.author}</span>
+        <span class="thread-time">${t.time}</span>
+      </div>
+      <div class="thread-msg">${t.msg}</div>
+      <div class="thread-reply">↳ ${t.replies} replies · Reply</div>
+    </div>`).join('');
+})();
+
+/* ── TASK BOARD ── */
+(function(){
+  const tasks={
+    todo:[
+      {title:'Sign AIFMD Annex IV',meta:'Due: today · Compliance'},
+      {title:'KYC refresh: 3 entities',meta:'Due: 31 Mar · Compliance'},
+      {title:'Review rule conflict #12 vs #18',meta:'Unassigned'},
+    ],
+    progress:[
+      {title:'AI validation: FATCA doc',meta:'In review · AI 78%'},
+      {title:'CRS filing preparation',meta:'Due: 25 Mar · Treasury'},
+    ],
+    done:[
+      {title:'Approve Jersey subscriptions',meta:'Completed 09:12'},
+      {title:'FX rates updated',meta:'Completed yesterday'},
+      {title:'Counterparty onboarding: Cartesia IV',meta:'Completed last week'},
+    ],
+  };
+  ['todo','progress','done'].forEach(k=>{
+    document.getElementById('board-'+k).innerHTML=tasks[k].map(t=>`
+      <div class="board-card">
+        <div class="board-card-title">${t.title}</div>
+        <div class="board-card-meta">${t.meta}</div>
+      </div>`).join('');
+  });
+})();
+
+/* ── REAL-TIME SIMULATION ── */
+setInterval(()=>{
+  // Flicker KPI values
+  const aum=(48.3+((Math.random()-0.5)*0.1)).toFixed(1);
+  document.getElementById('kpi-aum').textContent='$'+aum+'B';
+  const flow=(1.24+((Math.random()-0.5)*0.04)).toFixed(2);
+  document.getElementById('kpi-flow').textContent='$'+flow+'B';
+  const queue=Math.floor(180+Math.random()*20);
+  document.getElementById('hs-queue').textContent=queue;
+  const throughput=(4800+Math.floor(Math.random()*100)).toLocaleString();
+  document.getElementById('hs-throughput').textContent=throughput+' / min';
+  // Update feed timestamp randomly
+  const feedMeta=document.querySelectorAll('.feed-meta');
+  if(feedMeta.length&&Math.random()<0.3){
+    feedMeta[0].textContent='just now';
+  }
+},3500);
+
+// Auto-append feed event occasionally
+setInterval(()=>{
+  const newEvents=[
+    {color:'var(--green)',text:'Settlement confirmed: BVI → London £1.2M'},
+    {color:'var(--ai)',text:'AI scan complete: 3 new obligations identified'},
+    {color:'var(--token)',text:'New position opened: Balmoral II — HK equities'},
+    {color:'var(--amber)',text:'Concentration check: Cartesia IV approaching limit'},
+  ];
+  const ev=newEvents[Math.floor(Math.random()*newEvents.length)];
+  ev.time='just now';
+  // Update existing events' times
+  FEED_EVENTS.unshift(ev);
+  if(FEED_EVENTS.length>10)FEED_EVENTS.pop();
+  // Shift timestamps
+  FEED_EVENTS.forEach((e,i)=>{if(i>0)e.time=(i*3)+' min'});
+  buildFeed();
+},8000);
+</script>
+</body>
+</html>

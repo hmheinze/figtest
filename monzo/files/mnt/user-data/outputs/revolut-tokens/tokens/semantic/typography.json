@@ -1,0 +1,174 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amzn/style-dictionary/main/lib/common/schemas/token.json",
+  "$metadata": {
+    "source": "Revolut Brand System — Semantic Typography Tokens",
+    "version": "1.0.0",
+    "notes": "Semantic type scale maps role-based names to primitive font tokens. All text styles are combinations of family, size, weight, line-height and letter-spacing. WCAG 1.4.4 compliance: all text scales correctly up to 200% zoom. Body base: 16px. Components consume these tokens — not raw values."
+  },
+  "semantic": {
+    "typography": {
+      "display": {
+        "hero": {
+          "fontFamily":     { "$value": "{font.family.brand}", "$type": "fontFamily" },
+          "fontSize":       { "$value": "{font.size.7xl}",     "$type": "dimension", "$description": "72px — marketing hero only" },
+          "fontWeight":     { "$value": "{font.weight.bold}",  "$type": "fontWeight" },
+          "lineHeight":     { "$value": "{font.lineHeight.tight}", "$type": "number" },
+          "letterSpacing":  { "$value": "{font.letterSpacing.tighter}", "$type": "dimension" }
+        },
+        "large": {
+          "fontFamily":     { "$value": "{font.family.brand}", "$type": "fontFamily" },
+          "fontSize":       { "$value": "{font.size.6xl}",     "$type": "dimension", "$description": "60px" },
+          "fontWeight":     { "$value": "{font.weight.bold}",  "$type": "fontWeight" },
+          "lineHeight":     { "$value": "{font.lineHeight.tight}", "$type": "number" },
+          "letterSpacing":  { "$value": "{font.letterSpacing.tighter}", "$type": "dimension" }
+        },
+        "medium": {
+          "fontFamily":     { "$value": "{font.family.brand}", "$type": "fontFamily" },
+          "fontSize":       { "$value": "{font.size.5xl}",     "$type": "dimension", "$description": "48px" },
+          "fontWeight":     { "$value": "{font.weight.bold}",  "$type": "fontWeight" },
+          "lineHeight":     { "$value": "{font.lineHeight.tight}", "$type": "number" },
+          "letterSpacing":  { "$value": "{font.letterSpacing.tight}", "$type": "dimension" }
+        }
+      },
+      "heading": {
+        "h1": {
+          "fontFamily":    { "$value": "{font.family.brand}",  "$type": "fontFamily" },
+          "fontSize":      { "$value": "{font.size.4xl}",      "$type": "dimension", "$description": "36px" },
+          "fontWeight":    { "$value": "{font.weight.bold}",   "$type": "fontWeight" },
+          "lineHeight":    { "$value": "{font.lineHeight.tight}", "$type": "number" },
+          "letterSpacing": { "$value": "{font.letterSpacing.tight}", "$type": "dimension" }
+        },
+        "h2": {
+          "fontFamily":    { "$value": "{font.family.brand}",  "$type": "fontFamily" },
+          "fontSize":      { "$value": "{font.size.3xl}",      "$type": "dimension", "$description": "30px" },
+          "fontWeight":    { "$value": "{font.weight.bold}",   "$type": "fontWeight" },
+          "lineHeight":    { "$value": "{font.lineHeight.snug}", "$type": "number" },
+          "letterSpacing": { "$value": "{font.letterSpacing.tight}", "$type": "dimension" }
+        },
+        "h3": {
+          "fontFamily":    { "$value": "{font.family.brand}",  "$type": "fontFamily" },
+          "fontSize":      { "$value": "{font.size.2xl}",      "$type": "dimension", "$description": "24px" },
+          "fontWeight":    { "$value": "{font.weight.semibold}", "$type": "fontWeight" },
+          "lineHeight":    { "$value": "{font.lineHeight.snug}", "$type": "number" },
+          "letterSpacing": { "$value": "{font.letterSpacing.normal}", "$type": "dimension" }
+        },
+        "h4": {
+          "fontFamily":    { "$value": "{font.family.brand}",  "$type": "fontFamily" },
+          "fontSize":      { "$value": "{font.size.xl}",       "$type": "dimension", "$description": "20px" },
+          "fontWeight":    { "$value": "{font.weight.semibold}", "$type": "fontWeight" },
+          "lineHeight":    { "$value": "{font.lineHeight.snug}", "$type": "number" },
+          "letterSpacing": { "$value": "{font.letterSpacing.normal}", "$type": "dimension" }
+        },
+        "h5": {
+          "fontFamily":    { "$value": "{font.family.brand}",  "$type": "fontFamily" },
+          "fontSize":      { "$value": "{font.size.lg}",       "$type": "dimension", "$description": "18px" },
+          "fontWeight":    { "$value": "{font.weight.semibold}", "$type": "fontWeight" },
+          "lineHeight":    { "$value": "{font.lineHeight.normal}", "$type": "number" },
+          "letterSpacing": { "$value": "{font.letterSpacing.normal}", "$type": "dimension" }
+        },
+        "h6": {
+          "fontFamily":    { "$value": "{font.family.brand}",  "$type": "fontFamily" },
+          "fontSize":      { "$value": "{font.size.md}",       "$type": "dimension", "$description": "16px" },
+          "fontWeight":    { "$value": "{font.weight.semibold}", "$type": "fontWeight" },
+          "lineHeight":    { "$value": "{font.lineHeight.normal}", "$type": "number" },
+          "letterSpacing": { "$value": "{font.letterSpacing.normal}", "$type": "dimension" }
+        }
+      },
+      "body": {
+        "large": {
+          "fontFamily":    { "$value": "{font.family.brand}", "$type": "fontFamily" },
+          "fontSize":      { "$value": "{font.size.lg}",      "$type": "dimension", "$description": "18px — intro paragraphs, lead text" },
+          "fontWeight":    { "$value": "{font.weight.regular}", "$type": "fontWeight" },
+          "lineHeight":    { "$value": "{font.lineHeight.normal}", "$type": "number" },
+          "letterSpacing": { "$value": "{font.letterSpacing.normal}", "$type": "dimension" }
+        },
+        "default": {
+          "fontFamily":    { "$value": "{font.family.brand}", "$type": "fontFamily" },
+          "fontSize":      { "$value": "{font.size.md}",      "$type": "dimension", "$description": "16px — standard body text. Base size for WCAG 1.4.4." },
+          "fontWeight":    { "$value": "{font.weight.regular}", "$type": "fontWeight" },
+          "lineHeight":    { "$value": "{font.lineHeight.normal}", "$type": "number" },
+          "letterSpacing": { "$value": "{font.letterSpacing.normal}", "$type": "dimension" }
+        },
+        "small": {
+          "fontFamily":    { "$value": "{font.family.brand}", "$type": "fontFamily" },
+          "fontSize":      { "$value": "{font.size.sm}",      "$type": "dimension", "$description": "14px — secondary body, descriptions" },
+          "fontWeight":    { "$value": "{font.weight.regular}", "$type": "fontWeight" },
+          "lineHeight":    { "$value": "{font.lineHeight.normal}", "$type": "number" },
+          "letterSpacing": { "$value": "{font.letterSpacing.normal}", "$type": "dimension" }
+        }
+      },
+      "label": {
+        "large": {
+          "fontFamily":    { "$value": "{font.family.brand}",  "$type": "fontFamily" },
+          "fontSize":      { "$value": "{font.size.md}",       "$type": "dimension" },
+          "fontWeight":    { "$value": "{font.weight.medium}", "$type": "fontWeight" },
+          "lineHeight":    { "$value": "{font.lineHeight.snug}", "$type": "number" },
+          "letterSpacing": { "$value": "{font.letterSpacing.normal}", "$type": "dimension" }
+        },
+        "default": {
+          "fontFamily":    { "$value": "{font.family.brand}",  "$type": "fontFamily" },
+          "fontSize":      { "$value": "{font.size.sm}",       "$type": "dimension" },
+          "fontWeight":    { "$value": "{font.weight.medium}", "$type": "fontWeight" },
+          "lineHeight":    { "$value": "{font.lineHeight.snug}", "$type": "number" },
+          "letterSpacing": { "$value": "{font.letterSpacing.normal}", "$type": "dimension" }
+        },
+        "small": {
+          "fontFamily":    { "$value": "{font.family.brand}",  "$type": "fontFamily" },
+          "fontSize":      { "$value": "{font.size.xs}",       "$type": "dimension" },
+          "fontWeight":    { "$value": "{font.weight.medium}", "$type": "fontWeight" },
+          "lineHeight":    { "$value": "{font.lineHeight.snug}", "$type": "number" },
+          "letterSpacing": { "$value": "{font.letterSpacing.wide}", "$type": "dimension" }
+        }
+      },
+      "caption": {
+        "default": {
+          "fontFamily":    { "$value": "{font.family.brand}", "$type": "fontFamily" },
+          "fontSize":      { "$value": "{font.size.xs}",      "$type": "dimension", "$description": "12px — timestamps, helper text, footnotes" },
+          "fontWeight":    { "$value": "{font.weight.regular}", "$type": "fontWeight" },
+          "lineHeight":    { "$value": "{font.lineHeight.normal}", "$type": "number" },
+          "letterSpacing": { "$value": "{font.letterSpacing.normal}", "$type": "dimension" }
+        },
+        "micro": {
+          "fontFamily":    { "$value": "{font.family.brand}", "$type": "fontFamily" },
+          "fontSize":      { "$value": "{font.size.2xs}",     "$type": "dimension", "$description": "10px — legal text, badge labels only" },
+          "fontWeight":    { "$value": "{font.weight.medium}", "$type": "fontWeight" },
+          "lineHeight":    { "$value": "{font.lineHeight.normal}", "$type": "number" },
+          "letterSpacing": { "$value": "{font.letterSpacing.wider}", "$type": "dimension" }
+        }
+      },
+      "amount": {
+        "$description": "Financial amount display — used for balances, transaction values. Tabular figures ensure columns align.",
+        "hero": {
+          "fontFamily":    { "$value": "{font.family.brand}",  "$type": "fontFamily" },
+          "fontSize":      { "$value": "{font.size.5xl}",      "$type": "dimension", "$description": "48px — primary balance display" },
+          "fontWeight":    { "$value": "{font.weight.bold}",   "$type": "fontWeight" },
+          "lineHeight":    { "$value": "{font.lineHeight.none}", "$type": "number" },
+          "letterSpacing": { "$value": "{font.letterSpacing.tight}", "$type": "dimension" }
+        },
+        "large": {
+          "fontFamily":    { "$value": "{font.family.brand}",  "$type": "fontFamily" },
+          "fontSize":      { "$value": "{font.size.3xl}",      "$type": "dimension" },
+          "fontWeight":    { "$value": "{font.weight.bold}",   "$type": "fontWeight" },
+          "lineHeight":    { "$value": "{font.lineHeight.none}", "$type": "number" },
+          "letterSpacing": { "$value": "{font.letterSpacing.tight}", "$type": "dimension" }
+        },
+        "default": {
+          "fontFamily":    { "$value": "{font.family.brand}",  "$type": "fontFamily" },
+          "fontSize":      { "$value": "{font.size.xl}",       "$type": "dimension" },
+          "fontWeight":    { "$value": "{font.weight.semibold}", "$type": "fontWeight" },
+          "lineHeight":    { "$value": "{font.lineHeight.none}", "$type": "number" },
+          "letterSpacing": { "$value": "{font.letterSpacing.normal}", "$type": "dimension" }
+        }
+      },
+      "code": {
+        "default": {
+          "fontFamily":    { "$value": "{font.family.mono}", "$type": "fontFamily" },
+          "fontSize":      { "$value": "{font.size.sm}",     "$type": "dimension", "$description": "Account numbers, card numbers, sort codes" },
+          "fontWeight":    { "$value": "{font.weight.regular}", "$type": "fontWeight" },
+          "lineHeight":    { "$value": "{font.lineHeight.normal}", "$type": "number" },
+          "letterSpacing": { "$value": "{font.letterSpacing.wide}", "$type": "dimension" }
+        }
+      }
+    }
+  }
+}

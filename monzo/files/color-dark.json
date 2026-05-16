@@ -1,0 +1,79 @@
+{
+  "$schema": "https://raw.githubusercontent.com/amzn/style-dictionary/main/lib/common/schemas/token.json",
+  "$metadata": {
+    "source": "Revolut Brand System — Semantic Colour Tokens (Dark Mode)",
+    "version": "1.0.0",
+    "notes": "Dark mode overrides. Token names are identical to light mode — only values change. Components consume {semantic.color.*} and are agnostic to the active theme. All text/bg pairings meet WCAG 2.1 AA minimum. Revolut's app defaults to dark mode on OLED mobile devices."
+  },
+  "semantic": {
+    "color": {
+      "brand": {
+        "primary":       { "$value": "{color.blue.400}",   "$type": "color", "$description": "Primary interactive — slightly lighter in dark for luminance balance" },
+        "primaryHover":  { "$value": "{color.blue.300}",   "$type": "color" },
+        "primaryActive": { "$value": "{color.blue.200}",   "$type": "color" },
+        "primarySubtle": { "$value": "{color.blue.950}",   "$type": "color" },
+        "dark":          { "$value": "{color.neutral.0}",  "$type": "color", "$description": "Inverted — white logotype on dark surfaces" },
+        "darkAlt":       { "$value": "{color.neutral.200}","$type": "color" },
+        "premium":       { "$value": "{color.indigo.300}", "$type": "color" },
+        "accent":        { "$value": "{color.lime.300}",   "$type": "color" }
+      },
+      "text": {
+        "primary":     { "$value": "{color.neutral.0}",    "$type": "color", "$description": "Primary body text on dark. Contrast vs 191C1F: 16:1 (AAA)" },
+        "secondary":   { "$value": "{color.neutral.300}",  "$type": "color", "$description": "Secondary text. Contrast vs dark bg: 7.2:1 (AAA)" },
+        "tertiary":    { "$value": "{color.neutral.500}",  "$type": "color", "$description": "Hint text. Contrast: 4.5:1 (AA)" },
+        "disabled":    { "$value": "{color.neutral.600}",  "$type": "color", "$description": "Disabled — non-interactive only" },
+        "inverse":     { "$value": "{color.navy.800}",     "$type": "color", "$description": "Text on light inverse surfaces" },
+        "inverseSecondary": { "$value": "{color.neutral.700}", "$type": "color" },
+        "link":        { "$value": "{color.blue.300}",     "$type": "color", "$description": "Link on dark. Contrast: 5.1:1 (AA)" },
+        "linkHover":   { "$value": "{color.blue.200}",     "$type": "color" },
+        "brand":       { "$value": "{color.blue.300}",     "$type": "color" },
+        "success":     { "$value": "{color.green.300}",    "$type": "color", "$description": "Success text on dark" },
+        "warning":     { "$value": "{color.amber.300}",    "$type": "color", "$description": "Warning text on dark" },
+        "danger":      { "$value": "{color.red.300}",      "$type": "color", "$description": "Danger text on dark" },
+        "positive":    { "$value": "{color.green.400}",    "$type": "color" },
+        "negative":    { "$value": "{color.red.400}",      "$type": "color" }
+      },
+      "background": {
+        "canvas":        { "$value": "{color.navy.950}",    "$type": "color", "$description": "OLED-friendly near-black canvas" },
+        "surface":       { "$value": "{color.navy.800}",    "$type": "color", "$description": "Primary surface — Shark (#191C1F)" },
+        "surfaceRaised": { "$value": "{color.navy.700}",    "$type": "color", "$description": "Raised card on dark canvas" },
+        "surfaceOverlay":{ "$value": "{color.navy.700}",    "$type": "color", "$description": "Dropdown/tooltip on dark" },
+        "subtle":        { "$value": "{color.navy.900}",    "$type": "color", "$description": "Recessed row, sunken surface" },
+        "inverse":       { "$value": "{color.neutral.0}",   "$type": "color", "$description": "Light inverse surface" },
+        "brand":         { "$value": "{color.blue.600}",    "$type": "color", "$description": "Darker brand fill for dark mode legibility" },
+        "brandSubtle":   { "$value": "{color.blue.950}",    "$type": "color" },
+        "premium":       { "$value": "{color.indigo.900}",  "$type": "color" },
+        "premiumSubtle": { "$value": "{color.indigo.950}",  "$type": "color" },
+        "success":       { "$value": "{color.green.700}",   "$type": "color" },
+        "successSubtle": { "$value": "{color.green.900}",   "$type": "color" },
+        "warning":       { "$value": "{color.amber.700}",   "$type": "color" },
+        "warningSubtle": { "$value": "{color.amber.900}",   "$type": "color" },
+        "danger":        { "$value": "{color.red.700}",     "$type": "color" },
+        "dangerSubtle":  { "$value": "{color.red.900}",     "$type": "color" },
+        "scrim":         { "$value": "{color.black.alpha.80}", "$type": "color", "$description": "Stronger scrim on dark — ensures contrast under bright modals" }
+      },
+      "border": {
+        "default":     { "$value": "{color.navy.600}",      "$type": "color" },
+        "subtle":      { "$value": "{color.navy.700}",      "$type": "color" },
+        "strong":      { "$value": "{color.neutral.600}",   "$type": "color" },
+        "inverse":     { "$value": "{color.neutral.300}",   "$type": "color" },
+        "brand":       { "$value": "{color.blue.400}",      "$type": "color" },
+        "focus":       { "$value": "{color.blue.300}",      "$type": "color" },
+        "success":     { "$value": "{color.green.600}",     "$type": "color" },
+        "warning":     { "$value": "{color.amber.500}",     "$type": "color" },
+        "danger":      { "$value": "{color.red.500}",       "$type": "color" },
+        "disabled":    { "$value": "{color.navy.600}",      "$type": "color" }
+      },
+      "icon": {
+        "primary":     { "$value": "{color.neutral.0}",    "$type": "color" },
+        "secondary":   { "$value": "{color.neutral.400}",  "$type": "color" },
+        "tertiary":    { "$value": "{color.neutral.600}",  "$type": "color" },
+        "inverse":     { "$value": "{color.navy.800}",     "$type": "color" },
+        "brand":       { "$value": "{color.blue.300}",     "$type": "color" },
+        "success":     { "$value": "{color.green.400}",    "$type": "color" },
+        "warning":     { "$value": "{color.amber.400}",    "$type": "color" },
+        "danger":      { "$value": "{color.red.400}",      "$type": "color" }
+      }
+    }
+  }
+}

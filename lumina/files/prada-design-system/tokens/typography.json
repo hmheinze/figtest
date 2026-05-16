@@ -1,0 +1,407 @@
+{
+  "_comment": "Prada Beauty — Typography Tokens. Primitive → Semantic → Density Mode.",
+  "_comment_2": "Three modes: scanner (compact, data-readable), editorial (PDP, airy), kiosk (large, accessible). Components reference semantic type.* tokens. Modes override font sizes only — family, weight, tracking stay constant.",
+
+  "font": {
+    "_layer": "primitive",
+
+    "family": {
+      "primary":  { "value": "Source Sans 3", "type": "fontFamilies",
+                    "_note": "GT-America substitute. Swap in primitive only when licensed — all semantic tokens update automatically." }
+    },
+
+    "weight": {
+      "light":    { "value": "Light",   "type": "fontWeights" },
+      "regular":  { "value": "Regular", "type": "fontWeights" },
+      "medium":   { "value": "Medium",  "type": "fontWeights" }
+    },
+
+    "size": {
+      "_comment": "All confirmed from Figma CSS output. Do not add sizes here without a confirmed usage.",
+      "7":   { "value": "7px",  "type": "fontSizes", "_note": "Confirmed — product byline text-[7px], scanner channel label text-[7px]" },
+      "8":   { "value": "8px",  "type": "fontSizes", "_note": "Confirmed — sub-eyebrow, insight tag, step note text-[8px]" },
+      "9":   { "value": "9px",  "type": "fontSizes", "_note": "Confirmed — nav sub-label, section meta, tab labels text-[9px]" },
+      "10":  { "value": "10px", "type": "fontSizes", "_note": "Confirmed — CTA labels text-[10px]. prada.com footer confirmed." },
+      "11":  { "value": "11px", "type": "fontSizes", "_note": "Confirmed — insight body, product step text-[11px]" },
+      "12":  { "value": "12px", "type": "fontSizes", "_note": "Confirmed — wordmark, body-light text-[12px]" },
+      "14":  { "value": "14px", "type": "fontSizes", "_note": "Confirmed — product name text-[14px]. prada.com secondary confirmed." },
+      "15":  { "value": "15px", "type": "fontSizes", "_note": "Confirmed — body-sm, product description text-[15px]" },
+      "16":  { "value": "16px", "type": "fontSizes", "_note": "Confirmed — body. prada.com base confirmed." },
+      "17":  { "value": "17px", "type": "fontSizes", "_note": "Confirmed — ui-md, channel name rows" },
+      "18":  { "value": "18px", "type": "fontSizes", "_note": "Confirmed — zone scores text-[18px]" },
+      "20":  { "value": "20px", "type": "fontSizes", "_note": "Confirmed — desktop nav links" },
+      "22":  { "value": "22px", "type": "fontSizes", "_note": "Confirmed — scanner live readout values text-[22px]" },
+      "24":  { "value": "24px", "type": "fontSizes", "_note": "Confirmed — S4 result title" },
+      "34":  { "value": "34px", "type": "fontSizes", "_note": "Confirmed — S3 heading" },
+      "35":  { "value": "35px", "type": "fontSizes", "_note": "Confirmed — S1 heading" },
+      "38":  { "value": "38px", "type": "fontSizes", "_note": "Confirmed — S4 hero text-[38px]" },
+      "44":  { "value": "44px", "type": "fontSizes", "_note": "Confirmed — S0 hero text-[44px] (node h:46 includes line-height)" },
+      "46":  { "value": "46px", "type": "fontSizes", "_note": "S0 display-xl nominal" },
+      "76":  { "value": "76px", "type": "fontSizes", "_note": "Desktop display-xl" }
+    },
+
+    "lineHeight": {
+      "tight":   { "value": "105%", "type": "lineHeights" },
+      "heading": { "value": "115%", "type": "lineHeights" },
+      "snug":    { "value": "130%", "type": "lineHeights" },
+      "base":    { "value": "150%", "type": "lineHeights", "_note": "Confirmed prada.com 24/16" },
+      "data":    { "value": "155%", "type": "lineHeights", "_note": "Confirmed product description leading-[1.55]" },
+      "loose":   { "value": "170%", "type": "lineHeights" },
+      "scanner": { "value": "160%", "type": "lineHeights", "_note": "Confirmed insight body leading-[1.6]" }
+    },
+
+    "letterSpacing": {
+      "tightest": { "value": "-1%",  "type": "letterSpacing" },
+      "normal":   { "value": "0%",   "type": "letterSpacing" },
+      "xs":       { "value": "2%",   "type": "letterSpacing" },
+      "sm":       { "value": "7%",   "type": "letterSpacing", "_note": "Confirmed — scanner channel label tracking-[1.05px] @ 15px ≈ 7%" },
+      "md":       { "value": "8%",   "type": "letterSpacing" },
+      "lg":       { "value": "12%",  "type": "letterSpacing" },
+      "xl":       { "value": "16%",  "type": "letterSpacing", "_note": "Confirmed — sub-eyebrow tracking-[1.44px] @ 9px ≈ 16%" },
+      "2xl":      { "value": "18%",  "type": "letterSpacing", "_note": "Confirmed — nav sub-label tracking-[1.8px] @ 10px = 18%" },
+      "3xl":      { "value": "20%",  "type": "letterSpacing" },
+      "4xl":      { "value": "22%",  "type": "letterSpacing", "_note": "Confirmed — eyebrow tracking-[1.98px] @ 9px ≈ 22%" },
+      "wordmark": { "value": "30%",  "type": "letterSpacing", "_note": "Confirmed — wordmark tracking-[3.6px] @ 12px = 30%" }
+    }
+  },
+
+  "type": {
+    "_layer": "semantic",
+    "_comment": "Composite typography tokens. Components use these. Never reference font.size.* directly in components.",
+
+    "display-xl": {
+      "value": {
+        "fontFamily":    "{font.family.primary}",
+        "fontWeight":    "{font.weight.regular}",
+        "fontSize":      "{font.size.44}",
+        "lineHeight":    "{font.lineHeight.tight}",
+        "letterSpacing": "{font.letterSpacing.normal}",
+        "textCase":      "none",
+        "textDecoration":"none"
+      },
+      "type": "typography",
+      "_note": "S0 hero first line. Desktop → 76px via mode override."
+    },
+    "display-xl-italic": {
+      "value": {
+        "fontFamily":    "{font.family.primary}",
+        "fontWeight":    "{font.weight.regular}",
+        "fontSize":      "{font.size.44}",
+        "lineHeight":    "{font.lineHeight.tight}",
+        "letterSpacing": "{font.letterSpacing.normal}",
+        "textCase":      "none",
+        "textDecoration":"none"
+      },
+      "type": "typography",
+      "_note": "S0 hero second line. Apply font-style:italic and opacity:0.45 at component level."
+    },
+    "display-hero": {
+      "value": {
+        "fontFamily":    "{font.family.primary}",
+        "fontWeight":    "{font.weight.regular}",
+        "fontSize":      "{font.size.38}",
+        "lineHeight":    "{font.lineHeight.tight}",
+        "letterSpacing": "{font.letterSpacing.normal}",
+        "textCase":      "none",
+        "textDecoration":"none"
+      },
+      "type": "typography",
+      "_note": "S4 hero — confirmed text-[38px]. Distinct from display-xl."
+    },
+    "display-lg": {
+      "value": {
+        "fontFamily":    "{font.family.primary}",
+        "fontWeight":    "{font.weight.regular}",
+        "fontSize":      "{font.size.35}",
+        "lineHeight":    "{font.lineHeight.tight}",
+        "letterSpacing": "{font.letterSpacing.normal}",
+        "textCase":      "none",
+        "textDecoration":"none"
+      },
+      "type": "typography",
+      "_note": "S1 heading — Before / we scan"
+    },
+    "display-md": {
+      "value": {
+        "fontFamily":    "{font.family.primary}",
+        "fontWeight":    "{font.weight.regular}",
+        "fontSize":      "{font.size.34}",
+        "lineHeight":    "{font.lineHeight.heading}",
+        "letterSpacing": "{font.letterSpacing.normal}",
+        "textCase":      "none",
+        "textDecoration":"none"
+      },
+      "type": "typography",
+      "_note": "S3 heading — Analysing / your skin"
+    },
+    "scanner-live": {
+      "value": {
+        "fontFamily":    "{font.family.primary}",
+        "fontWeight":    "{font.weight.regular}",
+        "fontSize":      "{font.size.22}",
+        "lineHeight":    "{font.lineHeight.base}",
+        "letterSpacing": "{font.letterSpacing.normal}",
+        "textCase":      "none",
+        "textDecoration":"none"
+      },
+      "type": "typography",
+      "_note": "Confirmed text-[22px] — S2 live readout values (Radiance, Redness, Texture, Hydration dashes). Missing from previous system."
+    },
+    "zone-score": {
+      "value": {
+        "fontFamily":    "{font.family.primary}",
+        "fontWeight":    "{font.weight.regular}",
+        "fontSize":      "{font.size.18}",
+        "lineHeight":    "{font.lineHeight.base}",
+        "letterSpacing": "{font.letterSpacing.tightest}",
+        "textCase":      "none",
+        "textDecoration":"none"
+      },
+      "type": "typography",
+      "_note": "Confirmed text-[18px] — zone score numbers (72, 68, 55, 61, 70). Distinct from display-num."
+    },
+    "title": {
+      "value": {
+        "fontFamily":    "{font.family.primary}",
+        "fontWeight":    "{font.weight.regular}",
+        "fontSize":      "{font.size.24}",
+        "lineHeight":    "{font.lineHeight.heading}",
+        "letterSpacing": "{font.letterSpacing.normal}",
+        "textCase":      "none",
+        "textDecoration":"none"
+      },
+      "type": "typography",
+      "_note": "S4 result title — Balanced"
+    },
+    "ui-lg": {
+      "value": {
+        "fontFamily":    "{font.family.primary}",
+        "fontWeight":    "{font.weight.regular}",
+        "fontSize":      "{font.size.20}",
+        "lineHeight":    "{font.lineHeight.base}",
+        "letterSpacing": "{font.letterSpacing.normal}",
+        "textCase":      "none",
+        "textDecoration":"none"
+      },
+      "type": "typography",
+      "_note": "Desktop nav links"
+    },
+    "wordmark": {
+      "value": {
+        "fontFamily":    "{font.family.primary}",
+        "fontWeight":    "{font.weight.regular}",
+        "fontSize":      "{font.size.12}",
+        "lineHeight":    "{font.lineHeight.base}",
+        "letterSpacing": "{font.letterSpacing.wordmark}",
+        "textCase":      "none",
+        "textDecoration":"none"
+      },
+      "type": "typography",
+      "_note": "Confirmed 12px / tracking-[3.6px] = 30%"
+    },
+    "ui-md": {
+      "value": {
+        "fontFamily":    "{font.family.primary}",
+        "fontWeight":    "{font.weight.regular}",
+        "fontSize":      "{font.size.17}",
+        "lineHeight":    "{font.lineHeight.snug}",
+        "letterSpacing": "{font.letterSpacing.normal}",
+        "textCase":      "none",
+        "textDecoration":"none"
+      },
+      "type": "typography",
+      "_note": "Channel names, insight row text"
+    },
+    "body": {
+      "value": {
+        "fontFamily":    "{font.family.primary}",
+        "fontWeight":    "{font.weight.regular}",
+        "fontSize":      "{font.size.16}",
+        "lineHeight":    "{font.lineHeight.base}",
+        "letterSpacing": "{font.letterSpacing.normal}",
+        "textCase":      "none",
+        "textDecoration":"none"
+      },
+      "type": "typography",
+      "_note": "prada.com 16px / Regular / 150% confirmed"
+    },
+    "body-light": {
+      "value": {
+        "fontFamily":    "{font.family.primary}",
+        "fontWeight":    "{font.weight.light}",
+        "fontSize":      "{font.size.12}",
+        "lineHeight":    "{font.lineHeight.loose}",
+        "letterSpacing": "{font.letterSpacing.xs}",
+        "textCase":      "none",
+        "textDecoration":"none"
+      },
+      "type": "typography",
+      "_note": "S0 descriptor. Opacity 0.40 at component level."
+    },
+    "product-name": {
+      "value": {
+        "fontFamily":    "{font.family.primary}",
+        "fontWeight":    "{font.weight.regular}",
+        "fontSize":      "{font.size.14}",
+        "lineHeight":    "{font.lineHeight.base}",
+        "letterSpacing": "{font.letterSpacing.normal}",
+        "textCase":      "none",
+        "textDecoration":"none"
+      },
+      "type": "typography",
+      "_note": "Confirmed text-[14px] — product card title in recommendation section"
+    },
+    "body-sm": {
+      "value": {
+        "fontFamily":    "{font.family.primary}",
+        "fontWeight":    "{font.weight.regular}",
+        "fontSize":      "{font.size.15}",
+        "lineHeight":    "{font.lineHeight.snug}",
+        "letterSpacing": "{font.letterSpacing.normal}",
+        "textCase":      "none",
+        "textDecoration":"none"
+      },
+      "type": "typography",
+      "_note": "Product sub-description"
+    },
+    "insight-body": {
+      "value": {
+        "fontFamily":    "{font.family.primary}",
+        "fontWeight":    "{font.weight.light}",
+        "fontSize":      "{font.size.11}",
+        "lineHeight":    "{font.lineHeight.scanner}",
+        "letterSpacing": "{font.letterSpacing.normal}",
+        "textCase":      "none",
+        "textDecoration":"none"
+      },
+      "type": "typography",
+      "_note": "Confirmed text-[11px] leading-[1.6] — insight body copy in S4"
+    },
+    "product-desc": {
+      "value": {
+        "fontFamily":    "{font.family.primary}",
+        "fontWeight":    "{font.weight.light}",
+        "fontSize":      "{font.size.10}",
+        "lineHeight":    "{font.lineHeight.data}",
+        "letterSpacing": "{font.letterSpacing.normal}",
+        "textCase":      "none",
+        "textDecoration":"none"
+      },
+      "type": "typography",
+      "_note": "Confirmed text-[10px] leading-[1.55] — routine step description"
+    },
+    "eyebrow": {
+      "value": {
+        "fontFamily":    "{font.family.primary}",
+        "fontWeight":    "{font.weight.regular}",
+        "fontSize":      "{font.size.9}",
+        "lineHeight":    "{font.lineHeight.base}",
+        "letterSpacing": "{font.letterSpacing.4xl}",
+        "textCase":      "uppercase",
+        "textDecoration":"none"
+      },
+      "type": "typography",
+      "_note": "Confirmed text-[9px] tracking-[1.98px] = 22% — ZONE ANALYSIS, KEY INSIGHTS etc"
+    },
+    "meta": {
+      "value": {
+        "fontFamily":    "{font.family.primary}",
+        "fontWeight":    "{font.weight.regular}",
+        "fontSize":      "{font.size.9}",
+        "lineHeight":    "{font.lineHeight.base}",
+        "letterSpacing": "{font.letterSpacing.normal}",
+        "textCase":      "none",
+        "textDecoration":"none"
+      },
+      "type": "typography",
+      "_note": "Confirmed text-[9px] — nav sub-label without tracking (Skin Intelligence, Core Millennial)"
+    },
+    "caption": {
+      "value": {
+        "fontFamily":    "{font.family.primary}",
+        "fontWeight":    "{font.weight.regular}",
+        "fontSize":      "{font.size.8}",
+        "lineHeight":    "{font.lineHeight.base}",
+        "letterSpacing": "{font.letterSpacing.xl}",
+        "textCase":      "uppercase",
+        "textDecoration":"none"
+      },
+      "type": "typography",
+      "_note": "Confirmed text-[8px] tracking-[1.44px] = 18% — insight tag, step note, zone table header"
+    },
+    "scanner-label": {
+      "value": {
+        "fontFamily":    "{font.family.primary}",
+        "fontWeight":    "{font.weight.regular}",
+        "fontSize":      "{font.size.7}",
+        "lineHeight":    "{font.lineHeight.base}",
+        "letterSpacing": "{font.letterSpacing.sm}",
+        "textCase":      "none",
+        "textDecoration":"none"
+      },
+      "type": "typography",
+      "_note": "Confirmed text-[7px] tracking-[1.05px] = 15% — S2 channel labels (Radiance, Redness) AND product byline. Missing from previous system."
+    },
+    "byline": {
+      "value": {
+        "fontFamily":    "{font.family.primary}",
+        "fontWeight":    "{font.weight.regular}",
+        "fontSize":      "{font.size.7}",
+        "lineHeight":    "{font.lineHeight.base}",
+        "letterSpacing": "{font.letterSpacing.2xl}",
+        "textCase":      "none",
+        "textDecoration":"none"
+      },
+      "type": "typography",
+      "_note": "Confirmed text-[7px] tracking-[1.4px] = 20% — Prada Beauty · Augmented Skin product byline. Same size as scanner-label but wider tracking."
+    },
+    "step-note": {
+      "value": {
+        "fontFamily":    "{font.family.primary}",
+        "fontWeight":    "{font.weight.regular}",
+        "fontSize":      "{font.size.8}",
+        "lineHeight":    "{font.lineHeight.base}",
+        "letterSpacing": "{font.letterSpacing.md}",
+        "textCase":      "none",
+        "textDecoration":"none"
+      },
+      "type": "typography",
+      "_note": "Confirmed text-[8px] tracking-[0.8px] = 10% — routine step application note"
+    },
+    "nano": {
+      "value": {
+        "fontFamily":    "{font.family.primary}",
+        "fontWeight":    "{font.weight.light}",
+        "fontSize":      "{font.size.9}",
+        "lineHeight":    "{font.lineHeight.loose}",
+        "letterSpacing": "{font.letterSpacing.normal}",
+        "textCase":      "none",
+        "textDecoration":"none"
+      },
+      "type": "typography",
+      "_note": "Disclaimer, legal copy — Light weight, loose leading. prada.com ~10px confirmed."
+    }
+  },
+
+  "type-mode": {
+    "_layer": "context",
+    "_comment": "Density mode overrides for typography. Scanner compresses sizes for data density. Kiosk expands for accessibility. Editorial (PDP) is the base — no overrides needed.",
+
+    "scanner": {
+      "_comment": "Compact. Live data context. Sizes optimised for readability on camera feed at arm's length.",
+      "body-size":       { "value": "{font.size.14}", "type": "fontSizes", "_note": "Body reads at 14px in scanner density" },
+      "ui-md-size":      { "value": "{font.size.15}", "type": "fontSizes" },
+      "title-size":      { "value": "{font.size.20}", "type": "fontSizes" }
+    },
+
+    "kiosk": {
+      "_comment": "Accessible. Retail touchscreen 1080p at ~60cm viewing distance. All sizes up.",
+      "body-size":          { "value": "{font.size.20}", "type": "fontSizes" },
+      "body-sm-size":       { "value": "{font.size.18}", "type": "fontSizes" },
+      "ui-md-size":         { "value": "{font.size.22}", "type": "fontSizes" },
+      "title-size":         { "value": "{font.size.34}", "type": "fontSizes" },
+      "eyebrow-size":       { "value": "{font.size.12}", "type": "fontSizes" },
+      "caption-size":       { "value": "{font.size.11}", "type": "fontSizes" }
+    }
+  }
+}

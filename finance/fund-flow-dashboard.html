@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Orion · Maples Group Fund Infrastructure</title>
+<title>Maples Group · Fund Infrastructure</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -67,11 +67,14 @@ body{
   color:var(--ink);
   line-height:1.55;
   -webkit-font-smoothing:antialiased;
-  min-height:100vh;
+  min-height:100dvh;
+  overflow-x:clip; /* clip doesn't create a new scroll container, so vertical scroll is preserved */
 }
 
 /* ─── LAYOUT ─── */
-.shell{display:flex;min-height:100vh}
+/* Shell is a plain block — sidebar is position:fixed so it's out of flow.
+   Main sizes itself as a block element, width = 100% - margin-left automatically. */
+.shell{min-height:100dvh}
 
 /* ─── SIDEBAR ─── */
 .sidebar{
@@ -81,7 +84,16 @@ body{
   display:flex;flex-direction:column;
   position:fixed;top:0;left:0;height:100vh;
   z-index:200;
+  transition:transform 0.2s ease;
 }
+.sidebar-overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(20,18,15,0.30);
+  z-index:250;
+}
+body.sidebar-open .sidebar-overlay{display:block}
 .logo{
   padding:24px 22px 20px;
   border-bottom:1px solid var(--rule);
@@ -161,22 +173,32 @@ body{
 .user-role{font-family:var(--mono);font-size:9px;color:var(--ink-4);letter-spacing:0.8px;text-transform:uppercase}
 
 /* ─── MAIN ─── */
-.main{margin-left:220px;flex:1;display:flex;flex-direction:column;min-height:100vh;background:var(--paper)}
+/* Block element: width auto = 100% of parent minus margin-left. No flex needed.
+   This is the correct way to offset past a fixed sidebar — no overflow weirdness. */
+.main{
+  margin-left:220px;
+  display:flex;flex-direction:column;
+  min-height:100dvh;
+  background:var(--paper);
+  transition:margin-left 0.2s ease;
+}
 
 /* ─── TOPBAR ─── */
 .topbar{
   background:var(--white);
   border-bottom:1px solid var(--rule);
   display:flex;align-items:center;
-  padding:0 32px;
-  height:52px;
+  padding:14px 28px;        /* padding-based height — gives top+bottom breathing room */
+  height:auto;min-height:52px;
   position:sticky;top:0;z-index:100;
-  gap:16px;
+  gap:14px;
 }
 .topbar-title{
-  font-family:var(--serif);font-size:18px;
+  font-family:var(--serif);font-size:17px;
   color:var(--ink);font-weight:300;font-style:italic;
   letter-spacing:0.1px;
+  line-height:1.25;
+  flex-shrink:0;
 }
 .topbar-pills{
   display:flex;gap:0;
@@ -208,6 +230,7 @@ body{
   padding:3px 9px;
   border-radius:2px;
   letter-spacing:0.3px;
+  white-space:nowrap;   /* keep "LIVE · SWIFT + ONYX" on one line */
 }
 .live-dot{width:5px;height:5px;border-radius:50%;background:var(--green);animation:pulse 2s ease-in-out infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.35}}
@@ -221,6 +244,7 @@ body{
   position:relative;
 }
 .topbar-btn:hover{border-color:var(--ink-3);color:var(--ink);background:var(--paper)}
+.menu-btn{display:none}
 
 /* Tooltip — default centre, right-edge variant */
 .topbar-btn .tip{
@@ -270,7 +294,7 @@ body{
   position:absolute;
   top:calc(100% + 8px);
   right:0;
-  width:300px;
+  width:clamp(300px, 22vw, 420px); /* responsive: tighter on all screen sizes */
   background:var(--white);
   border:1px solid var(--rule);
   z-index:400;
@@ -278,7 +302,7 @@ body{
 }
 .topbar-btn.notif-open .notif-dropdown{display:block;animation:slideIn 0.15s ease}
 .notif-header{
-  padding:10px 14px;
+  padding:12px 18px;
   border-bottom:1px solid var(--rule);
   display:flex;align-items:center;justify-content:space-between;
 }
@@ -289,11 +313,12 @@ body{
 .notif-clear{
   font-family:var(--mono);font-size:9px;color:var(--gold);
   background:none;border:none;cursor:pointer;letter-spacing:0.5px;
+  white-space:nowrap;   /* keep "CLEAR ALL" on one line */
 }
 .notif-item{
-  padding:12px 14px;
+  padding:16px 18px;
   border-bottom:1px solid var(--rule-2);
-  display:flex;align-items:flex-start;gap:10px;
+  display:flex;align-items:flex-start;gap:12px;
 }
 .notif-item:last-child{border-bottom:none}
 .notif-dot{width:5px;height:5px;border-radius:50%;margin-top:4px;flex-shrink:0}
@@ -305,16 +330,23 @@ body{
 .notif-meta{font-family:var(--mono);font-size:10px;color:var(--ink-4);margin-top:3px;letter-spacing:0.2px}
 
 /* ─── CONTENT ─── */
-.content{padding:24px 28px;flex:1}
+.content{
+  padding:16px 28px;
+  flex:1;
+  width:100%;
+  max-width:1200px;      /* fits comfortably on MacBook Pro and Acer — same margin left+right */
+  margin-inline:auto;    /* centres within the main area so left/right margins are equal */
+  box-sizing:border-box;
+}
 
 /* View fade-in */
-#view-map,#view-tx,#view-compliance,#view-liquidity,#view-actions,#view-audit{
+#view-map,#view-tx,#view-compliance,#view-liquidity,#view-actions,#view-audit,#view-performance,#view-reconciliation{
   animation:viewIn 0.18s ease;
 }
 @keyframes viewIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
 /* ─── METRICS STRIP ─── */
-.metrics-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);margin-bottom:28px}
+.metrics-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);margin-bottom:20px}
 .metric-card{
   background:var(--white);
   padding:20px 22px;
@@ -357,13 +389,137 @@ body{
 /* ─── LAYOUT GRIDS ─── */
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:var(--gap)}
 .g3{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gap)}
-.g-63{display:grid;grid-template-columns:minmax(0,3fr) minmax(260px,1.4fr);gap:var(--gap)}
-.g-36{display:grid;grid-template-columns:minmax(260px,1.4fr) minmax(0,3fr);gap:var(--gap)}
+.g-63{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,1.4fr);gap:var(--gap)}
+.g-36{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,3fr);gap:var(--gap)}
+/* prevent any grid/flex child from blowing out its column */
+.g2>*,.g3>*,.g-63>*,.g-36>*,.stack>*{min-width:0}
 @media(max-width:1100px){
   .g-63,.g-36{grid-template-columns:1fr}
   .g2{grid-template-columns:1fr}
   .g3{grid-template-columns:1fr 1fr}
   .metrics-strip{grid-template-columns:1fr 1fr}
+}
+@media(min-width:1101px) and (max-width:1319px){
+  /* content is approaching max-width — keep two-col grids but tighten gap */
+  :root{--gap:16px}
+}
+
+/* ────────────────────────────────────────────
+   RESPONSIVE BREAKPOINT LADDER
+   Large monitor → small phone
+──────────────────────────────────────────── */
+
+/* 1600px+  Ultra-wide / large monitors */
+@media(min-width:1600px){
+  .content{padding:20px 32px;max-width:1240px}
+  .map-wrap{max-height:min(34vh, 360px)}
+}
+
+/* 1440px  Standard large monitor */
+@media(min-width:1440px){
+  .content{padding:18px 28px;max-width:1200px}
+  .map-wrap{max-height:min(36vh, 380px)}
+}
+
+/* 1100px  Grids collapse to single column */
+/* (already handled in grid section above) */
+
+/* 900px  Tablet portrait / small laptop — sidebar goes off-canvas */
+@media(max-width:900px){
+  .menu-btn{display:flex}
+
+  /* Sidebar hidden off-canvas by default */
+  .sidebar{transform:translateX(-100%);z-index:300}
+
+  /* Main fills full width when sidebar is hidden (block auto-width) */
+  .main{margin-left:0}
+
+  /* When sidebar opens: push main right so NO content is hidden behind it */
+  body.sidebar-open .sidebar{transform:translateX(0)}
+  body.sidebar-open .main{margin-left:220px}
+
+  .topbar{height:auto;min-height:48px;flex-wrap:wrap;padding:10px 16px;gap:10px}
+  .topbar-title{flex:1}
+  .topbar-pills{margin-left:0;order:3;width:100%;flex-wrap:wrap}
+  .topbar-right{order:2;margin-left:auto}
+
+  .content{padding:14px 16px 20px}
+  .map-wrap{min-height:180px;max-height:min(38vh, 300px)}
+}
+
+/* 680px  Large phone landscape / small tablet */
+@media(max-width:680px){
+  .g3{grid-template-columns:1fr 1fr}
+  .content{padding:12px 14px 18px}
+  .map-wrap{max-height:min(40vh, 260px)}
+}
+
+/* 520px  Phone portrait (large) */
+@media(max-width:520px){
+  .metrics-strip{grid-template-columns:1fr 1fr}
+  .pill{flex:1;text-align:center}
+  .content{padding:12px 12px 16px}
+  .panel-head{padding:11px 14px}
+  .panel-body{padding:14px 14px}
+  .map-wrap{min-height:160px;max-height:min(42vh, 240px)}
+
+  /* Transaction trace: reduce fixed columns so it fits */
+  .tx-head,.tx-row{
+    padding-left:14px;
+    padding-right:14px;
+    gap:8px;
+    grid-template-columns:32px 1fr 90px 70px 60px;
+  }
+
+  /* Action log: shrink columns and gaps */
+  .log-row{
+    grid-template-columns:46px 60px 110px 1fr 56px;
+    gap:6px;
+  }
+
+  /* Audit: shrink columns and gaps */
+  .audit-row{
+    grid-template-columns:40px 55px 80px 1fr 55px 45px;
+    gap:6px;
+  }
+  .audit-head{
+    grid-template-columns:40px 55px 80px 1fr 55px 45px !important;
+    gap:6px !important;
+    padding:10px 14px !important;
+  }
+  #audit-table{padding:0 14px !important}
+}
+
+/* 390px  Standard phone portrait (iPhone 14/15, Pixel) */
+@media(max-width:390px){
+  .metrics-strip{grid-template-columns:1fr}
+  .content{padding:10px 10px 14px}
+  .panel-head{padding:10px 12px}
+  .panel-body{padding:12px 12px}
+  .topbar{padding:8px 12px;gap:8px}
+  .map-wrap{max-height:min(42vh, 200px)}
+  .mc-value{font-size:24px}
+  .tx-head,.tx-row{
+    grid-template-columns:28px 1fr 80px 64px;
+    gap:6px;padding-left:12px;padding-right:12px;
+  }
+  /* hide rail column on smallest phones */
+  .tx-head>div:nth-child(3),.tx-row>div:nth-child(3){display:none}
+}
+
+/* 320px  Smallest supported phone (iPhone SE, old Androids) */
+@media(max-width:320px){
+  .content{padding:8px 8px 12px}
+  html{font-size:13px}
+}
+
+/* Landscape phone (height < 500px, width > height) */
+@media(max-height:500px) and (orientation:landscape){
+  .topbar{padding:6px 16px;min-height:40px}
+  .content{padding:10px 16px 14px}
+  .metrics-strip{grid-template-columns:repeat(4,1fr)}
+  .map-wrap{max-height:min(55vh, 220px)}
+  .mc-value{font-size:22px}
 }
 
 /* ─── TAGS ─── */
@@ -418,14 +574,19 @@ body{
 .map-wrap{
   background:var(--canvas);
   border-top:1px solid var(--rule);
-  overflow-x:auto;overflow-y:hidden;
-  height:400px;
+  overflow-x:hidden;overflow-y:hidden;
   position:relative;
+  aspect-ratio: 700 / 380;
+  height:auto;
+  min-height:220px;
+  /* cap height so content below stays visible across aspect ratios */
+  max-height:min(38vh, 400px);
 }
 .map-wrap svg{
-  min-width:700px;
   height:100%;
   display:block;
+  width:100%;
+  min-width:0;
 }
 @keyframes dash{to{stroke-dashoffset:-32}}
 .fl-t{animation:dash 2.4s linear infinite}
@@ -665,47 +826,243 @@ select:hover{border-color:var(--ink-4)}
   font-family:var(--mono);font-size:10.5px;letter-spacing:0.8px;
 }
 .export-btn:hover{background:#2a2520}
+
+/* ─── ROLE SWITCHER ─── */
+.role-switcher{
+  margin-top:12px;
+  display:flex;flex-direction:column;gap:4px;
+}
+.role-switcher-label{
+  font-family:var(--mono);font-size:8.5px;
+  color:var(--ink-4);letter-spacing:1.5px;text-transform:uppercase;
+  margin-bottom:4px;
+}
+.role-btn{
+  padding:5px 10px;
+  font-family:var(--mono);font-size:10px;
+  color:var(--ink-3);letter-spacing:0.5px;
+  border:1px solid transparent;
+  background:transparent;cursor:pointer;
+  text-align:left;transition:all 0.12s;
+}
+.role-btn:hover{color:var(--ink);background:rgba(20,18,15,0.04);border-color:var(--rule)}
+.role-btn.active{
+  color:var(--gold);
+  background:var(--gold-bg);
+  border-color:rgba(140,104,32,0.25);
+}
+
+/* ─── ENTITY FILTER BAR ─── */
+.entity-filter{
+  display:flex;gap:4px;flex-wrap:wrap;
+  margin-bottom:14px;
+}
+.ef-btn{
+  padding:4px 11px;
+  font-family:var(--mono);font-size:10px;
+  color:var(--ink-3);letter-spacing:0.3px;
+  border:1px solid var(--rule);
+  background:var(--white);cursor:pointer;
+  transition:all 0.12s;
+}
+.ef-btn:hover{color:var(--ink);border-color:var(--ink-4)}
+.ef-btn.active{
+  background:var(--ink);color:var(--white);border-color:var(--ink);
+}
+
+/* ─── KPI SPARKLINE ─── */
+.mc-spark{
+  display:block;overflow:hidden;
+  margin-top:8px;
+  line-height:0;
+}
+.mc-spark polyline{
+  fill:none;stroke-width:1.2;vector-effect:non-scaling-stroke;
+}
+
+/* ─── DRILLDOWN PANEL ─── */
+.drilldown-panel{
+  display:none;
+  background:var(--canvas);
+  border:1px solid var(--rule);
+  border-top:2px solid var(--gold);
+  padding:18px 22px;
+  margin-top:-1px;
+  margin-bottom:20px;
+  animation:slideIn 0.18s ease;
+}
+.drilldown-panel.open{display:block}
+.drilldown-panel-head{
+  display:flex;align-items:baseline;justify-content:space-between;
+  margin-bottom:14px;
+}
+.drilldown-title{
+  font-family:var(--serif);font-size:14px;font-weight:300;
+  font-style:italic;color:var(--ink);
+}
+.drilldown-close{
+  font-family:var(--mono);font-size:10px;color:var(--ink-3);
+  border:1px solid var(--rule);background:none;
+  padding:3px 9px;cursor:pointer;letter-spacing:0.5px;
+}
+.drilldown-close:hover{border-color:var(--ink-3);color:var(--ink)}
+.drilldown-table{width:100%}
+.drilldown-row{
+  display:flex;gap:14px;align-items:center;
+  padding:9px 0;border-bottom:1px solid var(--rule-2);
+  font-size:12px;
+}
+.drilldown-row:last-child{border-bottom:none}
+.dr-entity{flex:1;font-weight:400;color:var(--ink)}
+.dr-amount{font-family:var(--mono);font-size:11px;color:var(--ink-2);white-space:nowrap}
+.dr-rail{font-family:var(--mono);font-size:10px;color:var(--ink-4)}
+
+/* ─── RECONCILIATION ─── */
+.recon-head{
+  display:grid;grid-template-columns:1fr 1fr 1fr 90px;
+  gap:10px;padding:8px 22px;
+  border-bottom:1px solid var(--rule);
+}
+.recon-row{
+  display:grid;grid-template-columns:1fr 1fr 1fr 90px;
+  gap:10px;padding:11px 22px;
+  border-bottom:1px solid var(--rule-2);
+  align-items:center;font-size:12px;
+}
+.recon-row:last-child{border-bottom:none}
+.recon-entity{color:var(--ink);font-weight:400}
+.recon-amount{font-family:var(--mono);font-size:11px;color:var(--ink-2)}
+
+/* ─── ANOMALY BOX ─── */
+.anomaly-box{
+  padding:14px 16px;
+  margin-bottom:14px;
+  display:flex;align-items:flex-start;gap:12px;
+}
+.anomaly-box:last-child{margin-bottom:0}
+.anomaly-box.sev-red{border-left:2px solid var(--red);background:var(--red-bg)}
+.anomaly-box.sev-amber{border-left:2px solid var(--amber);background:var(--amber-bg)}
+.anomaly-sev{
+  font-family:var(--mono);font-size:8.5px;
+  letter-spacing:1.2px;text-transform:uppercase;
+  padding:2px 6px;white-space:nowrap;flex-shrink:0;margin-top:1px;
+}
+.sev-red .anomaly-sev{color:var(--red);background:var(--red-bg);border:1px solid rgba(176,48,32,0.2)}
+.sev-amber .anomaly-sev{color:var(--amber);background:var(--amber-bg);border:1px solid rgba(150,98,10,0.2)}
+.anomaly-body{flex:1}
+.anomaly-title{font-size:12.5px;font-weight:500;color:var(--ink);margin-bottom:3px}
+.anomaly-desc{font-size:11px;color:var(--ink-2);font-weight:300;line-height:1.55}
+.anomaly-action{
+  font-family:var(--mono);font-size:10px;
+  color:var(--red);border:1px solid rgba(176,48,32,0.3);
+  background:none;padding:4px 10px;cursor:pointer;
+  letter-spacing:0.3px;transition:all 0.12s;flex-shrink:0;
+  align-self:flex-start;margin-top:1px;
+}
+.anomaly-action:hover{background:var(--red);color:var(--white)}
+
+/* ─── TIMESTAMP LIVE ─── */
+.timestamp-live{
+  font-family:var(--mono);font-size:9.5px;
+  color:var(--ink-4);letter-spacing:0.5px;
+  white-space:nowrap;
+}
+
+/* ─── FLASH ANIMATIONS ─── */
+@keyframes flashUp{
+  0%{background:var(--green-bg);color:var(--green)}
+  70%{background:var(--green-bg);color:var(--green)}
+  100%{background:transparent;color:inherit}
+}
+@keyframes flashDown{
+  0%{background:var(--red-bg);color:var(--red)}
+  70%{background:var(--red-bg);color:var(--red)}
+  100%{background:transparent;color:inherit}
+}
+.flash-up{animation:flashUp 1.2s ease forwards}
+.flash-down{animation:flashDown 1.2s ease forwards}
+
+/* ─── PERFORMANCE VIEW ─── */
+.perf-bar rect{transition:opacity 0.2s}
+.perf-bar rect:hover{opacity:0.8}
+.mover-row{
+  display:flex;align-items:center;gap:12px;
+  padding:12px 0;border-bottom:1px solid var(--rule-2);
+}
+.mover-row:last-child{border-bottom:none}
+.mover-rank{font-family:var(--mono);font-size:11px;color:var(--ink-4);width:18px;flex-shrink:0}
+.mover-body{flex:1}
+.mover-title{font-size:12.5px;font-weight:400;color:var(--ink)}
+.mover-meta{font-family:var(--mono);font-size:10px;color:var(--ink-3);margin-top:2px}
+.mover-amount{font-family:var(--mono);font-size:12px;white-space:nowrap}
+.exec-summary{
+  padding:16px 18px;
+  border-left:2px solid var(--gold);
+  background:var(--gold-bg);
+  font-size:12px;color:var(--ink-2);
+  line-height:1.7;font-weight:300;
+}
+.exec-summary-title{
+  font-family:var(--mono);font-size:9px;color:var(--gold);
+  letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;
+}
+
+/* ─── METRIC CARD CLICKABLE ─── */
+.metric-card{cursor:pointer;transition:background 0.12s}
+.metric-card:hover{background:var(--canvas)}
+.metric-card.dd-active{background:var(--gold-bg);border-bottom:2px solid var(--gold)}
+
 </style>
 </head>
 <body>
 <div class="shell">
 
+<div id="sidebar-overlay" class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
 <!-- ═══════════════════ SIDEBAR ═══════════════════ -->
 <aside class="sidebar">
   <div class="logo">
-    <div class="logo-mark">O</div>
+    <div class="logo-mark">M</div>
     <div class="logo-text">
-      <span class="wordmark">Orion</span>
+      <span class="wordmark">Maples Group</span>
       <span class="division">Fund Infrastructure</span>
     </div>
   </div>
 
   <nav class="nav">
     <div class="nav-section">Overview</div>
-    <button class="nav-item active" onclick="show('map')">
+    <button class="nav-item active" data-roles="executive,finance,compliance,risk" onclick="show('map')">
       <svg class="ni" viewBox="0 0 14 14" fill="currentColor"><path d="M1 2h12v2H1zm0 4h5v6H1zm7 0h5v6H8z"/></svg>
       Capital Map
     </button>
-    <button class="nav-item" onclick="show('tx')">
+    <button class="nav-item" data-roles="finance,compliance" onclick="show('tx')">
       <svg class="ni" viewBox="0 0 14 14" fill="currentColor"><path d="M10.5 1.5L13 4l-2.5 2.5M13 4H5M3.5 12.5L1 10l2.5-2.5M1 10h8"/></svg>
       Transaction Trace
     </button>
-    <button class="nav-item" onclick="show('compliance')">
+    <button class="nav-item" data-roles="executive,finance,compliance,risk" onclick="show('compliance')">
       <svg class="ni" viewBox="0 0 14 14" fill="currentColor"><path d="M7 1l5.5 2.2v3.6C12.5 10 10.1 13 7 14 3.9 13 1.5 10 1.5 6.8V3.2L7 1zm2.8 4.5L6 9.3 4.2 7.5l-.7.7L6 10.7l4.5-4.5-.7-.7z"/></svg>
       Compliance
-      <span class="nav-badge">3</span>
+      <span class="nav-badge" id="compliance-badge">3</span>
     </button>
-    <button class="nav-item" onclick="show('liquidity')">
+    <button class="nav-item" data-roles="executive,finance,compliance,risk" onclick="show('liquidity')">
       <svg class="ni" viewBox="0 0 14 14" fill="currentColor"><path d="M1 9h2v4H1zm3-4h2v8H4zm3-4h2v12H7zm3 2h2v10h-2z"/></svg>
       Liquidity
     </button>
+    <button class="nav-item" data-roles="executive,finance" onclick="show('performance')">
+      <svg class="ni" viewBox="0 0 14 14" fill="currentColor"><path d="M1 13L4 7l3 3 3-5 3 2M1 11h12"/></svg>
+      Performance
+    </button>
 
     <div class="nav-section">Operations</div>
-    <button class="nav-item" onclick="show('actions')">
+    <button class="nav-item" data-roles="finance" onclick="show('actions')">
       <svg class="ni" viewBox="0 0 14 14" fill="currentColor"><path d="M8 1.5L5.5 6H1.5l4 3.5L4 14 8 11l4 3-1.5-4.5L14 6h-4L8 1.5z"/></svg>
       Smart Actions
     </button>
-    <button class="nav-item" onclick="show('audit')">
+    <button class="nav-item" data-roles="finance,risk" onclick="show('reconciliation')">
+      <svg class="ni" viewBox="0 0 14 14" fill="currentColor"><path d="M1 4h6M1 7h6M1 10h4M9 6l2 2 3-4M8 1h4a1 1 0 011 1v10a1 1 0 01-1 1H8"/></svg>
+      Reconciliation
+    </button>
+    <button class="nav-item" data-roles="finance,compliance,risk" onclick="show('audit')">
       <svg class="ni" viewBox="0 0 14 14" fill="currentColor"><path d="M3 1h8a1 1 0 011 1v10a1 1 0 01-1 1H3a1 1 0 01-1-1V2a1 1 0 011-1zm1 3h6v1H4V4zm0 2.5h6v1H4v-1zm0 2.5h4v1H4V9z"/></svg>
       Audit &amp; Regulator
     </button>
@@ -716,8 +1073,15 @@ select:hover{border-color:var(--ink-4)}
       <div class="avatar">JC</div>
       <div>
         <span class="user-name">James Clifford</span>
-        <span class="user-role">Fund Manager</span>
+        <span class="user-role" id="user-role-label">Finance</span>
       </div>
+    </div>
+    <div class="role-switcher">
+      <div class="role-switcher-label">Role</div>
+      <button class="role-btn" onclick="setRole('executive')">Executive</button>
+      <button class="role-btn active" onclick="setRole('finance')">Finance</button>
+      <button class="role-btn" onclick="setRole('compliance')">Compliance</button>
+      <button class="role-btn" onclick="setRole('risk')">Risk</button>
     </div>
   </div>
 </aside>
@@ -727,13 +1091,19 @@ select:hover{border-color:var(--ink-4)}
 
   <!-- TOPBAR -->
   <header class="topbar">
-    <div class="topbar-title" id="top-title">Global Capital Map</div>
+    <button class="topbar-btn menu-btn" id="menu-btn" onclick="toggleSidebar()" aria-label="Toggle navigation">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+        <path d="M2 3.5h12v1.5H2zM2 7h12v1.5H2zM2 10.5h12V12H2z"/>
+      </svg>
+    </button>
+    <div class="topbar-title" id="top-title">Global<br>Capital Map</div>
     <div class="topbar-pills" id="view-toggle">
       <button class="pill active" onclick="cyclePill(this)">Legal</button>
       <button class="pill" onclick="cyclePill(this)">Cash Flow</button>
       <button class="pill" onclick="cyclePill(this)">Token</button>
     </div>
     <div class="topbar-right">
+      <div class="timestamp-live" id="ts-live">—</div>
       <div class="live-pill"><div class="live-dot"></div>LIVE · SWIFT + ONYX</div>
       <button class="topbar-btn" id="notif-btn" onclick="toggleNotif(event)">
         <svg width="13" height="13" viewBox="0 0 14 14" fill="currentColor"><path d="M7 1a4 4 0 014 4c0 2.8 1 4 1.5 5h-11C2 9 3 7.8 3 5a4 4 0 014-4zm-1 11h2a1 1 0 01-2 0z"/></svg>
@@ -777,31 +1147,59 @@ select:hover{border-color:var(--ink-4)}
 
   <!-- ══════════════ VIEW: MAP ══════════════ -->
   <div id="view-map">
-    <div class="metrics-strip">
-      <div class="metric-card">
+    <!-- Entity Filter Bar -->
+    <div class="entity-filter" id="ef-map">
+      <button class="ef-btn active" onclick="filterEntity('map','all',this)">All Entities</button>
+      <button class="ef-btn" onclick="filterEntity('map','cayman',this)">🇰🇾 Cayman</button>
+      <button class="ef-btn" onclick="filterEntity('map','luxembourg',this)">🇱🇺 Luxembourg</button>
+      <button class="ef-btn" onclick="filterEntity('map','uk',this)">🇬🇧 UK</button>
+      <button class="ef-btn" onclick="filterEntity('map','singapore',this)">🇸🇬 Singapore</button>
+    </div>
+    <div class="metrics-strip" id="ms-map">
+      <div class="metric-card" id="mc-aum" onclick="toggleDrilldown('aum')">
         <div class="mc-label">Total AUM</div>
-        <div class="mc-value">$4.2B</div>
+        <div class="mc-value" id="mcv-aum">$4.2B</div>
         <div class="mc-sub"><span class="up">↑ 8.3%</span> QoQ</div>
         <div class="mc-bar"><div class="mc-fill" style="width:100%;background:var(--ink)"></div></div>
+        <svg class="mc-spark" width="60" height="18" viewBox="0 0 60 18">
+          <polyline points="0,14 10,12 20,10 30,9 40,7 50,5 60,3" stroke="var(--ink)" opacity="0.35"/>
+        </svg>
       </div>
-      <div class="metric-card">
+      <div class="metric-card" id="mc-token" onclick="toggleDrilldown('token')">
         <div class="mc-label">Tokenised</div>
-        <div class="mc-value" style="color:var(--token)">$1.7B</div>
+        <div class="mc-value" id="mcv-token" style="color:var(--token)">$1.7B</div>
         <div class="mc-sub">40.5% — Onyx rails</div>
         <div class="mc-bar"><div class="mc-fill" style="width:40%;background:var(--token)"></div></div>
+        <svg class="mc-spark" width="60" height="18" viewBox="0 0 60 18">
+          <polyline points="0,16 10,14 20,11 30,9 40,6 50,4 60,2" stroke="var(--token)" opacity="0.4"/>
+        </svg>
       </div>
-      <div class="metric-card">
+      <div class="metric-card" id="mc-fiat" onclick="toggleDrilldown('fiat')">
         <div class="mc-label">Fiat in Transit</div>
-        <div class="mc-value" style="color:var(--fiat)">$340M</div>
+        <div class="mc-value" id="mcv-fiat" style="color:var(--fiat)">$340M</div>
         <div class="mc-sub"><span class="warn">3 cross-border pending</span></div>
         <div class="mc-bar"><div class="mc-fill" style="width:8%;background:var(--fiat)"></div></div>
+        <svg class="mc-spark" width="60" height="18" viewBox="0 0 60 18">
+          <polyline points="0,9 10,7 20,10 30,8 40,11 50,9 60,8" stroke="var(--fiat)" opacity="0.4"/>
+        </svg>
       </div>
-      <div class="metric-card">
+      <div class="metric-card" id="mc-comp" onclick="toggleDrilldown('comp')">
         <div class="mc-label">Compliance</div>
-        <div class="mc-value" style="color:var(--amber)">94<span style="font-size:16px;color:var(--ink-3)">/100</span></div>
+        <div class="mc-value" id="mcv-comp" style="color:var(--amber)">94<span style="font-size:16px;color:var(--ink-3)">/100</span></div>
         <div class="mc-sub"><span class="warn">3 issues active</span></div>
         <div class="mc-bar"><div class="mc-fill" style="width:94%;background:var(--amber)"></div></div>
+        <svg class="mc-spark" width="60" height="18" viewBox="0 0 60 18">
+          <polyline points="0,7 10,6 20,8 30,10 40,9 50,7 60,6" stroke="var(--amber)" opacity="0.5"/>
+        </svg>
       </div>
+    </div>
+    <!-- Drilldown panel (below metrics strip) -->
+    <div class="drilldown-panel" id="drilldown-panel">
+      <div class="drilldown-panel-head">
+        <div class="drilldown-title" id="dd-title">—</div>
+        <button class="drilldown-close" onclick="closeDrilldown()">CLOSE ×</button>
+      </div>
+      <div class="drilldown-table" id="dd-body"></div>
     </div>
 
     <div class="g-63" style="margin-bottom:var(--gap)">
@@ -816,7 +1214,7 @@ select:hover{border-color:var(--ink-4)}
           </div>
         </div>
         <div class="map-wrap">
-          <svg width="100%" height="100%" viewBox="0 0 700 380">
+          <svg width="100%" height="100%" viewBox="0 0 700 380" preserveAspectRatio="xMidYMid meet">
             <defs>
               <marker id="mt" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="4" markerHeight="4" orient="auto">
                 <path d="M1 1.5L6 4L1 6.5" fill="none" stroke="#4040b8" stroke-width="1.5" stroke-linecap="round"/>
@@ -923,10 +1321,10 @@ select:hover{border-color:var(--ink-4)}
         <div class="panel">
           <div class="panel-head"><div class="panel-title">Jurisdictions</div></div>
           <div style="padding:0 22px">
-            <div class="juri-row"><span>🇰🇾</span><span class="juri-name">Cayman Islands</span><span class="juri-amt">$4.2B</span><span class="tag t-g">CLEAN</span></div>
-            <div class="juri-row"><span>🇱🇺</span><span class="juri-name">Luxembourg</span><span class="juri-amt">€1.12B</span><span class="tag t-a">REVIEW</span></div>
-            <div class="juri-row"><span>🇬🇧</span><span class="juri-name">United Kingdom</span><span class="juri-amt">£820M</span><span class="tag t-g">CLEAN</span></div>
-            <div class="juri-row"><span>🇸🇬</span><span class="juri-name">Singapore</span><span class="juri-amt">$260M</span><span class="tag t-g">CLEAN</span></div>
+            <div class="juri-row" data-entity="cayman"><span>🇰🇾</span><span class="juri-name">Cayman Islands</span><span class="juri-amt">$4.2B</span><span class="tag t-g">CLEAN</span></div>
+            <div class="juri-row" data-entity="luxembourg"><span>🇱🇺</span><span class="juri-name">Luxembourg</span><span class="juri-amt">€1.12B</span><span class="tag t-a">REVIEW</span></div>
+            <div class="juri-row" data-entity="uk"><span>🇬🇧</span><span class="juri-name">United Kingdom</span><span class="juri-amt">£820M</span><span class="tag t-g">CLEAN</span></div>
+            <div class="juri-row" data-entity="singapore"><span>🇸🇬</span><span class="juri-name">Singapore</span><span class="juri-amt">$260M</span><span class="tag t-g">CLEAN</span></div>
           </div>
         </div>
 
@@ -960,12 +1358,12 @@ select:hover{border-color:var(--ink-4)}
       </div>
       <div class="panel-body">
         <div class="g3 gap-sm">
-          <div class="s-row" style="padding:12px 0">
+          <div class="s-row" style="padding:12px 0" data-entity="luxembourg">
             <div class="s-dot sd-r"></div>
             <div class="s-body"><div class="s-title">Luxembourg AML mismatch</div><div class="s-desc">SPV I · €22M transfer blocked</div></div>
             <button class="s-action" onclick="show('compliance')">RESOLVE</button>
           </div>
-          <div class="s-row" style="padding:12px 0">
+          <div class="s-row" style="padding:12px 0" data-entity="cayman">
             <div class="s-dot sd-a"></div>
             <div class="s-body"><div class="s-title">Investor onboarding</div><div class="s-desc">Cayman SPV · 3 LPs pending KYC</div></div>
             <button class="s-action">REVIEW</button>
@@ -1042,15 +1440,22 @@ select:hover{border-color:var(--ink-4)}
 
   <!-- ══════════════ VIEW: COMPLIANCE ══════════════ -->
   <div id="view-compliance" style="display:none">
+    <div class="entity-filter" id="ef-compliance">
+      <button class="ef-btn active" onclick="filterEntity('compliance','all',this)">All Entities</button>
+      <button class="ef-btn" onclick="filterEntity('compliance','cayman',this)">🇰🇾 Cayman</button>
+      <button class="ef-btn" onclick="filterEntity('compliance','luxembourg',this)">🇱🇺 Luxembourg</button>
+      <button class="ef-btn" onclick="filterEntity('compliance','uk',this)">🇬🇧 UK</button>
+      <button class="ef-btn" onclick="filterEntity('compliance','singapore',this)">🇸🇬 Singapore</button>
+    </div>
     <div class="g2">
       <div class="panel">
         <div class="panel-head"><div class="panel-title">Compliance State Engine</div><div class="panel-sub">RAG across all entities</div></div>
         <div style="padding:0 22px">
-          <div class="s-row"><div class="s-dot sd-g"></div><div class="s-body"><div class="s-title">Cayman Master Fund</div><div class="s-desc">KYC · AML · Sanctions · FATCA — all clear</div></div><span class="s-score">100/100</span></div>
-          <div class="s-row"><div class="s-dot sd-r"></div><div class="s-body"><div class="s-title">Luxembourg SPV I</div><div class="s-desc">AML ✗ — Directive 2018/843 · Transfers suspended</div></div><span class="s-score" style="color:var(--red)">68/100</span></div>
-          <div class="s-row"><div class="s-dot sd-g"></div><div class="s-body"><div class="s-title">Luxembourg SPV II</div><div class="s-desc">UCITS compliant · All checks passed</div></div><span class="s-score">97/100</span></div>
-          <div class="s-row"><div class="s-dot sd-a"></div><div class="s-body"><div class="s-title">UK Custodian</div><div class="s-desc">Fireblocks audit pending · FCA review Q1</div></div><span class="s-score" style="color:var(--amber)">88/100</span></div>
-          <div class="s-row"><div class="s-dot sd-g"></div><div class="s-body"><div class="s-title">Singapore LP Pool</div><div class="s-desc">MAS registered · All checks clean</div></div><span class="s-score">99/100</span></div>
+          <div class="s-row" data-entity="cayman"><div class="s-dot sd-g"></div><div class="s-body"><div class="s-title">Cayman Master Fund</div><div class="s-desc">KYC · AML · Sanctions · FATCA — all clear</div></div><span class="s-score">100/100</span></div>
+          <div class="s-row" data-entity="luxembourg"><div class="s-dot sd-r"></div><div class="s-body"><div class="s-title">Luxembourg SPV I</div><div class="s-desc">AML ✗ — Directive 2018/843 · Transfers suspended</div></div><span class="s-score" style="color:var(--red)">68/100</span></div>
+          <div class="s-row" data-entity="luxembourg"><div class="s-dot sd-g"></div><div class="s-body"><div class="s-title">Luxembourg SPV II</div><div class="s-desc">UCITS compliant · All checks passed</div></div><span class="s-score">97/100</span></div>
+          <div class="s-row" data-entity="uk"><div class="s-dot sd-a"></div><div class="s-body"><div class="s-title">UK Custodian</div><div class="s-desc">Fireblocks audit pending · FCA review Q1</div></div><span class="s-score" style="color:var(--amber)">88/100</span></div>
+          <div class="s-row" data-entity="singapore"><div class="s-dot sd-g"></div><div class="s-body"><div class="s-title">Singapore LP Pool</div><div class="s-desc">MAS registered · All checks clean</div></div><span class="s-score">99/100</span></div>
         </div>
       </div>
 
@@ -1075,6 +1480,13 @@ select:hover{border-color:var(--ink-4)}
 
   <!-- ══════════════ VIEW: LIQUIDITY ══════════════ -->
   <div id="view-liquidity" style="display:none">
+    <div class="entity-filter" id="ef-liquidity">
+      <button class="ef-btn active" onclick="filterEntity('liquidity','all',this)">All Entities</button>
+      <button class="ef-btn" onclick="filterEntity('liquidity','cayman',this)">🇰🇾 Cayman</button>
+      <button class="ef-btn" onclick="filterEntity('liquidity','luxembourg',this)">🇱🇺 Luxembourg</button>
+      <button class="ef-btn" onclick="filterEntity('liquidity','uk',this)">🇬🇧 UK</button>
+      <button class="ef-btn" onclick="filterEntity('liquidity','singapore',this)">🇸🇬 Singapore</button>
+    </div>
     <div class="metrics-strip" style="margin-bottom:var(--gap)">
       <div class="metric-card"><div class="mc-label">Available</div><div class="mc-value" style="color:var(--green)">$2.1B</div><div class="mc-sub">Deployable T+0</div><div class="mc-bar"><div class="mc-fill" style="width:50%;background:var(--green)"></div></div></div>
       <div class="metric-card"><div class="mc-label">Restricted</div><div class="mc-value" style="color:var(--amber)">$820M</div><div class="mc-sub"><span class="warn">Compliance holds</span></div><div class="mc-bar"><div class="mc-fill" style="width:20%;background:var(--amber)"></div></div></div>
@@ -1091,11 +1503,11 @@ select:hover{border-color:var(--ink-4)}
             <div class="legend-item"><div class="l-dot" style="background:var(--fiat)"></div>Fiat</div>
             <div class="legend-item"><div class="l-dot" style="background:var(--rule)"></div>Locked</div>
           </div>
-          <div class="liq-entity"><div class="liq-name">Cayman Master Fund</div><div class="liq-bar-wrap"><div class="liq-seg liq-token" style="width:38%"></div><div class="liq-seg liq-fiat" style="left:38%;width:50%"></div><div class="liq-seg liq-locked" style="left:88%;width:12%"></div></div><div class="liq-total">$4.2B</div></div>
-          <div class="liq-entity"><div class="liq-name">Luxembourg SPV I</div><div class="liq-bar-wrap"><div class="liq-seg liq-token" style="width:55%"></div><div class="liq-seg liq-fiat" style="left:55%;width:20%"></div><div class="liq-seg liq-locked" style="left:75%;width:25%"></div></div><div class="liq-total">€640M</div></div>
-          <div class="liq-entity"><div class="liq-name">Luxembourg SPV II</div><div class="liq-bar-wrap"><div class="liq-seg liq-token" style="width:30%"></div><div class="liq-seg liq-fiat" style="left:30%;width:68%"></div><div class="liq-seg liq-locked" style="left:98%;width:2%"></div></div><div class="liq-total">€480M</div></div>
-          <div class="liq-entity"><div class="liq-name">UK Custodian</div><div class="liq-bar-wrap"><div class="liq-seg liq-token" style="width:48%"></div><div class="liq-seg liq-fiat" style="left:48%;width:38%"></div><div class="liq-seg liq-locked" style="left:86%;width:14%"></div></div><div class="liq-total">£820M</div></div>
-          <div class="liq-entity"><div class="liq-name">Singapore LP Pool</div><div class="liq-bar-wrap"><div class="liq-seg liq-fiat" style="width:80%"></div><div class="liq-seg liq-locked" style="left:80%;width:20%"></div></div><div class="liq-total">$260M</div></div>
+          <div class="liq-entity" data-entity="cayman"><div class="liq-name">Cayman Master Fund</div><div class="liq-bar-wrap"><div class="liq-seg liq-token" style="width:38%"></div><div class="liq-seg liq-fiat" style="left:38%;width:50%"></div><div class="liq-seg liq-locked" style="left:88%;width:12%"></div></div><div class="liq-total">$4.2B</div></div>
+          <div class="liq-entity" data-entity="luxembourg"><div class="liq-name">Luxembourg SPV I</div><div class="liq-bar-wrap"><div class="liq-seg liq-token" style="width:55%"></div><div class="liq-seg liq-fiat" style="left:55%;width:20%"></div><div class="liq-seg liq-locked" style="left:75%;width:25%"></div></div><div class="liq-total">€640M</div></div>
+          <div class="liq-entity" data-entity="luxembourg"><div class="liq-name">Luxembourg SPV II</div><div class="liq-bar-wrap"><div class="liq-seg liq-token" style="width:30%"></div><div class="liq-seg liq-fiat" style="left:30%;width:68%"></div><div class="liq-seg liq-locked" style="left:98%;width:2%"></div></div><div class="liq-total">€480M</div></div>
+          <div class="liq-entity" data-entity="uk"><div class="liq-name">UK Custodian</div><div class="liq-bar-wrap"><div class="liq-seg liq-token" style="width:48%"></div><div class="liq-seg liq-fiat" style="left:48%;width:38%"></div><div class="liq-seg liq-locked" style="left:86%;width:14%"></div></div><div class="liq-total">£820M</div></div>
+          <div class="liq-entity" data-entity="singapore"><div class="liq-name">Singapore LP Pool</div><div class="liq-bar-wrap"><div class="liq-seg liq-fiat" style="width:80%"></div><div class="liq-seg liq-locked" style="left:80%;width:20%"></div></div><div class="liq-total">$260M</div></div>
         </div>
       </div>
 
@@ -1124,6 +1536,13 @@ select:hover{border-color:var(--ink-4)}
 
   <!-- ══════════════ VIEW: ACTIONS ══════════════ -->
   <div id="view-actions" style="display:none">
+    <div class="entity-filter" id="ef-actions">
+      <button class="ef-btn active" onclick="filterEntity('actions','all',this)">All Entities</button>
+      <button class="ef-btn" onclick="filterEntity('actions','cayman',this)">🇰🇾 Cayman</button>
+      <button class="ef-btn" onclick="filterEntity('actions','luxembourg',this)">🇱🇺 Luxembourg</button>
+      <button class="ef-btn" onclick="filterEntity('actions','uk',this)">🇬🇧 UK</button>
+      <button class="ef-btn" onclick="filterEntity('actions','singapore',this)">🇸🇬 Singapore</button>
+    </div>
     <div class="g2">
       <div class="panel">
         <div class="panel-head"><div class="panel-title">Smart Action Layer</div><div class="panel-sub">orchestrate fund operations</div></div>
@@ -1163,9 +1582,9 @@ select:hover{border-color:var(--ink-4)}
         <div class="panel-head"><div class="panel-title">Action Log</div></div>
         <div style="padding:0 22px 4px">
           <div id="action-log">
-            <div class="log-row"><div class="log-hash">#A-001</div><div class="log-time">09:42:11</div><div class="log-entity">Cayman Master</div><div class="log-action">Sanctions sweep — all clear</div><span class="tag t-g">CLEAN</span></div>
-            <div class="log-row"><div class="log-hash">#A-002</div><div class="log-time">08:17:33</div><div class="log-entity">Lux SPV I</div><div class="log-action">AML flag — transfer suspended</div><span class="tag t-r">BLOCKED</span></div>
-            <div class="log-row"><div class="log-hash">#A-003</div><div class="log-time">07:55:02</div><div class="log-entity">Cayman Master</div><div class="log-action">Capital call — $6.5M settled</div><span class="tag t-g">SETTLED</span></div>
+            <div class="log-row" data-entity="cayman"><div class="log-hash">#A-001</div><div class="log-time">09:42:11</div><div class="log-entity">Cayman Master</div><div class="log-action">Sanctions sweep — all clear</div><span class="tag t-g">CLEAN</span></div>
+            <div class="log-row" data-entity="luxembourg"><div class="log-hash">#A-002</div><div class="log-time">08:17:33</div><div class="log-entity">Lux SPV I</div><div class="log-action">AML flag — transfer suspended</div><span class="tag t-r">BLOCKED</span></div>
+            <div class="log-row" data-entity="cayman"><div class="log-hash">#A-003</div><div class="log-time">07:55:02</div><div class="log-entity">Cayman Master</div><div class="log-action">Capital call — $6.5M settled</div><span class="tag t-g">SETTLED</span></div>
           </div>
         </div>
         <div style="padding:14px 22px;border-top:1px solid var(--rule-2)">
@@ -1177,6 +1596,13 @@ select:hover{border-color:var(--ink-4)}
 
   <!-- ══════════════ VIEW: AUDIT ══════════════ -->
   <div id="view-audit" style="display:none">
+    <div class="entity-filter" id="ef-audit">
+      <button class="ef-btn active" onclick="filterEntity('audit','all',this)">All Entities</button>
+      <button class="ef-btn" onclick="filterEntity('audit','cayman',this)">🇰🇾 Cayman</button>
+      <button class="ef-btn" onclick="filterEntity('audit','luxembourg',this)">🇱🇺 Luxembourg</button>
+      <button class="ef-btn" onclick="filterEntity('audit','uk',this)">🇬🇧 UK</button>
+      <button class="ef-btn" onclick="filterEntity('audit','singapore',this)">🇸🇬 Singapore</button>
+    </div>
     <div class="panel" style="margin-bottom:var(--gap)">
       <div class="panel-body" style="padding:14px 22px">
         <div class="flex-between" style="flex-wrap:wrap;gap:10px">
@@ -1191,13 +1617,250 @@ select:hover{border-color:var(--ink-4)}
     </div>
 
     <div class="panel">
-      <div style="display:grid;grid-template-columns:56px 80px 140px 1fr 80px 64px;gap:10px;padding:10px 22px;border-bottom:1px solid var(--rule)">
+      <div class="audit-head" style="display:grid;grid-template-columns:56px 80px 140px 1fr 80px 64px;gap:10px;padding:10px 22px;border-bottom:1px solid var(--rule)">
         <div class="th">HASH</div><div class="th">TIME</div><div class="th">ENTITY</div>
         <div class="th">ACTION</div><div class="th">AMOUNT</div><div class="th">STATUS</div>
       </div>
       <div style="padding:0 22px" id="audit-table"></div>
       <div style="padding:12px 22px;border-top:1px solid var(--rule-2)">
         <div style="font-family:var(--mono);font-size:9px;color:var(--ink-4);letter-spacing:0.5px">Root hash: 0x9f3a8d2c…d88e · All records immutable · Chain verified</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ VIEW: PERFORMANCE ══════════════ -->
+  <div id="view-performance" style="display:none">
+    <div class="entity-filter" id="ef-performance">
+      <button class="ef-btn active" onclick="filterEntity('performance','all',this)">All Entities</button>
+      <button class="ef-btn" onclick="filterEntity('performance','cayman',this)">🇰🇾 Cayman</button>
+      <button class="ef-btn" onclick="filterEntity('performance','luxembourg',this)">🇱🇺 Luxembourg</button>
+      <button class="ef-btn" onclick="filterEntity('performance','uk',this)">🇬🇧 UK</button>
+      <button class="ef-btn" onclick="filterEntity('performance','singapore',this)">🇸🇬 Singapore</button>
+    </div>
+    <div class="metrics-strip" style="margin-bottom:var(--gap)">
+      <div class="metric-card">
+        <div class="mc-label">YTD Return</div>
+        <div class="mc-value" style="color:var(--green)">+12.4%</div>
+        <div class="mc-sub"><span class="up">↑ 2.1%</span> vs benchmark</div>
+        <div class="mc-bar"><div class="mc-fill" style="width:62%;background:var(--green)"></div></div>
+      </div>
+      <div class="metric-card">
+        <div class="mc-label">Volatility Index</div>
+        <div class="mc-value" style="color:var(--amber)">8.7</div>
+        <div class="mc-sub">Annualised std dev</div>
+        <div class="mc-bar"><div class="mc-fill" style="width:29%;background:var(--amber)"></div></div>
+      </div>
+      <div class="metric-card">
+        <div class="mc-label">Sharpe Ratio</div>
+        <div class="mc-value">1.42</div>
+        <div class="mc-sub"><span class="up">Strong</span> risk-adjusted</div>
+        <div class="mc-bar"><div class="mc-fill" style="width:71%;background:var(--ink)"></div></div>
+      </div>
+      <div class="metric-card">
+        <div class="mc-label">Max Drawdown</div>
+        <div class="mc-value" style="color:var(--red)">−3.8%</div>
+        <div class="mc-sub">Jan 2026 trough</div>
+        <div class="mc-bar"><div class="mc-fill" style="width:19%;background:var(--red)"></div></div>
+      </div>
+    </div>
+
+    <div class="g2" style="margin-bottom:var(--gap)">
+      <!-- Program Performance chart -->
+      <div class="panel">
+        <div class="panel-head">
+          <div class="panel-title">Program Performance</div>
+          <div class="panel-sub">Monthly AUM by entity · Q1 2026</div>
+        </div>
+        <div class="panel-body">
+          <div style="margin-bottom:10px;display:flex;gap:14px;flex-wrap:wrap">
+            <div class="legend-item"><div class="l-dot" style="background:var(--ink)"></div>Cayman</div>
+            <div class="legend-item"><div class="l-dot" style="background:var(--gold)"></div>Luxembourg</div>
+            <div class="legend-item"><div class="l-dot" style="background:var(--fiat)"></div>UK</div>
+            <div class="legend-item"><div class="l-dot" style="background:var(--token)"></div>Singapore</div>
+          </div>
+          <svg class="perf-bar" width="100%" height="160" viewBox="0 0 320 160" preserveAspectRatio="xMidYMid meet">
+            <!-- Y axis labels -->
+            <text x="0" y="14" font-family="DM Mono,monospace" font-size="8" fill="rgba(20,18,15,0.35)">$5B</text>
+            <text x="0" y="54" font-family="DM Mono,monospace" font-size="8" fill="rgba(20,18,15,0.35)">$4B</text>
+            <text x="0" y="94" font-family="DM Mono,monospace" font-size="8" fill="rgba(20,18,15,0.35)">$3B</text>
+            <text x="0" y="134" font-family="DM Mono,monospace" font-size="8" fill="rgba(20,18,15,0.35)">$2B</text>
+            <!-- Grid lines -->
+            <line x1="24" y1="10" x2="320" y2="10" stroke="rgba(20,18,15,0.07)" stroke-width="1"/>
+            <line x1="24" y1="50" x2="320" y2="50" stroke="rgba(20,18,15,0.07)" stroke-width="1"/>
+            <line x1="24" y1="90" x2="320" y2="90" stroke="rgba(20,18,15,0.07)" stroke-width="1"/>
+            <line x1="24" y1="130" x2="320" y2="130" stroke="rgba(20,18,15,0.07)" stroke-width="1"/>
+            <!-- Jan stacked bar -->
+            <!-- Cayman 4.0B = 80px, Luxembourg 1.0B = 20px, UK 0.8B = 16px, SG 0.24B = 5px -->
+            <rect x="40" y="50" width="56" height="80" fill="var(--ink)" opacity="0.8"/>
+            <rect x="40" y="30" width="56" height="20" fill="var(--gold)" opacity="0.8"/>
+            <rect x="40" y="14" width="56" height="16" fill="var(--fiat)" opacity="0.8"/>
+            <rect x="40" y="9" width="56" height="5" fill="var(--token)" opacity="0.8"/>
+            <text x="68" y="148" font-family="DM Mono,monospace" font-size="9" fill="rgba(20,18,15,0.5)" text-anchor="middle">JAN</text>
+            <!-- Feb stacked bar -->
+            <!-- Cayman 4.1B = 82px, Luxembourg 1.05B = 21px, UK 0.8B = 16px, SG 0.25B = 5px -->
+            <rect x="132" y="48" width="56" height="82" fill="var(--ink)" opacity="0.8"/>
+            <rect x="132" y="27" width="56" height="21" fill="var(--gold)" opacity="0.8"/>
+            <rect x="132" y="11" width="56" height="16" fill="var(--fiat)" opacity="0.8"/>
+            <rect x="132" y="6" width="56" height="5" fill="var(--token)" opacity="0.8"/>
+            <text x="160" y="148" font-family="DM Mono,monospace" font-size="9" fill="rgba(20,18,15,0.5)" text-anchor="middle">FEB</text>
+            <!-- Mar stacked bar -->
+            <!-- Cayman 4.2B = 84px, Luxembourg 1.12B = 22px, UK 0.82B = 16px, SG 0.26B = 5px -->
+            <rect x="224" y="46" width="56" height="84" fill="var(--ink)" opacity="0.8"/>
+            <rect x="224" y="24" width="56" height="22" fill="var(--gold)" opacity="0.8"/>
+            <rect x="224" y="8" width="56" height="16" fill="var(--fiat)" opacity="0.8"/>
+            <rect x="224" y="3" width="56" height="5" fill="var(--token)" opacity="0.8"/>
+            <text x="252" y="148" font-family="DM Mono,monospace" font-size="9" fill="rgba(20,18,15,0.5)" text-anchor="middle">MAR</text>
+            <!-- Baseline -->
+            <line x1="24" y1="130" x2="320" y2="130" stroke="rgba(20,18,15,0.2)" stroke-width="1"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Top Movers + Executive Summary -->
+      <div class="stack">
+        <div class="panel">
+          <div class="panel-head"><div class="panel-title">Top Movers</div><div class="panel-sub">largest capital movements · March</div></div>
+          <div class="panel-body" style="padding-top:10px;padding-bottom:10px">
+            <div class="mover-row" data-entity="cayman">
+              <div class="mover-rank">01</div>
+              <div class="mover-body"><div class="mover-title">Cayman LP Capital Call</div><div class="mover-meta">Onyx rail · Mar 14 · 12 LPs</div></div>
+              <div class="mover-amount up">+$48.2M</div>
+            </div>
+            <div class="mover-row" data-entity="luxembourg">
+              <div class="mover-rank">02</div>
+              <div class="mover-body"><div class="mover-title">Luxembourg SPV I blocked wire</div><div class="mover-meta">SWIFT · AML hold · Mar 11</div></div>
+              <div class="mover-amount dn">−€22.0M</div>
+            </div>
+            <div class="mover-row" data-entity="uk">
+              <div class="mover-rank">03</div>
+              <div class="mover-body"><div class="mover-title">UK Custodian → SG LP</div><div class="mover-meta">SWIFT gpi · Mar 10 · settled</div></div>
+              <div class="mover-amount up">+$12.8M</div>
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><div class="panel-title">Executive Summary</div></div>
+          <div class="panel-body">
+            <div class="exec-summary">
+              <div class="exec-summary-title">Key Highlights · March 2026</div>
+              Fund AUM reached $4.2B, up 8.3% QoQ, driven by strong Cayman capital call activity. Tokenised assets now represent 40.5% of the portfolio via JP Morgan Onyx. Luxembourg SPV I AML resolution is the primary risk item — €22M in transit blocked pending CSSF clearance. Sharpe ratio of 1.42 indicates strong risk-adjusted performance relative to peers. Volatility remains contained at 8.7 annualised.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ VIEW: RECONCILIATION ══════════════ -->
+  <div id="view-reconciliation" style="display:none">
+    <div class="entity-filter" id="ef-reconciliation">
+      <button class="ef-btn active" onclick="filterEntity('reconciliation','all',this)">All Entities</button>
+      <button class="ef-btn" onclick="filterEntity('reconciliation','cayman',this)">🇰🇾 Cayman</button>
+      <button class="ef-btn" onclick="filterEntity('reconciliation','luxembourg',this)">🇱🇺 Luxembourg</button>
+      <button class="ef-btn" onclick="filterEntity('reconciliation','uk',this)">🇬🇧 UK</button>
+      <button class="ef-btn" onclick="filterEntity('reconciliation','singapore',this)">🇸🇬 Singapore</button>
+    </div>
+    <div class="metrics-strip" style="margin-bottom:var(--gap)">
+      <div class="metric-card">
+        <div class="mc-label">Matched Pairs</div>
+        <div class="mc-value" style="color:var(--green)">142</div>
+        <div class="mc-sub">Auto-reconciled today</div>
+        <div class="mc-bar"><div class="mc-fill" style="width:94%;background:var(--green)"></div></div>
+      </div>
+      <div class="metric-card">
+        <div class="mc-label">Unmatched</div>
+        <div class="mc-value" style="color:var(--red)">7</div>
+        <div class="mc-sub">Require investigation</div>
+        <div class="mc-bar"><div class="mc-fill" style="width:5%;background:var(--red)"></div></div>
+      </div>
+      <div class="metric-card">
+        <div class="mc-label">Anomalies</div>
+        <div class="mc-value" style="color:var(--amber)">3</div>
+        <div class="mc-sub">Patterns flagged</div>
+        <div class="mc-bar"><div class="mc-fill" style="width:3%;background:var(--amber)"></div></div>
+      </div>
+      <div class="metric-card">
+        <div class="mc-label">Pending Review</div>
+        <div class="mc-value">12</div>
+        <div class="mc-sub">Awaiting sign-off</div>
+        <div class="mc-bar"><div class="mc-fill" style="width:8%;background:var(--ink)"></div></div>
+      </div>
+    </div>
+
+    <div class="panel" style="margin-bottom:var(--gap)">
+      <div class="panel-head">
+        <div class="panel-title">Inter-Company Matching</div>
+        <div class="panel-sub">automated reconciliation engine</div>
+      </div>
+      <div class="recon-head">
+        <div class="th">Entity A</div><div class="th">Entity B</div>
+        <div class="th">Amount</div><div class="th">Status</div>
+      </div>
+      <div>
+        <div class="recon-row" data-entity="cayman"><div class="recon-entity">Cayman Master Fund</div><div class="recon-entity">Luxembourg SPV II</div><div class="recon-amount">$48,200,000</div><span class="tag t-g">MATCHED</span></div>
+        <div class="recon-row" data-entity="luxembourg"><div class="recon-entity">Luxembourg SPV I</div><div class="recon-entity">Luxembourg SPV II</div><div class="recon-amount">€22,000,000</div><span class="tag t-r">UNMATCHED</span></div>
+        <div class="recon-row" data-entity="uk"><div class="recon-entity">UK Custodian</div><div class="recon-entity">Singapore LP Pool</div><div class="recon-amount">$12,800,000</div><span class="tag t-g">MATCHED</span></div>
+        <div class="recon-row" data-entity="cayman"><div class="recon-entity">Cayman Master Fund</div><div class="recon-entity">UK Custodian</div><div class="recon-amount">$6,500,000</div><span class="tag t-g">MATCHED</span></div>
+        <div class="recon-row" data-entity="singapore"><div class="recon-entity">Singapore LP Pool</div><div class="recon-entity">Cayman Master Fund</div><div class="recon-amount">$1,200,000</div><span class="tag t-a">PENDING</span></div>
+        <div class="recon-row" data-entity="luxembourg"><div class="recon-entity">Luxembourg SPV II</div><div class="recon-entity">Cayman Master Fund</div><div class="recon-amount">€8,400,000</div><span class="tag t-a">PENDING</span></div>
+      </div>
+    </div>
+
+    <div class="g2">
+      <div class="panel">
+        <div class="panel-head"><div class="panel-title">Anomaly Detection</div><div class="panel-sub">ML-flagged patterns</div></div>
+        <div class="panel-body">
+          <div class="anomaly-box sev-red" data-entity="luxembourg">
+            <span class="anomaly-sev">HIGH</span>
+            <div class="anomaly-body">
+              <div class="anomaly-title">Duplicate reference detected — Lux SPV I</div>
+              <div class="anomaly-desc">Two wires share reference REF-8812. €22M and €8.4M both routed through SocGen on Mar 11. Possible double-posting.</div>
+            </div>
+            <button class="anomaly-action" onclick="alert('Investigation workflow initiated')">INVESTIGATE</button>
+          </div>
+          <div class="anomaly-box sev-amber" data-entity="cayman">
+            <span class="anomaly-sev">MEDIUM</span>
+            <div class="anomaly-body">
+              <div class="anomaly-title">Unusual round-number transfer — Cayman</div>
+              <div class="anomaly-desc">$50,000,000 exactly transferred to new counterparty without prior history. KYC verification recommended.</div>
+            </div>
+            <button class="anomaly-action" onclick="alert('KYC review triggered')">INVESTIGATE</button>
+          </div>
+          <div class="anomaly-box sev-amber" data-entity="singapore">
+            <span class="anomaly-sev">MEDIUM</span>
+            <div class="anomaly-body">
+              <div class="anomaly-title">FX timing mismatch — SG LP Pool</div>
+              <div class="anomaly-desc">GBP→USD conversion timestamp 4h before underlying SWIFT instruction. Rate lock may not match settlement.</div>
+            </div>
+            <button class="anomaly-action" onclick="alert('FX audit log opened')">INVESTIGATE</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head"><div class="panel-title">Reconciliation Queue</div><div class="panel-sub">items pending human review</div></div>
+        <div style="padding:0 22px">
+          <div class="s-row" data-entity="luxembourg">
+            <div class="s-dot sd-r"></div>
+            <div class="s-body"><div class="s-title">Lux SPV I · REF-8812 duplicate</div><div class="s-desc">2 wires · same ref · €30.4M total · assign analyst</div></div>
+            <button class="s-action">ASSIGN</button>
+          </div>
+          <div class="s-row" data-entity="cayman">
+            <div class="s-dot sd-a"></div>
+            <div class="s-body"><div class="s-title">Cayman round-number transfer</div><div class="s-desc">$50M · new counterparty · KYC needed</div></div>
+            <button class="s-action">REVIEW</button>
+          </div>
+          <div class="s-row" data-entity="singapore">
+            <div class="s-dot sd-a"></div>
+            <div class="s-body"><div class="s-title">SG LP FX rate mismatch</div><div class="s-desc">4h delta · $12.8M · rate audit required</div></div>
+            <button class="s-action">AUDIT</button>
+          </div>
+          <div class="s-row" data-entity="uk">
+            <div class="s-dot sd-g"></div>
+            <div class="s-body"><div class="s-title">UK Custodian fee reconciliation</div><div class="s-desc">£120K custody fees · Q1 statement pending</div></div>
+            <button class="s-action">APPROVE</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -1224,15 +1887,209 @@ select:hover{border-color:var(--ink-4)}
 
 <script>
 /* ─── NAVIGATION ─── */
-const TITLES={map:'Global Capital Map',tx:'Transaction Trace',compliance:'Compliance State Engine',liquidity:'Liquidity & Treasury',actions:'Smart Actions',audit:'Audit & Regulator'};
+const TITLES={
+  map:'Global Capital Map',
+  tx:'Transaction Trace',
+  compliance:'Compliance State Engine',
+  liquidity:'Liquidity & Treasury',
+  actions:'Smart Actions',
+  audit:'Audit & Regulator',
+  performance:'Performance',
+  reconciliation:'Reconciliation'
+};
+const ALL_VIEWS=['map','tx','compliance','liquidity','actions','audit','performance','reconciliation'];
+function toggleSidebar(){
+  document.body.classList.toggle('sidebar-open');
+}
+function setTitle(v){
+  const t=TITLES[v]||'';
+  const sp=t.indexOf(' ');
+  document.getElementById('top-title').innerHTML=sp>-1?t.slice(0,sp)+'<br>'+t.slice(sp+1):t;
+}
 function show(v){
-  ['map','tx','compliance','liquidity','actions','audit'].forEach(id=>document.getElementById('view-'+id).style.display=id===v?'block':'none');
-  document.getElementById('top-title').textContent=TITLES[v]||'';
+  ALL_VIEWS.forEach(id=>{
+    const el=document.getElementById('view-'+id);
+    if(el)el.style.display=id===v?'block':'none';
+  });
+  setTitle(v);
   document.getElementById('view-toggle').style.display=v==='map'?'flex':'none';
   document.querySelectorAll('.nav-item').forEach(el=>el.classList.toggle('active',el.getAttribute('onclick')?.includes("'"+v+"'")));
   if(v==='audit')buildAudit();
+  closeDrilldown();
+  document.body.classList.remove('sidebar-open');
 }
 function cyclePill(el){document.querySelectorAll('.topbar-pills .pill').forEach(p=>p.classList.remove('active'));el.classList.add('active')}
+
+/* ─── ROLE-BASED ACCESS ─── */
+const ROLE_LABELS={executive:'Executive',finance:'Finance',compliance:'Compliance',risk:'Risk'};
+let currentRole='finance';
+function setRole(role){
+  currentRole=role;
+  document.body.className=document.body.className.replace(/role-\w+/g,'').trim();
+  document.body.classList.add('role-'+role);
+  // Update role button highlighting
+  document.querySelectorAll('.role-btn').forEach(btn=>{
+    btn.classList.toggle('active',btn.textContent.toLowerCase()===role);
+  });
+  // Update user role label
+  const lbl=document.getElementById('user-role-label');
+  if(lbl)lbl.textContent=ROLE_LABELS[role]||role;
+  // Filter nav items by role
+  document.querySelectorAll('.nav-item[data-roles]').forEach(item=>{
+    const roles=item.getAttribute('data-roles').split(',');
+    item.style.display=roles.includes(role)?'':'none';
+  });
+  // Highlight compliance badge for compliance role
+  const badge=document.getElementById('compliance-badge');
+  if(badge){
+    badge.style.fontWeight=role==='compliance'?'700':'400';
+    badge.style.borderColor=role==='compliance'?'rgba(176,48,32,0.5)':'rgba(176,48,32,0.2)';
+  }
+  // If current view is hidden for this role, switch to first visible view
+  const activeNav=document.querySelector('.nav-item.active');
+  if(activeNav&&activeNav.style.display==='none'){
+    const firstVisible=document.querySelector('.nav-item[data-roles]:not([style*="display: none"])');
+    if(firstVisible){const oc=firstVisible.getAttribute('onclick');const m=oc&&oc.match(/show\('(\w+)'\)/);if(m)show(m[1]);}
+  }
+}
+// Init role on load
+setRole('finance');
+
+/* ─── ENTITY FILTER ─── */
+function filterEntity(view,entity,btn){
+  // Highlight button
+  const bar=document.getElementById('ef-'+view);
+  if(bar)bar.querySelectorAll('.ef-btn').forEach(b=>b.classList.toggle('active',b===btn));
+  // Filter rows in this view's container
+  const container=document.getElementById('view-'+view);
+  if(!container)return;
+  const rows=container.querySelectorAll('[data-entity]');
+  rows.forEach(row=>{
+    if(entity==='all'){row.style.display='';}
+    else{row.style.display=row.getAttribute('data-entity')===entity?'':'none';}
+  });
+}
+
+/* ─── DRILLDOWN PANEL ─── */
+const DD_DATA={
+  aum:{
+    title:'Total AUM — Entity Breakdown',
+    rows:[
+      {entity:'🇰🇾 Cayman Master Fund',amount:'$4.2B',rail:'Onyx + SWIFT'},
+      {entity:'🇱🇺 Luxembourg SPV I',amount:'€640M',rail:'SWIFT gpi'},
+      {entity:'🇱🇺 Luxembourg SPV II',amount:'€480M',rail:'SWIFT gpi'},
+      {entity:'🇬🇧 UK Custodian',amount:'£820M',rail:'Fireblocks MPC'},
+      {entity:'🇸🇬 Singapore LP Pool',amount:'$260M',rail:'MAS regulated'},
+    ]
+  },
+  token:{
+    title:'Tokenised Assets — Entity Breakdown',
+    rows:[
+      {entity:'🇰🇾 Cayman Master Fund',amount:'$680M',rail:'Onyx'},
+      {entity:'🇱🇺 Luxembourg SPV I',amount:'€520M',rail:'Onyx'},
+      {entity:'🇬🇧 UK Custodian',amount:'£340M',rail:'Fireblocks'},
+      {entity:'🇸🇬 Singapore LP Pool',amount:'$160M',rail:'MAS'},
+    ]
+  },
+  fiat:{
+    title:'Fiat in Transit — Pending Wires',
+    rows:[
+      {entity:'Lux SPV I → SPV II (blocked)',amount:'€22,000,000',rail:'AML HOLD'},
+      {entity:'UK Custodian → SG LP Pool',amount:'$12,800,000',rail:'SWIFT gpi'},
+      {entity:'Cayman → Lux SPV I',amount:'$48,200,000',rail:'Onyx pending'},
+    ]
+  },
+  comp:{
+    title:'Compliance Score — Per Entity',
+    rows:[
+      {entity:'🇰🇾 Cayman Master Fund',amount:'100 / 100',rail:'All clear'},
+      {entity:'🇱🇺 Luxembourg SPV I',amount:'68 / 100',rail:'AML ✗ blocked'},
+      {entity:'🇱🇺 Luxembourg SPV II',amount:'97 / 100',rail:'UCITS ✓'},
+      {entity:'🇬🇧 UK Custodian',amount:'88 / 100',rail:'FCA audit pending'},
+      {entity:'🇸🇬 Singapore LP Pool',amount:'99 / 100',rail:'MAS ✓'},
+    ]
+  }
+};
+let activeDd=null;
+function toggleDrilldown(key){
+  const panel=document.getElementById('drilldown-panel');
+  if(activeDd===key){closeDrilldown();return;}
+  activeDd=key;
+  // Reset card highlights
+  ['aum','token','fiat','comp'].forEach(k=>{
+    const c=document.getElementById('mc-'+k);
+    if(c)c.classList.toggle('dd-active',k===key);
+  });
+  const d=DD_DATA[key];
+  if(!d)return;
+  document.getElementById('dd-title').textContent=d.title;
+  document.getElementById('dd-body').innerHTML=d.rows.map(r=>
+    `<div class="drilldown-row"><span class="dr-entity">${r.entity}</span><span class="dr-amount">${r.amount}</span><span class="dr-rail">${r.rail}</span></div>`
+  ).join('');
+  panel.classList.add('open');
+}
+function closeDrilldown(){
+  activeDd=null;
+  const panel=document.getElementById('drilldown-panel');
+  if(panel)panel.classList.remove('open');
+  ['aum','token','fiat','comp'].forEach(k=>{
+    const c=document.getElementById('mc-'+k);
+    if(c)c.classList.remove('dd-active');
+  });
+}
+
+/* ─── REAL-TIME SIMULATION ─── */
+// 1. Live timestamp
+function updateTimestamp(){
+  const el=document.getElementById('ts-live');
+  if(el)el.textContent=new Date().toTimeString().slice(0,8);
+}
+setInterval(updateTimestamp,1000);
+updateTimestamp();
+
+// 2. Random metric card value flicker every 8 seconds
+const MC_IDS=[
+  {id:'mcv-aum',  base:4.2,  unit:'$',suffix:'B', decimals:1},
+  {id:'mcv-token',base:1.7,  unit:'$',suffix:'B', decimals:1},
+  {id:'mcv-fiat', base:340,  unit:'$',suffix:'M', decimals:0},
+];
+function flickerMetric(){
+  const pick=MC_IDS[Math.floor(Math.random()*MC_IDS.length)];
+  const el=document.getElementById(pick.id);
+  if(!el)return;
+  const delta=(Math.random()*0.04-0.02); // ±2%
+  const newVal=pick.base*(1+delta);
+  const formatted=pick.unit+(pick.decimals===0?Math.round(newVal):newVal.toFixed(pick.decimals))+pick.suffix;
+  el.textContent=formatted;
+  el.classList.remove('flash-up','flash-down');
+  void el.offsetWidth; // reflow to restart animation
+  el.classList.add(delta>=0?'flash-up':'flash-down');
+  setTimeout(()=>el.classList.remove('flash-up','flash-down'),1300);
+}
+setInterval(flickerMetric,8000);
+
+// 3. Auto-add live feed item every 15 seconds
+const LIVE_EVENTS=[
+  {entity:'Cayman Master',action:'Sanctions sweep — all clear',tag:'t-g',label:'CLEAN',de:'cayman'},
+  {entity:'Lux SPV II',action:'UCITS check passed — automated',tag:'t-g',label:'CLEAN',de:'luxembourg'},
+  {entity:'UK Custodian',action:'FCA heartbeat ping — OK',tag:'t-g',label:'OK',de:'uk'},
+  {entity:'SG LP Pool',action:'MAS daily report submitted',tag:'t-g',label:'SENT',de:'singapore'},
+  {entity:'Cayman Master',action:'LP onboarding — 1 new investor',tag:'t-a',label:'PENDING',de:'cayman'},
+  {entity:'Lux SPV I',action:'AML re-screening cycle',tag:'t-a',label:'REVIEW',de:'luxembourg'},
+];
+let liveIdx=0;
+function addLiveFeedItem(){
+  const ev=LIVE_EVENTS[liveIdx%LIVE_EVENTS.length];liveIdx++;
+  const t=new Date().toTimeString().slice(0,8);
+  const n=document.createElement('div');
+  n.className='log-row';
+  n.setAttribute('data-entity',ev.de);
+  n.style.cssText='animation:slideIn 0.2s ease';
+  n.innerHTML=`<div class="log-hash">#L-${String(100+liveIdx).slice(-3)}</div><div class="log-time">${t}</div><div class="log-entity">${ev.entity}</div><div class="log-action">${ev.action}</div><span class="tag ${ev.tag}">${ev.label}</span>`;
+  const log=document.getElementById('action-log');
+  if(log)log.insertBefore(n,log.firstChild);
+}
+setInterval(addLiveFeedItem,15000);
 
 /* ─── TRACE ─── */
 const TX={
@@ -1315,15 +2172,15 @@ function confirmAction(id){
 
 /* ─── AUDIT ─── */
 const AUDIT=[
-  {hash:'0x9f3a',time:'09:42:11',entity:'Cayman Master',action:'Sanctions sweep — all entities clear',amount:'—',s:'t-g',l:'CLEAN'},
-  {hash:'0x8b2c',time:'08:17:33',entity:'Lux SPV I',action:'AML mismatch — transfer suspended',amount:'€22M',s:'t-r',l:'BLOCKED'},
-  {hash:'0x7f1a',time:'07:55:02',entity:'Cayman Master',action:'Capital call LP distribution settled',amount:'$6.5M',s:'t-g',l:'SETTLED'},
-  {hash:'0x6e4d',time:'06:30:18',entity:'UK Custodian',action:'GBP→USD wire to SG LP · SWIFT gpi',amount:'$12.8M',s:'t-g',l:'SETTLED'},
-  {hash:'0x5c3b',time:'05:10:44',entity:'SG LP Pool',action:'LP redemption — Investor A',amount:'$1.2M',s:'t-g',l:'SETTLED'},
-  {hash:'0x4a2c',time:'04:00:11',entity:'Lux SPV II',action:'UCITS compliance check completed',amount:'—',s:'t-g',l:'CLEAN'},
-  {hash:'0x3f1e',time:'02:45:30',entity:'All Entities',action:'Automated KYC refresh — 127 LPs',amount:'—',s:'t-g',l:'PASSED'},
+  {hash:'0x9f3a',time:'09:42:11',entity:'Cayman Master',action:'Sanctions sweep — all entities clear',amount:'—',s:'t-g',l:'CLEAN',de:'cayman'},
+  {hash:'0x8b2c',time:'08:17:33',entity:'Lux SPV I',action:'AML mismatch — transfer suspended',amount:'€22M',s:'t-r',l:'BLOCKED',de:'luxembourg'},
+  {hash:'0x7f1a',time:'07:55:02',entity:'Cayman Master',action:'Capital call LP distribution settled',amount:'$6.5M',s:'t-g',l:'SETTLED',de:'cayman'},
+  {hash:'0x6e4d',time:'06:30:18',entity:'UK Custodian',action:'GBP→USD wire to SG LP · SWIFT gpi',amount:'$12.8M',s:'t-g',l:'SETTLED',de:'uk'},
+  {hash:'0x5c3b',time:'05:10:44',entity:'SG LP Pool',action:'LP redemption — Investor A',amount:'$1.2M',s:'t-g',l:'SETTLED',de:'singapore'},
+  {hash:'0x4a2c',time:'04:00:11',entity:'Lux SPV II',action:'UCITS compliance check completed',amount:'—',s:'t-g',l:'CLEAN',de:'luxembourg'},
+  {hash:'0x3f1e',time:'02:45:30',entity:'All Entities',action:'Automated KYC refresh — 127 LPs',amount:'—',s:'t-g',l:'PASSED',de:'cayman'},
 ];
-function buildAudit(){document.getElementById('audit-table').innerHTML=AUDIT.map(r=>`<div class="audit-row"><div class="a-hash">${r.hash}…</div><div class="a-time">${r.time}</div><div class="a-entity">${r.entity}</div><div class="a-action">${r.action}</div><div class="a-amount">${r.amount}</div><div><span class="tag ${r.s}">${r.l}</span></div></div>`).join('')}
+function buildAudit(){document.getElementById('audit-table').innerHTML=AUDIT.map(r=>`<div class="audit-row" data-entity="${r.de}"><div class="a-hash">${r.hash}…</div><div class="a-time">${r.time}</div><div class="a-entity">${r.entity}</div><div class="a-action">${r.action}</div><div class="a-amount">${r.amount}</div><div><span class="tag ${r.s}">${r.l}</span></div></div>`).join('')}
 
 /* ─── NOTIFICATIONS ─── */
 function toggleNotif(e){

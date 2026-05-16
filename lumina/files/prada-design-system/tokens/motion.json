@@ -1,0 +1,150 @@
+{
+  "_comment": "Prada Beauty — Motion Tokens. Primitive → Semantic → Context Mode.",
+  "_comment_2": "Three modes: scanner (real-time, continuous, stagger), editorial (deliberate, one-shot reveals), kiosk (slow, accessible, reduced motion respected). Components reference motion.* tokens.",
+
+  "duration": {
+    "_layer": "primitive",
+    "_comment": "Raw durations in ms. Do not use directly in components.",
+
+    "0":    { "value": "0ms",    "type": "other" },
+    "50":   { "value": "50ms",   "type": "other" },
+    "80":   { "value": "80ms",   "type": "other" },
+    "160":  { "value": "160ms",  "type": "other" },
+    "200":  { "value": "200ms",  "type": "other" },
+    "280":  { "value": "280ms",  "type": "other" },
+    "400":  { "value": "400ms",  "type": "other" },
+    "480":  { "value": "480ms",  "type": "other" },
+    "600":  { "value": "600ms",  "type": "other" },
+    "700":  { "value": "700ms",  "type": "other" },
+    "1000": { "value": "1000ms", "type": "other" },
+    "1500": { "value": "1500ms", "type": "other" },
+    "2000": { "value": "2000ms", "type": "other" }
+  },
+
+  "easing": {
+    "_layer": "primitive",
+    "_comment": "Raw curves. Do not use directly in components.",
+
+    "linear":     { "value": "linear",                          "type": "other" },
+    "standard":   { "value": "cubic-bezier(0.4,0.0,0.2,1)",    "type": "other" },
+    "enter":      { "value": "cubic-bezier(0.0,0.0,0.2,1)",    "type": "other" },
+    "exit":       { "value": "cubic-bezier(0.4,0.0,1.0,1)",    "type": "other" },
+    "spring":     { "value": "cubic-bezier(0.34,1.56,0.64,1)", "type": "other" },
+    "decelerate": { "value": "cubic-bezier(0.0,0.0,0.2,1)",    "type": "other" },
+    "accelerate": { "value": "cubic-bezier(0.4,0.0,1.0,1)",    "type": "other" }
+  },
+
+  "stagger": {
+    "_layer": "primitive",
+    "_comment": "Stagger delays for sequential reveals. Applied per-item as animation-delay multiplier.",
+
+    "xs":  { "value": "40ms",  "type": "other", "_note": "Tight stagger — S3 processing rows" },
+    "sm":  { "value": "80ms",  "type": "other" },
+    "md":  { "value": "120ms", "type": "other", "_note": "Standard stagger — S4 zone rows entering" },
+    "lg":  { "value": "160ms", "type": "other" }
+  },
+
+  "motion": {
+    "_layer": "semantic",
+    "_comment": "Named motion tokens. Components use these. Modes override durations without changing component code.",
+
+    "feedback": {
+      "duration": { "value": "{duration.80}",  "type": "other", "_note": "Button tap, toggle press" },
+      "easing":   { "value": "{easing.standard}", "type": "other" }
+    },
+    "state": {
+      "duration": { "value": "{duration.160}", "type": "other", "_note": "Detecting → Locked, status badge swap" },
+      "easing":   { "value": "{easing.standard}", "type": "other" }
+    },
+    "transition": {
+      "duration": { "value": "{duration.280}", "type": "other", "_note": "Screen transitions S0→S1→S2→S3→S4" },
+      "easing":   { "value": "{easing.standard}", "type": "other" }
+    },
+    "reveal": {
+      "duration": { "value": "{duration.480}", "type": "other", "_note": "S3 processing row reveals, zone analysis entrance" },
+      "easing":   { "value": "{easing.enter}",  "type": "other" }
+    },
+    "hero": {
+      "duration": { "value": "{duration.700}", "type": "other", "_note": "Score ring fill — use once per session. The single most meaningful reveal." },
+      "easing":   { "value": "{easing.spring}", "type": "other" }
+    },
+
+    "scanner-pulse": {
+      "duration": { "value": "{duration.1500}", "type": "other", "_note": "Continuous. Scanner guide glow/pulse when detecting." },
+      "easing":   { "value": "{easing.linear}",  "type": "other" }
+    },
+    "scanner-update": {
+      "duration": { "value": "{duration.200}",  "type": "other", "_note": "Live value update flash — Radiance/Redness/Texture/Hydration readouts." },
+      "easing":   { "value": "{easing.standard}", "type": "other" }
+    },
+    "scanner-lock": {
+      "duration": { "value": "{duration.400}",  "type": "other", "_note": "Face detection lock-on — crosshair snaps to face." },
+      "easing":   { "value": "{easing.spring}",  "type": "other" }
+    },
+
+    "processing-row": {
+      "duration": { "value": "{duration.480}", "type": "other", "_note": "S3 individual processing row reveal" },
+      "easing":   { "value": "{easing.enter}", "type": "other" }
+    },
+    "processing-stagger": {
+      "delay":    { "value": "{stagger.xs}",   "type": "other", "_note": "S3 stagger between row reveals — 40ms × row-index" }
+    },
+
+    "score-count": {
+      "duration": { "value": "{duration.700}", "type": "other", "_note": "Score number counting up (0→65)" },
+      "easing":   { "value": "{easing.decelerate}", "type": "other" }
+    },
+    "score-ring": {
+      "duration": { "value": "{duration.1000}", "type": "other", "_note": "Score ring fill — slightly longer than count for rhythm" },
+      "easing":   { "value": "{easing.spring}",  "type": "other" }
+    },
+    "zone-stagger": {
+      "delay":    { "value": "{stagger.md}",  "type": "other", "_note": "S4 zone rows entering — 120ms × row-index" }
+    },
+    "insight-stagger": {
+      "delay":    { "value": "{stagger.sm}",  "type": "other", "_note": "S4 insight items entering — 80ms × item-index" }
+    }
+  },
+
+  "motion-mode": {
+    "_layer": "context",
+    "_comment": "Motion mode overrides. Same token names, different durations. Kiosk runs slower for accessibility. Scanner runs faster for real-time responsiveness. Always respect prefers-reduced-motion at implementation level.",
+
+    "scanner": {
+      "_comment": "Real-time. Feedback must be instant. Continuous animations for live data.",
+      "feedback-duration":    { "value": "{duration.50}",  "type": "other", "_note": "Faster feedback in scanner context" },
+      "state-duration":       { "value": "{duration.80}",  "type": "other" },
+      "transition-duration":  { "value": "{duration.200}", "type": "other", "_note": "Screen transitions faster — user is in active scan" },
+      "reveal-duration":      { "value": "{duration.280}", "type": "other" }
+    },
+
+    "editorial": {
+      "_comment": "PDP, S4 results. Deliberate pace. Luxury brand timing.",
+      "feedback-duration":    { "value": "{duration.80}",  "type": "other" },
+      "state-duration":       { "value": "{duration.160}", "type": "other" },
+      "transition-duration":  { "value": "{duration.400}", "type": "other", "_note": "Slower transitions — editorial pacing" },
+      "reveal-duration":      { "value": "{duration.600}", "type": "other" },
+      "hero-duration":        { "value": "{duration.1000}","type": "other", "_note": "Hero reveal slower in editorial mode" }
+    },
+
+    "kiosk": {
+      "_comment": "Retail. Accessible. All durations extended. No spring — linear or ease only.",
+      "feedback-duration":    { "value": "{duration.160}", "type": "other" },
+      "state-duration":       { "value": "{duration.280}", "type": "other" },
+      "transition-duration":  { "value": "{duration.480}", "type": "other" },
+      "reveal-duration":      { "value": "{duration.700}", "type": "other" },
+      "hero-duration":        { "value": "{duration.1500}","type": "other" }
+    },
+
+    "reduced-motion": {
+      "_comment": "prefers-reduced-motion override. All animations instant or replaced with fades. Apply at system level via @media query.",
+      "feedback-duration":    { "value": "{duration.0}",   "type": "other" },
+      "state-duration":       { "value": "{duration.0}",   "type": "other" },
+      "transition-duration":  { "value": "{duration.160}", "type": "other", "_note": "Minimum — opacity only" },
+      "reveal-duration":      { "value": "{duration.160}", "type": "other" },
+      "hero-duration":        { "value": "{duration.160}", "type": "other" },
+      "scanner-pulse-duration":{ "value": "{duration.0}",  "type": "other", "_note": "No pulsing animation" },
+      "score-ring-duration":  { "value": "{duration.160}", "type": "other", "_note": "Instant fill instead of animated" }
+    }
+  }
+}

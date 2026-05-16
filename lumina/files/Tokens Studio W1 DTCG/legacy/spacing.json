@@ -1,0 +1,103 @@
+{
+  "_comment": "Prada Beauty — Spacing Token System v2. R/GA multi-system architecture.",
+  "_comment_2": "Three layers: (1) primitive scale — raw values only. (2) semantic roles — named by purpose. (3) density modes — scanner/pdp/kiosk swap the base without changing component code.",
+
+  "scale": {
+    "_comment": "4pt base. Every value divisible by 4. Confirmed against Figma layout.",
+    "0":  { "value": "0px",   "type": "spacing" },
+    "1":  { "value": "4px",   "type": "spacing" },
+    "2":  { "value": "8px",   "type": "spacing" },
+    "3":  { "value": "12px",  "type": "spacing" },
+    "4":  { "value": "16px",  "type": "spacing" },
+    "5":  { "value": "20px",  "type": "spacing" },
+    "6":  { "value": "24px",  "type": "spacing" },
+    "7":  { "value": "32px",  "type": "spacing" },
+    "8":  { "value": "40px",  "type": "spacing" },
+    "9":  { "value": "48px",  "type": "spacing" },
+    "10": { "value": "52px",  "type": "spacing", "_note": "Product image size — confirmed Figma" },
+    "11": { "value": "56px",  "type": "spacing" },
+    "12": { "value": "64px",  "type": "spacing" },
+    "13": { "value": "80px",  "type": "spacing", "_note": "Score ring size — confirmed Figma" },
+    "14": { "value": "96px",  "type": "spacing" },
+    "15": { "value": "120px", "type": "spacing" }
+  },
+
+  "inset": {
+    "_comment": "Internal padding — what goes inside a component. Named by context, not size.",
+    "none":     { "value": "{scale.0}", "type": "spacing" },
+    "squish-sm":{ "value": "3px 8px",  "type": "spacing", "_note": "Tag pill — confirmed Figma: pt-[3px] pl-[8px]. Not on 4pt grid by design — pill optical correction." },
+    "squish-md":{ "value": "5px 8px",  "type": "spacing", "_note": "Tag pill primary — confirmed Figma: pb-[3px] pl-[8px] pr-[31px] pt-[5px]" },
+    "xs":       { "value": "{scale.1}", "type": "spacing", "_note": "4px — icon internal, zone score gap" },
+    "sm":       { "value": "{scale.2}", "type": "spacing", "_note": "8px — tight component padding" },
+    "md":       { "value": "{scale.3}", "type": "spacing", "_note": "12px — standard component padding, product card gap" },
+    "lg":       { "value": "{scale.4}", "type": "spacing", "_note": "16px" },
+    "xl":       { "value": "{scale.5}", "type": "spacing", "_note": "20px — screen edge inset mobile" },
+    "2xl":      { "value": "{scale.6}", "type": "spacing", "_note": "24px" },
+    "3xl":      { "value": "{scale.7}", "type": "spacing", "_note": "32px" }
+  },
+
+  "gap": {
+    "_comment": "Space between sibling elements inside a component.",
+    "none":  { "value": "{scale.0}", "type": "spacing" },
+    "xs":    { "value": "{scale.1}", "type": "spacing", "_note": "4px — label/value pair, zone name/bar, tag row gap. Confirmed." },
+    "sm":    { "value": "{scale.2}", "type": "spacing", "_note": "8px" },
+    "md":    { "value": "{scale.3}", "type": "spacing", "_note": "12px — product card image/text. Confirmed." },
+    "lg":    { "value": "{scale.4}", "type": "spacing", "_note": "16px" },
+    "xl":    { "value": "{scale.5}", "type": "spacing", "_note": "20px — product card stack gap. Confirmed." },
+    "2xl":   { "value": "{scale.6}", "type": "spacing", "_note": "24px — profile section gap. Confirmed." },
+    "3xl":   { "value": "{scale.7}", "type": "spacing", "_note": "32px" }
+  },
+
+  "layout": {
+    "_comment": "Structural layout values — margins, gutters, columns, fixed heights.",
+    "screen-margin-mobile":  { "value": "{scale.5}",  "type": "spacing", "_note": "20px — confirmed Figma left-[20px] throughout" },
+    "screen-margin-desktop": { "value": "{scale.12}", "type": "spacing", "_note": "64px — confirmed desktop nav/content inset" },
+    "column-gutter-mobile":  { "value": "{scale.2}",  "type": "spacing", "_note": "8px" },
+    "column-gutter-desktop": { "value": "{scale.4}",  "type": "spacing", "_note": "16px" },
+    "nav-height":            { "value": "{scale.9}",  "type": "spacing", "_note": "48px — confirmed h-[48px]" },
+    "section-header-height": { "value": "{scale.6}",  "type": "spacing", "_note": "24px — confirmed h-[24px] section bars" },
+    "divider":               { "value": "1px",        "type": "spacing", "_note": "Not on 4pt grid — hairline dividers are always 1px" }
+  },
+
+  "size": {
+    "_comment": "Fixed dimensions — elements with prescribed width/height.",
+    "touch-target":   { "value": "{scale.9}",  "type": "spacing", "_note": "48px — minimum accessible touch target" },
+    "button-height":  { "value": "44px",       "type": "spacing", "_note": "44px — confirmed Figma h-[44px]. Intentionally 44 not 48 — Apple HIG minimum." },
+    "product-image":  { "value": "{scale.10}", "type": "spacing", "_note": "52px — confirmed Figma size-[52px]" },
+    "score-ring":     { "value": "{scale.13}", "type": "spacing", "_note": "80px — confirmed Figma size-[80px]" },
+    "icon-sm":        { "value": "{scale.1}",  "type": "spacing", "_note": "4px — dot indicators S3 progress list" },
+    "icon-md":        { "value": "{scale.2}",  "type": "spacing", "_note": "8px" },
+    "scanner-crosshair": { "value": "18px",    "type": "spacing", "_note": "18px — confirmed Figma w-[18px] corner bracket arms" }
+  },
+
+  "density": {
+    "_comment": "Density modes — swap entire spacing system per product context. Same semantic names, different values. In Tokens Studio: create three token sets (density/scanner, density/pdp, density/kiosk) each overriding these values.",
+
+    "scanner": {
+      "_comment": "Compact. Data-dense. Every pixel counts. S0–S4 scanner screens.",
+      "component-padding": { "value": "{scale.2}",  "type": "spacing", "_note": "8px" },
+      "section-gap":       { "value": "{scale.4}",  "type": "spacing", "_note": "16px" },
+      "list-item-gap":     { "value": "{scale.1}",  "type": "spacing", "_note": "4px" },
+      "content-gap":       { "value": "{scale.6}",  "type": "spacing", "_note": "24px" },
+      "page-top":          { "value": "{scale.9}",  "type": "spacing", "_note": "48px — nav clearance" }
+    },
+
+    "pdp": {
+      "_comment": "Editorial. Airy. Luxury pace. Product detail pages, PDP redesign.",
+      "component-padding": { "value": "{scale.4}",  "type": "spacing", "_note": "16px" },
+      "section-gap":       { "value": "{scale.7}",  "type": "spacing", "_note": "32px" },
+      "list-item-gap":     { "value": "{scale.3}",  "type": "spacing", "_note": "12px" },
+      "content-gap":       { "value": "{scale.8}",  "type": "spacing", "_note": "40px" },
+      "page-top":          { "value": "{scale.9}",  "type": "spacing", "_note": "48px" }
+    },
+
+    "kiosk": {
+      "_comment": "Accessible. Large touch targets. Retail environment. 1080p touchscreen.",
+      "component-padding": { "value": "{scale.6}",  "type": "spacing", "_note": "24px" },
+      "section-gap":       { "value": "{scale.8}",  "type": "spacing", "_note": "40px" },
+      "list-item-gap":     { "value": "{scale.4}",  "type": "spacing", "_note": "16px" },
+      "content-gap":       { "value": "{scale.12}", "type": "spacing", "_note": "64px" },
+      "page-top":          { "value": "{scale.11}", "type": "spacing", "_note": "56px — larger nav for kiosk" }
+    }
+  }
+}

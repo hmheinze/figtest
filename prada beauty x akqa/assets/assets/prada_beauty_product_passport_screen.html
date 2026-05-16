@@ -1,0 +1,492 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap');
+  * { margin:0;padding:0;box-sizing:border-box; }
+  :root {
+    --pb-parchment: #F8F5F0;
+    --pb-white: #FFFFFF;
+    --pb-smoke: #EDEADE;
+    --pb-smoke2: #E4E0D6;
+    --pb-gold: #B8965A;
+    --pb-gold-dim: rgba(184,150,90,0.12);
+    --pb-onyx: #0A0A0A;
+    --pb-charcoal: #2A2A2A;
+    --pb-mid: #6B6560;
+    --pb-light: #9A9590;
+    --pb-border: rgba(184,150,90,0.25);
+    --pb-border-light: rgba(42,42,42,0.1);
+    --pb-rose: #D4A89A;
+    --font-display: 'Cormorant Garamond', 'Times New Roman', Georgia, serif;
+  }
+  body {
+    background: var(--pb-parchment);
+    color: var(--pb-charcoal);
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .phone-wrap { display:flex;justify-content:center;padding:16px 0 24px; }
+  .phone {
+    width:375px;
+    min-height:820px;
+    background:var(--pb-parchment);
+    border-radius:40px;
+    border:0.5px solid rgba(0,0,0,0.1);
+    overflow:hidden;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.12), 0 0 0 1px rgba(255,255,255,0.8);
+  }
+  .status-bar {
+    display:flex;justify-content:space-between;align-items:center;
+    padding:14px 24px 0;
+    font-size:11px;color:var(--pb-mid);letter-spacing:0.02em;
+  }
+  .nav {
+    display:flex;justify-content:space-between;align-items:center;
+    padding:12px 24px 0;
+  }
+  .nav-back {
+    font-size:11px;letter-spacing:0.08em;color:var(--pb-mid);
+    cursor:pointer;display:flex;align-items:center;gap:4px;
+  }
+  .nav-title {
+    font-family:var(--font-display);font-size:13px;letter-spacing:0.15em;
+    text-transform:uppercase;color:var(--pb-charcoal);
+  }
+  .nav-share {
+    font-size:13px;color:var(--pb-gold);cursor:pointer;
+    width:32px;height:32px;border:0.5px solid var(--pb-border);
+    border-radius:50%;display:flex;align-items:center;justify-content:center;
+  }
+
+  /* Product hero */
+  .product-hero {
+    margin:16px 24px 0;
+    background:var(--pb-white);
+    border:0.5px solid var(--pb-border-light);
+    border-radius:16px;
+    overflow:hidden;
+    display:flex;
+    gap:0;
+  }
+  .product-image {
+    width:130px;
+    background:linear-gradient(160deg, #F0EDE6 0%, #E8E4DC 100%);
+    display:flex;align-items:center;justify-content:center;
+    position:relative;flex-shrink:0;
+    padding:20px 16px;
+  }
+  .product-bottle {
+    width:52px;height:80px;
+    border:0.5px solid rgba(184,150,90,0.4);
+    border-radius:6px 6px 3px 3px;
+    background:linear-gradient(180deg, rgba(248,245,240,0.9) 0%, rgba(232,228,220,0.95) 100%);
+    display:flex;flex-direction:column;align-items:center;
+    padding-top:8px;position:relative;
+  }
+  .product-bottle-cap {
+    width:26px;height:10px;
+    background:var(--pb-gold);
+    border-radius:3px 3px 0 0;
+    position:absolute;top:-10px;
+  }
+  .product-bottle-label {
+    font-family:var(--font-display);font-size:7px;letter-spacing:0.1em;
+    color:var(--pb-charcoal);text-align:center;line-height:1.4;margin-top:4px;
+  }
+  .product-badge-cert {
+    position:absolute;bottom:10px;left:10px;
+    font-size:7px;padding:2px 5px;
+    background:rgba(122,194,154,0.15);
+    border:0.5px solid rgba(122,194,154,0.4);
+    border-radius:3px;color:#3a7a58;
+    letter-spacing:0.06em;
+  }
+
+  .product-info { padding:16px 16px 16px 12px;flex:1; }
+  .product-category {
+    font-size:8px;letter-spacing:0.16em;text-transform:uppercase;
+    color:var(--pb-gold);margin-bottom:4px;
+  }
+  .product-name {
+    font-family:var(--font-display);font-size:20px;font-weight:400;
+    color:var(--pb-charcoal);line-height:1.15;margin-bottom:2px;
+  }
+  .product-sub {
+    font-family:var(--font-display);font-size:14px;font-style:italic;
+    color:var(--pb-mid);margin-bottom:10px;
+  }
+  .product-sku {
+    font-family:'Helvetica Neue',monospace;font-size:8px;
+    color:var(--pb-light);letter-spacing:0.08em;margin-bottom:10px;
+  }
+  .score-pill {
+    display:inline-flex;align-items:center;gap:4px;
+    background:var(--pb-gold-dim);border:0.5px solid var(--pb-border);
+    border-radius:20px;padding:4px 10px;
+    font-size:11px;color:var(--pb-gold);font-weight:500;
+  }
+  .score-pill small { font-size:9px;opacity:0.7; }
+
+  /* Chapter tabs */
+  .chapter-nav {
+    display:flex;
+    margin:14px 24px 0;
+    background:var(--pb-smoke);
+    border-radius:8px;
+    padding:3px;
+    gap:2px;
+  }
+  .chapter-tab {
+    flex:1;padding:7px 4px;text-align:center;
+    font-size:9px;letter-spacing:0.1em;text-transform:uppercase;
+    color:var(--pb-light);border-radius:6px;cursor:pointer;
+    transition:all 0.2s;user-select:none;
+  }
+  .chapter-tab.active {
+    background:var(--pb-white);color:var(--pb-charcoal);
+    box-shadow:0 1px 3px rgba(0,0,0,0.08);
+  }
+
+  /* Content sections */
+  .content { padding:14px 24px 0; }
+  .section-head {
+    font-size:8px;letter-spacing:0.16em;text-transform:uppercase;
+    color:var(--pb-gold);margin-bottom:10px;
+    display:flex;justify-content:space-between;align-items:center;
+  }
+
+  /* Provenance chain */
+  .chain {
+    display:flex;flex-direction:column;gap:0;
+    position:relative;
+  }
+  .chain::before {
+    content:'';position:absolute;left:14px;top:24px;bottom:24px;
+    width:0.5px;background:var(--pb-border);
+  }
+  .chain-item {
+    display:flex;gap:12px;align-items:flex-start;
+    padding:0 0 16px 0;position:relative;
+  }
+  .chain-dot {
+    width:28px;height:28px;flex-shrink:0;
+    border-radius:50%;border:0.5px solid var(--pb-border);
+    background:var(--pb-white);
+    display:flex;align-items:center;justify-content:center;
+    font-size:10px;position:relative;z-index:1;
+  }
+  .chain-dot.verified { border-color:rgba(122,194,154,0.5);background:rgba(122,194,154,0.08); }
+  .chain-body { flex:1;padding-top:4px; }
+  .chain-title {
+    font-size:12px;font-weight:500;color:var(--pb-charcoal);margin-bottom:1px;
+  }
+  .chain-meta {
+    font-size:10px;color:var(--pb-mid);line-height:1.4;
+  }
+  .chain-tag {
+    display:inline-block;margin-top:4px;
+    font-size:8px;padding:2px 6px;border-radius:3px;letter-spacing:0.06em;
+  }
+  .tag-green { background:rgba(122,194,154,0.12);color:#3a7a58;border:0.5px solid rgba(122,194,154,0.3); }
+  .tag-gold { background:var(--pb-gold-dim);color:var(--pb-gold);border:0.5px solid var(--pb-border); }
+  .tag-neutral { background:var(--pb-smoke);color:var(--pb-mid);border:0.5px solid var(--pb-border-light); }
+
+  /* Ingredient list */
+  .ingredient-list { display:flex;flex-direction:column;gap:6px; }
+  .ingredient-row {
+    display:flex;justify-content:space-between;align-items:center;
+    padding:10px 12px;
+    background:var(--pb-white);
+    border:0.5px solid var(--pb-border-light);
+    border-radius:8px;cursor:pointer;
+    transition:border-color 0.15s;
+  }
+  .ingredient-row:hover { border-color:var(--pb-border); }
+  .ing-name { font-size:12px;color:var(--pb-charcoal);font-weight:400; }
+  .ing-inci { font-size:9px;color:var(--pb-light);margin-top:1px;letter-spacing:0.02em; }
+  .ing-right { display:flex;flex-direction:column;align-items:flex-end;gap:3px; }
+  .ing-pct { font-family:'Helvetica Neue',monospace;font-size:10px;color:var(--pb-mid); }
+  .ing-badge {
+    font-size:7px;padding:2px 5px;border-radius:3px;letter-spacing:0.06em;
+  }
+
+  /* Certifications */
+  .cert-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:8px; }
+  .cert-card {
+    background:var(--pb-white);border:0.5px solid var(--pb-border-light);
+    border-radius:8px;padding:10px 8px;text-align:center;
+  }
+  .cert-icon { font-size:18px;margin-bottom:4px; }
+  .cert-name { font-size:8px;font-weight:500;color:var(--pb-charcoal);margin-bottom:1px;letter-spacing:0.04em; }
+  .cert-body { font-size:7px;color:var(--pb-light);line-height:1.4; }
+
+  /* Sustainability bar */
+  .sustain-bar-wrap {
+    background:var(--pb-smoke);border-radius:4px;height:6px;margin:4px 0 8px;
+    overflow:hidden;
+  }
+  .sustain-bar {
+    height:100%;border-radius:4px;
+    background:linear-gradient(90deg, #7AC29A, #B8965A);
+    transition:width 1s;
+  }
+  .sustain-label {
+    display:flex;justify-content:space-between;
+    font-size:9px;color:var(--pb-mid);
+  }
+
+  /* Tab bar */
+  .tab-bar {
+    display:flex;border-top:0.5px solid var(--pb-border-light);
+    margin-top:20px;padding:10px 0 20px;
+  }
+  .tab-item {
+    flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;
+    cursor:pointer;padding:6px 0;
+  }
+  .tab-icon {
+    width:22px;height:22px;border-radius:6px;
+    display:flex;align-items:center;justify-content:center;font-size:11px;
+  }
+  .tab-item.active .tab-icon { background:rgba(184,150,90,0.12);color:var(--pb-gold); }
+  .tab-item:not(.active) .tab-icon { color:var(--pb-light); }
+  .tab-name { font-size:7px;letter-spacing:0.1em;text-transform:uppercase; }
+  .tab-item.active .tab-name { color:var(--pb-gold); }
+  .tab-item:not(.active) .tab-name { color:var(--pb-light); }
+
+  .chapter-panel { display:none; }
+  .chapter-panel.active { display:block; }
+</style>
+</head>
+<body>
+<div class="phone-wrap">
+  <div class="phone">
+
+    <div class="status-bar">
+      <span>9:41</span>
+      <span style="font-family:'Cormorant Garamond',serif;letter-spacing:0.12em;font-size:10px;">PRADA BEAUTY</span>
+      <span>◉</span>
+    </div>
+
+    <div class="nav">
+      <div class="nav-back" onclick="sendPrompt('Go back to the Skin AI screen')">← Skin AI</div>
+      <div class="nav-title">Passport</div>
+      <div class="nav-share">↗</div>
+    </div>
+
+    <!-- Product hero -->
+    <div class="product-hero">
+      <div class="product-image">
+        <div class="product-bottle">
+          <div class="product-bottle-cap"></div>
+          <div class="product-bottle-label">PRADA<br>BEAUTÉ</div>
+          <div style="width:1.5px;height:30px;background:rgba(184,150,90,0.3);border-radius:1px;margin-top:auto;margin-bottom:8px;"></div>
+        </div>
+        <div class="product-badge-cert">COSMOS</div>
+      </div>
+      <div class="product-info">
+        <div class="product-category">Prestige Serum</div>
+        <div class="product-name">Hydra<br>Vital</div>
+        <div class="product-sub">Intensive Serum</div>
+        <div class="product-sku">SKU · PRD-HVS-030-B</div>
+        <div class="score-pill">94 <small>/100</small> &nbsp;Sustainability</div>
+      </div>
+    </div>
+
+    <!-- Chapter navigation -->
+    <div class="chapter-nav">
+      <div class="chapter-tab active" onclick="switchChapter('provenance',this)">Provenance</div>
+      <div class="chapter-tab" onclick="switchChapter('formula',this)">Formula</div>
+      <div class="chapter-tab" onclick="switchChapter('certify',this)">Certify</div>
+    </div>
+
+    <!-- PROVENANCE -->
+    <div class="content">
+      <div id="panel-provenance" class="chapter-panel active">
+        <div class="section-head">
+          <span>Ingredient Journey</span>
+          <span style="font-size:8px;color:var(--pb-light);">5 origins · 3 continents</span>
+        </div>
+
+        <div class="chain">
+          <div class="chain-item">
+            <div class="chain-dot verified">✦</div>
+            <div class="chain-body">
+              <div class="chain-title">Hyaluronic Acid</div>
+              <div class="chain-meta">Fermented in Osaka, Japan · Vegan biotechnology process · Zero animal derivatives</div>
+              <span class="chain-tag tag-green">Verified · Vegan</span>
+              <span class="chain-tag tag-gold">Primary Active</span>
+            </div>
+          </div>
+          <div class="chain-item">
+            <div class="chain-dot verified">◎</div>
+            <div class="chain-body">
+              <div class="chain-title">Rosa Damascena Extract</div>
+              <div class="chain-meta">Harvested in Grasse, Provence · Estate-grown, steam distilled · 100% traceable lot</div>
+              <span class="chain-tag tag-green">Organic Certified</span>
+              <span class="chain-tag tag-neutral">Lot #GRS-2024-09</span>
+            </div>
+          </div>
+          <div class="chain-item">
+            <div class="chain-dot verified">○</div>
+            <div class="chain-body">
+              <div class="chain-title">Niacinamide B3</div>
+              <div class="chain-meta">Synthesised in Basel, Switzerland · Pharmaceutical grade · Carbon-neutral facility</div>
+              <span class="chain-tag tag-green">Carbon Neutral</span>
+            </div>
+          </div>
+          <div class="chain-item" style="padding-bottom:0;">
+            <div class="chain-dot">◇</div>
+            <div class="chain-body">
+              <div class="chain-title">Ceramide NP Complex</div>
+              <div class="chain-meta">Plant-derived, Germany · RSPO Mass Balance certified · Traceable palm-free</div>
+              <span class="chain-tag tag-neutral">Palm-free</span>
+              <span class="chain-tag tag-gold">Barrier Support</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-head" style="margin-top:4px;">
+          <span>Carbon Footprint</span>
+          <span style="font-size:8px;color:var(--pb-light);">2.1 kg CO₂e per unit</span>
+        </div>
+        <div class="sustain-label"><span>Sourcing</span><span>Production</span><span>Distribution</span></div>
+        <div class="sustain-bar-wrap"><div class="sustain-bar" style="width:94%;"></div></div>
+        <div class="sustain-label"><span style="color:#3a7a58;">92% local</span><span></span><span style="color:var(--pb-gold);">94/100</span></div>
+      </div>
+
+      <!-- FORMULA -->
+      <div id="panel-formula" class="chapter-panel">
+        <div class="section-head"><span>Full INCI Declaration</span></div>
+        <div class="ingredient-list">
+          <div class="ingredient-row" onclick="sendPrompt('Tell me more about Sodium Hyaluronate in Prada Beauty Hydra Vital Serum')">
+            <div>
+              <div class="ing-name">Hyaluronic Acid</div>
+              <div class="ing-inci">Sodium Hyaluronate (3-weights)</div>
+            </div>
+            <div class="ing-right">
+              <div class="ing-pct">2.0%</div>
+              <div class="ing-badge tag-gold">Active</div>
+            </div>
+          </div>
+          <div class="ingredient-row" onclick="sendPrompt('Tell me more about Rosa Damascena in the serum')">
+            <div>
+              <div class="ing-name">Rose Extract</div>
+              <div class="ing-inci">Rosa Damascena Flower Water</div>
+            </div>
+            <div class="ing-right">
+              <div class="ing-pct">1.5%</div>
+              <div class="ing-badge tag-green">Organic</div>
+            </div>
+          </div>
+          <div class="ingredient-row">
+            <div>
+              <div class="ing-name">Niacinamide</div>
+              <div class="ing-inci">Niacinamide (Vitamin B3)</div>
+            </div>
+            <div class="ing-right">
+              <div class="ing-pct">5.0%</div>
+              <div class="ing-badge tag-gold">Active</div>
+            </div>
+          </div>
+          <div class="ingredient-row">
+            <div>
+              <div class="ing-name">Ceramide Complex</div>
+              <div class="ing-inci">Ceramide NP, AP, EOP</div>
+            </div>
+            <div class="ing-right">
+              <div class="ing-pct">0.4%</div>
+              <div class="ing-badge tag-neutral">Barrier</div>
+            </div>
+          </div>
+          <div class="ingredient-row">
+            <div>
+              <div class="ing-name">Peptide Matrix</div>
+              <div class="ing-inci">Palmitoyl Tripeptide-1</div>
+            </div>
+            <div class="ing-right">
+              <div class="ing-pct">0.2%</div>
+              <div class="ing-badge tag-gold">Active</div>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:10px;font-size:9px;color:var(--pb-light);line-height:1.6;text-align:center;">Free from: parabens · mineral oils · silicones · SLS</div>
+      </div>
+
+      <!-- CERTIFICATIONS -->
+      <div id="panel-certify" class="chapter-panel">
+        <div class="section-head"><span>Certifications &amp; Standards</span></div>
+        <div class="cert-grid">
+          <div class="cert-card">
+            <div class="cert-icon" style="font-size:16px;color:#3a7a58;">✓</div>
+            <div class="cert-name">COSMOS Organic</div>
+            <div class="cert-body">Ecocert certified organic standard</div>
+          </div>
+          <div class="cert-card">
+            <div class="cert-icon" style="font-size:16px;color:var(--pb-gold);">◈</div>
+            <div class="cert-name">Vegan Society</div>
+            <div class="cert-body">No animal-derived ingredients or testing</div>
+          </div>
+          <div class="cert-card">
+            <div class="cert-icon" style="font-size:16px;color:#5B8DB8;">○</div>
+            <div class="cert-name">ISO 16128</div>
+            <div class="cert-body">Natural &amp; organic cosmetic standard</div>
+          </div>
+          <div class="cert-card">
+            <div class="cert-icon" style="font-size:16px;color:#3a7a58;">◉</div>
+            <div class="cert-name">Carbon Neutral</div>
+            <div class="cert-body">Gold Standard verified offset programme</div>
+          </div>
+          <div class="cert-card">
+            <div class="cert-icon" style="font-size:16px;color:var(--pb-mid);">✦</div>
+            <div class="cert-name">Leaping Bunny</div>
+            <div class="cert-body">Cruelty-free supply chain certified</div>
+          </div>
+          <div class="cert-card">
+            <div class="cert-icon" style="font-size:16px;color:#B8965A;">◇</div>
+            <div class="cert-name">B Corp</div>
+            <div class="cert-body">Verified social &amp; environmental impact</div>
+          </div>
+        </div>
+        <div style="margin-top:12px;padding:10px 12px;background:var(--pb-white);border:0.5px solid var(--pb-border-light);border-radius:8px;">
+          <div style="font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--pb-gold);margin-bottom:4px;">QR Blockchain Record</div>
+          <div style="font-family:'Helvetica Neue',monospace;font-size:8px;color:var(--pb-light);word-break:break-all;line-height:1.6;">0x4f2a8b3c1e9d7f6a2b5c8e1f4a7d3b6c9e2f5a8d1b4c7e0f3a6d9b2c5e8f1a4d</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom tab bar -->
+    <div class="tab-bar">
+      <div class="tab-item" onclick="sendPrompt('Go back to the Skin AI screen')">
+        <div class="tab-icon">✦</div>
+        <div class="tab-name">Skin AI</div>
+      </div>
+      <div class="tab-item active">
+        <div class="tab-icon">◈</div>
+        <div class="tab-name">Passport</div>
+      </div>
+      <div class="tab-item" onclick="sendPrompt('Build the Prada Beauty Refill UI screen')">
+        <div class="tab-icon">◎</div>
+        <div class="tab-name">Refill</div>
+      </div>
+      <div class="tab-item">
+        <div class="tab-icon">○</div>
+        <div class="tab-name">Profile</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function switchChapter(id, el) {
+  document.querySelectorAll('.chapter-tab').forEach(function(t){ t.classList.remove('active'); });
+  document.querySelectorAll('.chapter-panel').forEach(function(p){ p.classList.remove('active'); });
+  el.classList.add('active');
+  document.getElementById('panel-' + id).classList.add('active');
+}
+</script>
+</body>
+</html>

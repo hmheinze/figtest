@@ -1,0 +1,178 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Triad System — Symmetrical Loop</title>
+<style>
+body{margin:0;background:#1a1814}
+.wrap{display:grid;grid-template-columns:repeat(2,1fr);gap:2px}
+.cell{display:flex;flex-direction:column;align-items:center;padding:16px 8px 12px;gap:8px}
+canvas{display:block}
+.lbl{font-family:sans-serif;font-size:9px;letter-spacing:0.13em;color:#444;text-transform:uppercase;text-align:center}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="cell"><canvas id="a" width="210" height="210"></canvas><div class="lbl">01 — unfurl</div></div>
+  <div class="cell"><canvas id="b" width="210" height="210"></canvas><div class="lbl">02 — swell</div></div>
+  <div class="cell"><canvas id="c" width="210" height="210"></canvas><div class="lbl">03 — twin</div></div>
+  <div class="cell"><canvas id="d" width="210" height="210"></canvas><div class="lbl">04 — contract</div></div>
+</div>
+
+<script>
+(function(){
+
+const TAU = Math.PI*2;
+let t = 0;
+const LOOP = TAU;
+
+// ---------- timing ----------
+function loopPhase(speed=1){
+  t += 0.006 * speed;
+  return t % LOOP;
+}
+
+function triadPhase(base,i){
+  return base + i*(TAU/3);
+}
+
+function breath(base){
+  return 0.5 + 0.5*Math.sin(base);
+}
+
+function eio(x){
+  return x<0.5 ? 2*x*x : 1 - Math.pow(-2*x+2,2)/2;
+}
+
+// ---------- noise ----------
+function sn(sx,sy,t){
+  return(
+    Math.sin(sx*1.4+t*0.9)*Math.cos(sy*1.1-t*0.7)
+  + Math.sin(sx*2.8-t*1.2)*Math.cos(sy*2.2+t*0.5)*0.5
+  + Math.sin(sx*5.1+t*0.4)*Math.cos(sy*4.6-t*1.0)*0.22
+  )/2;
+}
+
+// ---------- colour ----------
+const AMBER=[210,165,90];
+const SLATE=[85,115,148];
+const BONE=[232,218,192];
+const INK=[14,12,10];
+
+function lerp(a,b,t){return a+(b-a)*t}
+function mc(c1,c2,t){
+  return[
+    Math.floor(lerp(c1[0],c2[0],t)),
+    Math.floor(lerp(c1[1],c2[1],t)),
+    Math.floor(lerp(c1[2],c2[2],t))
+  ];
+}
+
+// ---------- nodes ----------
+function getNodes(cx,cy,base,R){
+  return[0,1,2].map(i=>{
+    const a = triadPhase(base,i) - Math.PI/2;
+    return{
+      x:cx + R*Math.cos(a),
+      y:cy + R*Math.sin(a),
+      a
+    };
+  });
+}
+
+// ---------- TRIANGLE CONNECTION ----------
+function drawTriad(ctx,ns,base){
+  const connect = Math.pow(breath(base),3);
+  if(connect < 0.02) return;
+
+  ctx.lineWidth = 0.6 + connect*1.2;
+
+  for(let i=0;i<3;i++){
+    const a = ns[i];
+    const b = ns[(i+1)%3];
+    ctx.strokeStyle = `rgba(232,218,192,${connect*0.6})`;
+    ctx.beginPath();
+    ctx.moveTo(a.x,a.y);
+    ctx.lineTo(b.x,b.y);
+    ctx.stroke();
+  }
+}
+
+// ---------- shared renderer ----------
+function render(ctx,cx,cy,variant){
+  const W=210,H=210;
+
+  function draw(){
+    ctx.fillStyle='rgba(14,12,10,0.1)';
+    ctx.fillRect(0,0,W,H);
+
+    const base = loopPhase(1);
+    const ns = getNodes(cx,cy,base,58);
+
+    drawTriad(ctx,ns,base);
+
+    for(let i=0;i<3;i++){
+      const n = ns[i];
+      const axis = Math.atan2(n.y-cy,n.x-cx);
+
+      const unified = breath(base);
+      const tri = breath(triadPhase(base,i));
+
+      let b;
+      if(variant===0) b = unified;
+      if(variant===1) b = tri;
+      if(variant===2) b = unified;
+      if(variant===3) b = Math.pow(unified,1.8);
+
+      const spread = 0.4 + b*0.8;
+      const maxR = 8 + b*40;
+
+      for(let d=0; d<100; d++){
+        const frac = d/100;
+        const cen = 1 - Math.abs(frac*2-1);
+
+        const off = (frac-0.5)*spread*2;
+        const nm = 0.5 + sn(frac*4+i,frac*3+i,base)*0.5;
+        const pulse = 0.5+0.5*Math.sin(base*2+frac*TAU);
+
+        const r = maxR * nm * (0.5+cen*0.5);
+
+        const col = cen>0.5
+          ? mc(AMBER,BONE,cen)
+          : mc(SLATE,INK,1-cen);
+
+        const alpha = cen * (0.3 + b*0.7) * pulse;
+        const size = 0.5 + cen*2*b;
+
+        [off,-off].forEach(o=>{
+          const ang = axis + o;
+          ctx.fillStyle=`rgba(${col[0]},${col[1]},${col[2]},${alpha})`;
+          ctx.beginPath();
+          ctx.arc(n.x+Math.cos(ang)*r,n.y+Math.sin(ang)*r,size,0,TAU);
+          ctx.fill();
+        });
+      }
+    }
+
+    requestAnimationFrame(draw);
+  }
+
+  ctx.fillStyle='#0e0c0a';
+  ctx.fillRect(0,0,210,210);
+  draw();
+}
+
+// ---------- init ----------
+render(document.getElementById('a').getContext('2d'),105,105,0);
+render(document.getElementById('b').getContext('2d'),105,105,1);
+render(document.getElementById('c').getContext('2d'),105,105,2);
+render(document.getElementById('d').getContext('2d'),105,105,3);
+
+})();
+</script>
+
+</body>
+</html>
+```
